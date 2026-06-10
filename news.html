@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News — P20 Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
+      <div class="nav-right">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="news.html" class="active">News</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="requests.html">Requests</a></li>
+        </ul>
+        <div class="nav-user" id="nav-user"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-heading">
+      <h1>Program News</h1>
+      <p>Announcements, stories, and updates from the P20 Ambassador community.</p>
+    </div>
+
+    <section class="section">
+      <div class="container">
+
+        <!-- Admin bar (ambassadors & staff only) -->
+        <div class="admin-bar" id="admin-bar">
+          <button class="btn-primary" onclick="openModal('modal-news')">+ Publish News</button>
+        </div>
+
+        <!-- Ambassador-published articles (dynamic) -->
+        <div class="grid-3" id="dynamic-news" style="margin-bottom: 1.5rem;"></div>
+
+        <!-- Seed articles -->
+        <div class="grid-3" id="seed-news">
+          <div class="card">
+            <span class="card-badge">Announcement</span>
+            <h3>Welcome, New Ambassadors!</h3>
+            <p>We're thrilled to welcome the newest cohort of P20 Ambassadors. Get ready for an exciting year of connection and growth.</p>
+            <p class="card-meta">June 5, 2026</p>
+            <a href="#" class="btn-secondary">Read more</a>
+          </div>
+          <div class="card">
+            <span class="card-badge">Spotlight</span>
+            <h3>Senior Ambassador Spotlight: Maria L.</h3>
+            <p>Maria shares her journey from new ambassador to team lead, and her tips for making the most of the program.</p>
+            <p class="card-meta">May 28, 2026</p>
+            <a href="#" class="btn-secondary">Read more</a>
+          </div>
+          <div class="card">
+            <span class="card-badge">Update</span>
+            <h3>Spring Mixer Recap</h3>
+            <p>Over 40 ambassadors gathered for the Spring Mixer last week. Here's a look back at the highlights and new connections made.</p>
+            <p class="card-meta">May 18, 2026</p>
+            <a href="#" class="btn-secondary">Read more</a>
+          </div>
+          <div class="card">
+            <span class="card-badge">Resource</span>
+            <h3>New Onboarding Guide Available</h3>
+            <p>The updated onboarding guide for new ambassadors is now live. It covers everything from your first week to ongoing responsibilities.</p>
+            <p class="card-meta">May 10, 2026</p>
+            <a href="#" class="btn-secondary">Read more</a>
+          </div>
+          <div class="card">
+            <span class="card-badge">Announcement</span>
+            <h3>Device Request Portal Now Open</h3>
+            <p>Ambassadors can now submit requests for devices and funding support through the Requests page. All submissions are reviewed by staff.</p>
+            <p class="card-meta">April 30, 2026</p>
+            <a href="requests.html" class="btn-secondary">Go to Requests</a>
+          </div>
+          <div class="card">
+            <span class="card-badge">Event</span>
+            <h3>Leadership Training — Save the Date</h3>
+            <p>A full-day leadership training for senior ambassadors is scheduled for late June. Details and sign-up coming soon.</p>
+            <p class="card-meta">April 22, 2026</p>
+            <a href="events.html" class="btn-secondary">See Events</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Publish News Modal -->
+  <div class="modal-overlay" id="modal-news" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-news')">&times;</button>
+      <h3>Publish News</h3>
+      <form id="form-news">
+        <div class="form-group">
+          <label for="n-category">Category</label>
+          <select id="n-category">
+            <option>Announcement</option>
+            <option>Spotlight</option>
+            <option>Update</option>
+            <option>Resource</option>
+            <option>Event</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="n-title">Title</label>
+          <input type="text" id="n-title" placeholder="Article headline" required />
+        </div>
+        <div class="form-group">
+          <label for="n-excerpt">Excerpt</label>
+          <textarea id="n-excerpt" placeholder="A short description or summary..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Publish</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    p20RequireLogin();
+    p20InitHeader();
+
+    if (p20GetUser()) {
+      document.getElementById('admin-bar').style.display = 'flex';
+    }
+
+    function renderNews() {
+      const items = p20GetItems('p20_news');
+      const container = document.getElementById('dynamic-news');
+      container.innerHTML = items.map(item => `
+        <div class="card">
+          <span class="card-badge">${item.category}</span>
+          <h3>${item.title}</h3>
+          <p>${item.excerpt}</p>
+          <p class="card-meta">${item.publishedDate} &mdash; ${item.author}</p>
+          <a href="#" class="btn-secondary">Read more</a>
+        </div>
+      `).join('');
+    }
+
+    renderNews();
+
+    document.getElementById('form-news').addEventListener('submit', function(e) {
+      e.preventDefault();
+      p20AddItem('p20_news', {
+        category: document.getElementById('n-category').value,
+        title:    document.getElementById('n-title').value,
+        excerpt:  document.getElementById('n-excerpt').value
+      });
+      renderNews();
+      this.reset();
+      closeModal('modal-news');
+    });
+
+    function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+  </script>
+</body>
+</html>

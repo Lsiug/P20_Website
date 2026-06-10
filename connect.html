@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect — P20 Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
+      <div class="nav-right">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="connect.html" class="active">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="requests.html">Requests</a></li>
+        </ul>
+        <div class="nav-user" id="nav-user"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-heading">
+      <h1>Ambassador Directory</h1>
+      <p>Get to know the P20 Ambassador community — new and senior members alike.</p>
+    </div>
+
+    <!-- Senior Ambassadors -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Senior Ambassadors</h2>
+          <p>Experienced ambassadors ready to guide and support newcomers.</p>
+        </div>
+        <div class="admin-bar" id="admin-bar-senior">
+          <button class="btn-primary" onclick="openModal('modal-profile', 'senior')">+ Add Senior Profile</button>
+        </div>
+        <div class="grid-3" id="dynamic-senior" style="margin-bottom: 1.5rem;"></div>
+        <div class="grid-3" id="seed-senior">
+          <div class="profile-card">
+            <div class="profile-avatar">ML</div>
+            <h3>Maria Lopez</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Public Policy, Junior</p>
+            <p class="profile-bio">Passionate about education equity and connecting students to resources. Happy to chat about navigating campus life.</p>
+            <a href="mailto:mlopez@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">JK</div>
+            <h3>James Kim</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Computer Science, Senior</p>
+            <p class="profile-bio">Tech enthusiast and first-gen student. Loves helping new ambassadors find their footing and build confidence.</p>
+            <a href="mailto:jkim@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">AT</div>
+            <h3>Aisha Torres</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Communications, Sophomore</p>
+            <p class="profile-bio">Storyteller and community organizer. Ask me about events, outreach, or how to get involved beyond the classroom.</p>
+            <a href="mailto:atorres@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">RP</div>
+            <h3>Ryan Patel</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Biology, Junior</p>
+            <p class="profile-bio">Pre-med student who found community through the ambassador program. Open to mentoring and study sessions.</p>
+            <a href="mailto:rpatel@example.edu" class="btn-secondary">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Ambassadors -->
+    <section class="section section-cream">
+      <div class="container">
+        <div class="section-title">
+          <h2>New Ambassadors</h2>
+          <p>Just joined the program — welcome to the team!</p>
+        </div>
+        <div class="admin-bar" id="admin-bar-new">
+          <button class="btn-primary" onclick="openModal('modal-profile', 'new')">+ Add New Ambassador Profile</button>
+        </div>
+        <div class="grid-3" id="dynamic-new" style="margin-bottom: 1.5rem;"></div>
+        <div class="grid-3" id="seed-new">
+          <div class="profile-card">
+            <div class="profile-avatar">SN</div>
+            <h3>Sofia Nguyen</h3>
+            <span class="profile-role new">New</span>
+            <p class="profile-major">Psychology, Freshman</p>
+            <p class="profile-bio">Excited to connect, learn, and grow as a P20 Ambassador. Looking forward to meeting everyone!</p>
+            <a href="mailto:snguyen@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">DW</div>
+            <h3>David Williams</h3>
+            <span class="profile-role new">New</span>
+            <p class="profile-major">Business, Freshman</p>
+            <p class="profile-bio">First-gen college student passionate about giving back. Eager to learn from senior ambassadors.</p>
+            <a href="mailto:dwilliams@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">LC</div>
+            <h3>Lucia Chen</h3>
+            <span class="profile-role new">New</span>
+            <p class="profile-major">Education, Freshman</p>
+            <p class="profile-bio">Interested in education reform and community building. Looking for a senior mentor to learn from!</p>
+            <a href="mailto:lchen@example.edu" class="btn-secondary">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Profile Modal -->
+  <div class="modal-overlay" id="modal-profile" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-profile')">&times;</button>
+      <h3 id="modal-profile-title">Add Profile</h3>
+      <form id="form-profile">
+        <input type="hidden" id="p-role-value" />
+        <div class="form-group">
+          <label for="p-name">Full Name</label>
+          <input type="text" id="p-name" placeholder="e.g. Jordan Smith" required />
+        </div>
+        <div class="form-group">
+          <label for="p-major">Major &amp; Year</label>
+          <input type="text" id="p-major" placeholder="e.g. Psychology, Sophomore" required />
+        </div>
+        <div class="form-group">
+          <label for="p-bio">Short Bio</label>
+          <textarea id="p-bio" placeholder="A sentence or two about yourself..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="p-email">Contact Email</label>
+          <input type="email" id="p-email" placeholder="you@email.edu" required />
+        </div>
+        <button type="submit" class="btn-primary">Add Profile</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    p20RequireLogin();
+    p20InitHeader();
+
+    if (p20GetUser()) {
+      document.getElementById('admin-bar-senior').style.display = 'flex';
+      document.getElementById('admin-bar-new').style.display = 'flex';
+    }
+
+    function initials(name) {
+      return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    function profileCard(item) {
+      const roleClass = item.role === 'senior' ? 'senior' : 'new';
+      const roleLabel = item.role === 'senior' ? 'Senior' : 'New';
+      return `
+        <div class="profile-card">
+          <div class="profile-avatar">${initials(item.name)}</div>
+          <h3>${item.name}</h3>
+          <span class="profile-role ${roleClass}">${roleLabel}</span>
+          <p class="profile-major">${item.major}</p>
+          <p class="profile-bio">${item.bio}</p>
+          <a href="mailto:${item.email}" class="btn-secondary">Contact</a>
+        </div>
+      `;
+    }
+
+    function renderProfiles() {
+      const all = p20GetItems('p20_profiles');
+      const seniors = all.filter(p => p.role === 'senior');
+      const newAmbs = all.filter(p => p.role === 'new');
+      document.getElementById('dynamic-senior').innerHTML = seniors.map(profileCard).join('');
+      document.getElementById('dynamic-new').innerHTML    = newAmbs.map(profileCard).join('');
+    }
+
+    renderProfiles();
+
+    function openModal(id, role) {
+      if (role) {
+        document.getElementById('p-role-value').value = role;
+        document.getElementById('modal-profile-title').textContent =
+          role === 'senior' ? 'Add Senior Ambassador Profile' : 'Add New Ambassador Profile';
+      }
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    document.getElementById('form-profile').addEventListener('submit', function(e) {
+      e.preventDefault();
+      p20AddItem('p20_profiles', {
+        role:  document.getElementById('p-role-value').value,
+        name:  document.getElementById('p-name').value,
+        major: document.getElementById('p-major').value,
+        bio:   document.getElementById('p-bio').value,
+        email: document.getElementById('p-email').value
+      });
+      renderProfiles();
+      this.reset();
+      closeModal('modal-profile');
+    });
+  </script>
+</body>
+</html>
