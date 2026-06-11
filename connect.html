@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connect — Educational Ambassadors</title>
+  <title>Connect — P20 Ambassadors</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -27,61 +27,94 @@
     </div>
   </header>
 
+  <style>
+    .dir-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e2e8f0;
+      margin: 0 auto;
+      max-width: 1100px;
+      padding: 0 1.5rem;
+    }
+    .dir-tab {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      color: #64748b;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .dir-tab.active {
+      color: #1e40af;
+      border-bottom-color: #1e40af;
+    }
+    .dir-panel { display: none; }
+    .dir-panel.active { display: block; }
+    .dir-empty {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+    .council-table-wrap {
+      overflow-x: auto;
+    }
+    .council-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+    .council-table th {
+      background: #1e40af;
+      color: #fff;
+      text-align: left;
+      padding: 0.65rem 1rem;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+    .council-table th:last-child {
+      border-right: none;
+    }
+    .council-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+    .council-table td:last-child {
+      border-right: none;
+    }
+    .council-table tbody tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    .council-table tbody tr:hover td {
+      background: #eff6ff;
+    }
+    .council-table a {
+      color: #1e40af;
+      text-decoration: none;
+    }
+    .council-table a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
   <main>
     <div class="page-heading">
-      <h1>Ambassador Directory</h1>
-      <p>Get to know the P20 Ambassador community — new and senior members alike.</p>
+      <h1>Connect</h1>
+      <p>Get to know the P20 community — ambassadors and council members.</p>
+    </div>
+
+    <div class="dir-tabs">
+      <button class="dir-tab active" onclick="switchTab('ambassador')">Ambassador Directory</button>
+      <button class="dir-tab" onclick="switchTab('council')">P20 Council Directory</button>
     </div>
 
     <div id="panel-ambassador" class="dir-panel active">
-
-    <!-- Senior Ambassadors -->
-    <section class="section">
-      <div class="container">
-        <div class="section-title">
-          <h2>Senior Ambassadors</h2>
-          <p>Experienced ambassadors ready to guide and support newcomers.</p>
-        </div>
-        <div class="admin-bar" id="admin-bar-senior">
-          <button class="btn-primary" onclick="openModal('modal-profile', 'senior')">+ Add Senior Profile</button>
-        </div>
-        <div class="grid-3" id="dynamic-senior" style="margin-bottom: 1.5rem;"></div>
-        <div class="grid-3" id="seed-senior">
-          <div class="profile-card">
-            <div class="profile-avatar">ML</div>
-            <h3>Maria Lopez</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Public Policy, Junior</p>
-            <p class="profile-bio">Passionate about education equity and connecting students to resources. Happy to chat about navigating campus life.</p>
-            <a href="mailto:mlopez@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">JK</div>
-            <h3>James Kim</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Computer Science, Senior</p>
-            <p class="profile-bio">Tech enthusiast and first-gen student. Loves helping new ambassadors find their footing and build confidence.</p>
-            <a href="mailto:jkim@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">AT</div>
-            <h3>Aisha Torres</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Communications, Sophomore</p>
-            <p class="profile-bio">Storyteller and community organizer. Ask me about events, outreach, or how to get involved beyond the classroom.</p>
-            <a href="mailto:atorres@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">RP</div>
-            <h3>Ryan Patel</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Biology, Junior</p>
-            <p class="profile-bio">Pre-med student who found community through the ambassador program. Open to mentoring and study sessions.</p>
-            <a href="mailto:rpatel@example.edu" class="btn-secondary">Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 2023 Student Ambassadors -->
     <section class="section section-cream">
@@ -117,46 +150,6 @@
       </div>
     </section>
 
-    <!-- New Ambassadors -->
-    <section class="section section-cream">
-      <div class="container">
-        <div class="section-title">
-          <h2>New Ambassadors</h2>
-          <p>Just joined the program — welcome to the team!</p>
-        </div>
-        <div class="admin-bar" id="admin-bar-new">
-          <button class="btn-primary" onclick="openModal('modal-profile', 'new')">+ Add New Ambassador Profile</button>
-        </div>
-        <div class="grid-3" id="dynamic-new" style="margin-bottom: 1.5rem;"></div>
-        <div class="grid-3" id="seed-new">
-          <div class="profile-card">
-            <div class="profile-avatar">SN</div>
-            <h3>Sofia Nguyen</h3>
-            <span class="profile-role new">New</span>
-            <p class="profile-major">Psychology, Freshman</p>
-            <p class="profile-bio">Excited to connect, learn, and grow as an Educational Ambassador. Looking forward to meeting everyone!</p>
-            <a href="mailto:snguyen@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">DW</div>
-            <h3>David Williams</h3>
-            <span class="profile-role new">New</span>
-            <p class="profile-major">Business, Freshman</p>
-            <p class="profile-bio">First-gen college student passionate about giving back. Eager to learn from senior ambassadors.</p>
-            <a href="mailto:dwilliams@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">LC</div>
-            <h3>Lucia Chen</h3>
-            <span class="profile-role new">New</span>
-            <p class="profile-major">Education, Freshman</p>
-            <p class="profile-bio">Interested in education reform and community building. Looking for a senior mentor to learn from!</p>
-            <a href="mailto:lchen@example.edu" class="btn-secondary">Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     </div><!-- /panel-ambassador -->
 
     <div id="panel-council" class="dir-panel">
@@ -166,54 +159,38 @@
             <h2>P20 Council Members</h2>
             <p>Representatives from partner organizations across the region.</p>
           </div>
-          <div class="council-table-wrap">
-            <table class="council-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Organization</th>
-                  <th>Title</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>Dana Moore</td><td>A-B Tech CC</td><td>Associate Vice President of Instructional Services</td><td><a href="mailto:danabmoore@abtech.edu">danabmoore@abtech.edu</a></td></tr>
-                <tr><td>Diana Blackett</td><td>Asheville Chamber of Commerce</td><td>Workforce Partnership Specialist</td><td><a href="mailto:dblackett@ashevillechamber.org">dblackett@ashevillechamber.org</a></td></tr>
-                <tr><td>Dr. Ivry Cheeks</td><td>Asheville City Schools</td><td>Career &amp; Technical Education Director</td><td><a href="mailto:ivry.cheeks@acsgmail.net">ivry.cheeks@acsgmail.net</a></td></tr>
-                <tr><td>Josh Kersey</td><td>Biltmore Farms</td><td>Senior HR Manager</td><td><a href="mailto:jkersey@biltmorefarms.com">jkersey@biltmorefarms.com</a></td></tr>
-                <tr><td>Dr. Laura Leatherwood</td><td>Blue Ridge CC</td><td>President</td><td><a href="mailto:leatherwood@blueridge.edu">leatherwood@blueridge.edu</a></td></tr>
-                <tr><td>Rachael Sawyer</td><td>Buncombe County</td><td>Director of Strategic Partnerships</td><td><a href="mailto:Rachael.sawyer@buncombenc.gov">Rachael.sawyer@buncombenc.gov</a></td></tr>
-                <tr><td>Dr. Jennifer Reed</td><td>Buncombe County Schools</td><td>Associate Superintendent of Curriculum and Instruction</td><td><a href="mailto:jennifer.reed@bcsemail.org">jennifer.reed@bcsemail.org</a></td></tr>
-                <tr><td></td><td>Buncombe Partnership for Children</td><td></td><td></td></tr>
-                <tr><td>Devon McCarthy-James</td><td>CFNC</td><td>Associate Outreach Director Western Region</td><td><a href="mailto:Devon.McCarthy-James@cfi.org">Devon.McCarthy-James@cfi.org</a></td></tr>
-                <tr><td>Robe Rode</td><td>City of Asheville</td><td>Assistant Director of Human Resources</td><td><a href="mailto:rrode@ashevillenc.gov">rrode@ashevillenc.gov</a></td></tr>
-                <tr><td>Samantha Cole</td><td>Commerce NC</td><td>Child Care Business Liaison</td><td><a href="mailto:samantha.cole@commerce.nc.gov">samantha.cole@commerce.nc.gov</a></td></tr>
-                <tr><td>Dr. Gene Loflin</td><td>Community Member</td><td></td><td><a href="mailto:william.e.loflin@gmail.com">william.e.loflin@gmail.com</a></td></tr>
-                <tr><td>Dr. Joseph Fox</td><td>Fox Management Consulting Enterprises</td><td>President &amp; CEO</td><td></td></tr>
-                <tr><td>Jorie Matijevich</td><td>HCA Healthcare - NC Division</td><td>Vice President, Human Resources</td><td><a href="mailto:jorie.matijevich@healthonecares.com">jorie.matijevich@healthonecares.com</a></td></tr>
-                <tr><td>John Mitchell</td><td>Henderson County</td><td>County Manager</td><td><a href="mailto:jmitchell@hendersoncountync.gov">jmitchell@hendersoncountync.gov</a></td></tr>
-                <tr><td>Emily Martin</td><td>Henderson County Partnership for Economic Development</td><td>Director of Industry Relations</td><td><a href="mailto:emilym@hcped.org">emilym@hcped.org</a></td></tr>
-                <tr><td>Scott Rhodes</td><td>Henderson County Public Schools</td><td>Assistant Superintendent for Human Resources</td><td><a href="mailto:wsrhodes@hcpsnc.org">wsrhodes@hcpsnc.org</a></td></tr>
-                <tr><td>Brandon Priester</td><td>Land of Sky Regional Council</td><td>Youth Business Services Representative, Mountain Area Workforce Development Board</td><td><a href="mailto:brandonp@landofsky.org">brandonp@landofsky.org</a></td></tr>
-                <tr><td>Dr. Will Hoffman</td><td>Madison County Schools</td><td>Superintendent</td><td><a href="mailto:whoffman@madisonk12.net">whoffman@madisonk12.net</a></td></tr>
-                <tr><td></td><td>Madison County Smart Start</td><td></td><td></td></tr>
-                <tr><td>Dr. Tracy Parkinson</td><td>Mars Hill University</td><td>Executive Vice President and Provost</td><td><a href="mailto:tracy_parkinson@mhu.edu">tracy_parkinson@mhu.edu</a></td></tr>
-                <tr><td>Dr. Denisha Bonds</td><td>Montreat College</td><td>Director of Career Development</td><td><a href="mailto:denisha.bonds@montreat.edu">denisha.bonds@montreat.edu</a></td></tr>
-                <tr><td>Pam Hartley</td><td>myFutureNC</td><td>Regional Impact Manager</td><td><a href="mailto:pam@myfuturenc.org">pam@myfuturenc.org</a></td></tr>
-                <tr><td>Wesley Downing</td><td>Pratt &amp; Whitney Asheville</td><td>Senior Human Resources Manager</td><td><a href="mailto:Wesley.downing@prattwhitney.com">Wesley.downing@prattwhitney.com</a></td></tr>
-                <tr><td>Samantha Sircey</td><td>South College</td><td>Campus President</td><td><a href="mailto:ssircey@south.edu">ssircey@south.edu</a></td></tr>
-                <tr><td></td><td>Smart Start of Transylvania County</td><td></td><td></td></tr>
-                <tr><td>Jaime Laughter</td><td>Transylvania County</td><td>County Manager</td><td><a href="mailto:jaime.laughter@transylvaniacounty.org">jaime.laughter@transylvaniacounty.org</a></td></tr>
-                <tr><td>Dr. Lisa Fletcher</td><td>Transylvania County Schools</td><td>Superintendent</td><td><a href="mailto:lfletcher@tcsnc.org">lfletcher@tcsnc.org</a></td></tr>
-                <tr><td>Lance Edwards</td><td>United Way</td><td>Senior Vice President, Community Impact</td><td><a href="mailto:lance.edwards@unitedwayabc.org">lance.edwards@unitedwayabc.org</a></td></tr>
-                <tr><td></td><td>UNC Health Pardee</td><td></td><td></td></tr>
-                <tr><td>Lisa Mann</td><td>UNC-Asheville</td><td>Director of Career Center</td><td><a href="mailto:mann@unca.edu">mann@unca.edu</a></td></tr>
-                <tr><td>Dr. Kevan Frazier</td><td>WCU</td><td>Executive Director, WCU at Biltmore Park</td><td><a href="mailto:kdfrazier@email.wcu.edu">kdfrazier@email.wcu.edu</a></td></tr>
-                <tr><td>Drew Pollick</td><td>WNC Human Resources Association</td><td>Founder/CEO of Craft HR Solutions</td><td><a href="mailto:drew@crafthr.com">drew@crafthr.com</a></td></tr>
-                <tr><td>Candie Sellers</td><td>WRESA</td><td>Elementary Coordinator for the Western Region Education Service Alliance (WRESA)</td><td><a href="mailto:csellers@wresa.org">csellers@wresa.org</a></td></tr>
-                <tr><td>Claudia Gutierrez</td><td>WWBC Program Associate</td><td>Program Associate</td><td><a href="mailto:cgutierrez@carolinasmallbusiness.org">cgutierrez@carolinasmallbusiness.org</a></td></tr>
-              </tbody>
-            </table>
+          <div class="grid-3">
+            <div class="profile-card"><div class="profile-avatar">DM</div><h3>Dana Moore</h3><p class="profile-major">A-B Tech CC</p><p class="profile-bio">Associate Vice President of Instructional Services</p><a href="mailto:danabmoore@abtech.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">DB</div><h3>Diana Blackett</h3><p class="profile-major">Asheville Chamber of Commerce</p><p class="profile-bio">Workforce Partnership Specialist</p><a href="mailto:dblackett@ashevillechamber.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">IC</div><h3>Dr. Ivry Cheeks</h3><p class="profile-major">Asheville City Schools</p><p class="profile-bio">Career &amp; Technical Education Director</p><a href="mailto:ivry.cheeks@acsgmail.net" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">JK</div><h3>Josh Kersey</h3><p class="profile-major">Biltmore Farms</p><p class="profile-bio">Senior HR Manager</p><a href="mailto:jkersey@biltmorefarms.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">LL</div><h3>Dr. Laura Leatherwood</h3><p class="profile-major">Blue Ridge CC</p><p class="profile-bio">President</p><a href="mailto:leatherwood@blueridge.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">RS</div><h3>Rachael Sawyer</h3><p class="profile-major">Buncombe County</p><p class="profile-bio">Director of Strategic Partnerships</p><a href="mailto:Rachael.sawyer@buncombenc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">JR</div><h3>Dr. Jennifer Reed</h3><p class="profile-major">Buncombe County Schools</p><p class="profile-bio">Associate Superintendent of Curriculum and Instruction</p><a href="mailto:jennifer.reed@bcsemail.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">DM</div><h3>Devon McCarthy-James</h3><p class="profile-major">CFNC</p><p class="profile-bio">Associate Outreach Director Western Region</p><a href="mailto:Devon.McCarthy-James@cfi.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">RR</div><h3>Robe Rode</h3><p class="profile-major">City of Asheville</p><p class="profile-bio">Assistant Director of Human Resources</p><a href="mailto:rrode@ashevillenc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">SC</div><h3>Samantha Cole</h3><p class="profile-major">Commerce NC</p><p class="profile-bio">Child Care Business Liaison</p><a href="mailto:samantha.cole@commerce.nc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">GL</div><h3>Dr. Gene Loflin</h3><p class="profile-major">Community Member</p><p class="profile-bio"></p><a href="mailto:william.e.loflin@gmail.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">JF</div><h3>Dr. Joseph Fox</h3><p class="profile-major">Fox Management Consulting Enterprises</p><p class="profile-bio">President &amp; CEO</p></div>
+            <div class="profile-card"><div class="profile-avatar">JM</div><h3>Jorie Matijevich</h3><p class="profile-major">HCA Healthcare - NC Division</p><p class="profile-bio">Vice President, Human Resources</p><a href="mailto:jorie.matijevich@healthonecares.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">JM</div><h3>John Mitchell</h3><p class="profile-major">Henderson County</p><p class="profile-bio">County Manager</p><a href="mailto:jmitchell@hendersoncountync.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">EM</div><h3>Emily Martin</h3><p class="profile-major">Henderson County Partnership for Economic Development</p><p class="profile-bio">Director of Industry Relations</p><a href="mailto:emilym@hcped.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">SR</div><h3>Scott Rhodes</h3><p class="profile-major">Henderson County Public Schools</p><p class="profile-bio">Assistant Superintendent for Human Resources</p><a href="mailto:wsrhodes@hcpsnc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">BP</div><h3>Brandon Priester</h3><p class="profile-major">Land of Sky Regional Council</p><p class="profile-bio">Youth Business Services Representative, Mountain Area Workforce Development Board</p><a href="mailto:brandonp@landofsky.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">WH</div><h3>Dr. Will Hoffman</h3><p class="profile-major">Madison County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:whoffman@madisonk12.net" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">TP</div><h3>Dr. Tracy Parkinson</h3><p class="profile-major">Mars Hill University</p><p class="profile-bio">Executive Vice President and Provost</p><a href="mailto:tracy_parkinson@mhu.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">DB</div><h3>Dr. Denisha Bonds</h3><p class="profile-major">Montreat College</p><p class="profile-bio">Director of Career Development</p><a href="mailto:denisha.bonds@montreat.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">PH</div><h3>Pam Hartley</h3><p class="profile-major">myFutureNC</p><p class="profile-bio">Regional Impact Manager</p><a href="mailto:pam@myfuturenc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">WD</div><h3>Wesley Downing</h3><p class="profile-major">Pratt &amp; Whitney Asheville</p><p class="profile-bio">Senior Human Resources Manager</p><a href="mailto:Wesley.downing@prattwhitney.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">SS</div><h3>Samantha Sircey</h3><p class="profile-major">South College</p><p class="profile-bio">Campus President</p><a href="mailto:ssircey@south.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">JL</div><h3>Jaime Laughter</h3><p class="profile-major">Transylvania County</p><p class="profile-bio">County Manager</p><a href="mailto:jaime.laughter@transylvaniacounty.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">LF</div><h3>Dr. Lisa Fletcher</h3><p class="profile-major">Transylvania County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:lfletcher@tcsnc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">LE</div><h3>Lance Edwards</h3><p class="profile-major">United Way</p><p class="profile-bio">Senior Vice President, Community Impact</p><a href="mailto:lance.edwards@unitedwayabc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">LM</div><h3>Lisa Mann</h3><p class="profile-major">UNC-Asheville</p><p class="profile-bio">Director of Career Center</p><a href="mailto:mann@unca.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">KF</div><h3>Dr. Kevan Frazier</h3><p class="profile-major">WCU</p><p class="profile-bio">Executive Director, WCU at Biltmore Park</p><a href="mailto:kdfrazier@email.wcu.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">DP</div><h3>Drew Pollick</h3><p class="profile-major">WNC Human Resources Association</p><p class="profile-bio">Founder/CEO of Craft HR Solutions</p><a href="mailto:drew@crafthr.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">CS</div><h3>Candie Sellers</h3><p class="profile-major">WRESA</p><p class="profile-bio">Elementary Coordinator for the Western Region Education Service Alliance (WRESA)</p><a href="mailto:csellers@wresa.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card"><div class="profile-avatar">CG</div><h3>Claudia Gutierrez</h3><p class="profile-major">WWBC Program Associate</p><p class="profile-bio">Program Associate</p><a href="mailto:cgutierrez@carolinasmallbusiness.org" class="btn-secondary">Contact</a></div>
           </div>
         </div>
       </section>
@@ -250,7 +227,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
   </footer>
 
   <script src="js/auth.js"></script>
@@ -301,24 +278,13 @@
       }
     }
 
-    async function renderProfiles() {
-      const [seniors, newAmbs] = await Promise.all([
-        p20GetAmbassadors({ cohort: 'dynamic', role: 'senior' }),
-        p20GetAmbassadors({ cohort: 'dynamic', role: 'new' }),
-      ]);
-      document.getElementById('dynamic-senior').innerHTML = seniors.map(r => profileCard(r, isStaff)).join('');
-      document.getElementById('dynamic-new').innerHTML    = newAmbs.map(r => profileCard(r, isStaff)).join('');
-    }
-
     async function deleteAmbassador(id) {
       if (!confirm('Remove this ambassador?')) return;
       await p20DeleteAmbassador(id);
       render2023();
-      renderProfiles();
     }
 
     render2023();
-    renderProfiles();
 
     function switchTab(name) {
       document.querySelectorAll('.dir-tab').forEach((btn, i) => {
