@@ -3,29 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Requests — P20 Ambassadors</title>
+  <title>Requests — Educational Ambassadors</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="requests.html" class="active">Requests</a></li>
-        </ul>
-        <div class="nav-user" id="nav-user"></div>
-      </div>
-    </div>
-  </header>
+  <!-- Sidebar toggle button -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu">&#9776;</button>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
+    <a href="index.html" class="sidebar-logo">Educational Ambassadors</a>
+    <ul class="sidebar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html" class="active">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
 
   <main>
     <div class="page-heading">
@@ -100,7 +101,7 @@
           <h2>Submit a Device or Funding Request</h2>
           <p class="form-subtitle">Complete all fields. Staff will review and contact you by email.</p>
           <div class="staff-note">
-            <strong>Note:</strong> All device and funding requests are reviewed by P20 program staff. You will be contacted once a decision has been made.
+            <strong>Note:</strong> All device and funding requests are reviewed by program staff. You will be contacted once a decision has been made.
           </div>
           <form id="form-device">
             <div class="form-group">
@@ -144,7 +145,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
   </footer>
 
   <script src="js/auth.js"></script>

@@ -3,35 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>P20 Ambassadors</title>
+  <title>Educational Ambassadors</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="requests.html">Requests</a></li>
-        </ul>
-        <div class="nav-user" id="nav-user"></div>
-      </div>
-    </div>
-  </header>
+  <!-- Sidebar toggle button -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu">&#9776;</button>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
+    <a href="index.html" class="sidebar-logo">Educational Ambassadors</a>
+    <ul class="sidebar-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
 
   <main>
     <section class="hero">
-      <h1>Welcome to P20 Ambassadors</h1>
-      <p>Bridging new and experienced ambassadors — together we grow, lead, and inspire.</p>
-      <a href="connect.html" class="btn-primary">Meet the Ambassadors</a>
+      <div class="hero-content">
+        <h1>Educational Ambassadors</h1>
+        <a href="#ambassadors" class="btn-primary">Meet the Ambassadors</a>
+      </div>
     </section>
 
     <section class="section">
@@ -70,10 +72,55 @@
         <a href="connect.html" class="btn-secondary">Browse Profiles</a>
       </div>
     </section>
+    <section id="ambassadors" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Meet the Ambassadors</h2>
+          <p>Get to know the senior ambassadors who make this program what it is.</p>
+        </div>
+        <div class="grid-3">
+          <div class="profile-card">
+            <div class="profile-avatar">ML</div>
+            <h3>Maria Lopez</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Public Policy, Junior</p>
+            <p class="profile-bio">Passionate about education equity and connecting students to resources. Happy to chat about navigating campus life.</p>
+            <a href="mailto:mlopez@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">JK</div>
+            <h3>James Kim</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Computer Science, Senior</p>
+            <p class="profile-bio">Tech enthusiast and first-gen student. Loves helping new ambassadors find their footing and build confidence.</p>
+            <a href="mailto:jkim@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">AT</div>
+            <h3>Aisha Torres</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Communications, Sophomore</p>
+            <p class="profile-bio">Storyteller and community organizer. Ask me about events, outreach, or how to get involved beyond the classroom.</p>
+            <a href="mailto:atorres@example.edu" class="btn-secondary">Contact</a>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">RP</div>
+            <h3>Ryan Patel</h3>
+            <span class="profile-role senior">Senior</span>
+            <p class="profile-major">Biology, Junior</p>
+            <p class="profile-bio">Pre-med student who found community through the ambassador program. Open to mentoring and study sessions.</p>
+            <a href="mailto:rpatel@example.edu" class="btn-secondary">Contact</a>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:2.5rem;">
+          <a href="connect.html" class="btn-secondary">See All Ambassadors &rarr;</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
   </footer>
 
   <script src="js/auth.js"></script>

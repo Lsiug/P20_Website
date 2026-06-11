@@ -3,34 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News — P20 Ambassadors</title>
+  <title>News — Educational Ambassadors</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="news.html" class="active">News</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="requests.html">Requests</a></li>
-        </ul>
-        <div class="nav-user" id="nav-user"></div>
-      </div>
-    </div>
-  </header>
+  <!-- Sidebar toggle button -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu">&#9776;</button>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
+    <a href="index.html" class="sidebar-logo">Educational Ambassadors</a>
+    <ul class="sidebar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html" class="active">News</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
 
   <main>
     <div class="page-heading">
       <h1>Program News</h1>
-      <p>Announcements, stories, and updates from the P20 Ambassador community.</p>
+      <p>Announcements, stories, and updates from the Educational Ambassador community.</p>
     </div>
 
     <section class="section">
@@ -49,7 +50,7 @@
           <div class="card">
             <span class="card-badge">Announcement</span>
             <h3>Welcome, New Ambassadors!</h3>
-            <p>We're thrilled to welcome the newest cohort of P20 Ambassadors. Get ready for an exciting year of connection and growth.</p>
+            <p>We're thrilled to welcome the newest cohort of Educational Ambassadors. Get ready for an exciting year of connection and growth.</p>
             <p class="card-meta">June 5, 2026</p>
             <a href="#" class="btn-secondary">Read more</a>
           </div>
@@ -124,7 +125,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 P20 Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
   </footer>
 
   <script src="js/auth.js"></script>
