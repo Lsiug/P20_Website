@@ -101,6 +101,39 @@
     .council-table a:hover {
       text-decoration: underline;
     }
+    .cohort-accordion {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .cohort-toggle {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #1e293b;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .cohort-toggle:hover { background: #eff6ff; color: #1e40af; }
+    .cohort-toggle.open  { background: #1e40af; color: #fff; }
+    .cohort-arrow {
+      font-size: 1rem;
+      transition: transform 0.25s;
+    }
+    .cohort-toggle.open .cohort-arrow { transform: rotate(90deg); }
+    .cohort-body {
+      display: none;
+      padding: 0 1.5rem;
+    }
+    .cohort-body.open { display: block; }
   </style>
 
   <main>
@@ -116,66 +149,71 @@
 
     <div id="panel-ambassador" class="dir-panel active">
 
-    <!-- 2023 Student Ambassadors -->
-    <section class="section section-cream">
-      <div class="container">
-        <div class="section-title">
-          <h2>Fall 2023 Student Ambassadors</h2>
-          <p>Meet the students who joined the P20 Ambassador program in 2023.</p>
-        </div>
-        <div class="grid-3" id="cohort-2023">
-          <div class="profile-card"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CB</div><h3>Cate Boyette</h3><a href="mailto:cateboyette@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><a href="mailto:cdiazmar9138@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EC</div><h3>Eleura Clark</h3><a href="mailto:eclark@mcsstudent.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EE</div><h3>Ella Estrada</h3><a href="mailto:elestrada@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EV</div><h3>Eric Velez</h3><a href="mailto:ericvelez@students.abtech.edu" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">FR</div><h3>Fanny Reynoso-Diaz</h3><a href="mailto:reynosodiaz189@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><a href="mailto:kphillips2373@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">LI</div><h3>Lucian Iavorschi</h3><a href="mailto:liavorschi9487@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MS</div><h3>Michael "Hilton" Swing</h3><a href="mailto:mswing8406@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SM</div><h3>Stuart Maise</h3><a href="mailto:smaise8774@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">TM</div><h3>Taylor McHone</h3><a href="mailto:tmchone2238@k12bcs.org" class="btn-secondary">Contact</a></div>
-        </div>
-        <p id="cohort-2023-status" style="text-align:center;padding:1rem;display:none;">Loading from database…</p>
-      </div>
-    </section>
-
-    <!-- Spring 2024 Student Ambassadors -->
     <section class="section">
       <div class="container">
-        <div class="section-title">
-          <h2>Spring 2024 Student Ambassadors</h2>
-          <p>Meet the students who joined the P20 Ambassador program in Spring 2024.</p>
+
+        <!-- Fall 2023 Accordion -->
+        <div class="cohort-accordion">
+          <button class="cohort-toggle" onclick="toggleCohort('cohort-2023-grid')">
+            <span>Fall 2023 Student Ambassadors</span>
+            <span class="cohort-arrow">▸</span>
+          </button>
+          <div class="cohort-body" id="cohort-2023-grid">
+            <div class="grid-3" style="padding: 1.5rem 0;">
+              <div class="profile-card"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">CB</div><h3>Cate Boyette</h3><a href="mailto:cateboyette@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><a href="mailto:cdiazmar9138@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">EC</div><h3>Eleura Clark</h3><a href="mailto:eclark@mcsstudent.net" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">EE</div><h3>Ella Estrada</h3><a href="mailto:elestrada@acsgmail.net" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">EV</div><h3>Eric Velez</h3><a href="mailto:ericvelez@students.abtech.edu" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">FR</div><h3>Fanny Reynoso-Diaz</h3><a href="mailto:reynosodiaz189@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><a href="mailto:kphillips2373@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">LI</div><h3>Lucian Iavorschi</h3><a href="mailto:liavorschi9487@k12bcs.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">MS</div><h3>Michael "Hilton" Swing</h3><a href="mailto:mswing8406@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">SM</div><h3>Stuart Maise</h3><a href="mailto:smaise8774@k12bcs.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card"><div class="profile-avatar">TM</div><h3>Taylor McHone</h3><a href="mailto:tmchone2238@k12bcs.org" class="btn-secondary">Contact</a></div>
+            </div>
+          </div>
         </div>
-        <div class="grid-3">
-          <div class="profile-card"><div class="profile-avatar">DS</div><h3>Douglas Swayze</h3></div>
-          <div class="profile-card"><div class="profile-avatar">JU</div><h3>Jasmin Umanzor</h3></div>
-          <div class="profile-card"><div class="profile-avatar">KW</div><h3>Katherine Wombwell</h3></div>
-          <div class="profile-card"><div class="profile-avatar">LA</div><h3>Linlee Ammann</h3></div>
-          <div class="profile-card"><div class="profile-avatar">EA</div><h3>Ernesto Arellano-Perez</h3></div>
-          <div class="profile-card"><div class="profile-avatar">AB</div><h3>Agya Boakye-Boaten II</h3></div>
-          <div class="profile-card"><div class="profile-avatar">NC</div><h3>Nataliia Chorna</h3></div>
-          <div class="profile-card"><div class="profile-avatar">KC</div><h3>Katherin Cid-Hernandez</h3></div>
-          <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz-Mar</h3></div>
-          <div class="profile-card"><div class="profile-avatar">LG</div><h3>Liliana Guapia</h3></div>
-          <div class="profile-card"><div class="profile-avatar">WJ</div><h3>Wilson Jones</h3></div>
-          <div class="profile-card"><div class="profile-avatar">KM</div><h3>Kenny Malis</h3></div>
-          <div class="profile-card"><div class="profile-avatar">RE</div><h3>Roselyn Estevez Menendez</h3></div>
-          <div class="profile-card"><div class="profile-avatar">CN</div><h3>Christina Nguyen</h3></div>
-          <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3></div>
-          <div class="profile-card"><div class="profile-avatar">KR</div><h3>Kaitlyn Raby</h3></div>
-          <div class="profile-card"><div class="profile-avatar">AS</div><h3>Aydan Shelton</h3></div>
+
+        <!-- Spring 2024 Accordion -->
+        <div class="cohort-accordion">
+          <button class="cohort-toggle" onclick="toggleCohort('cohort-2024-grid')">
+            <span>Spring 2024 Student Ambassadors</span>
+            <span class="cohort-arrow">▸</span>
+          </button>
+          <div class="cohort-body" id="cohort-2024-grid">
+            <div class="grid-3" style="padding: 1.5rem 0;">
+              <div class="profile-card"><div class="profile-avatar">DS</div><h3>Douglas Swayze</h3></div>
+              <div class="profile-card"><div class="profile-avatar">JU</div><h3>Jasmin Umanzor</h3></div>
+              <div class="profile-card"><div class="profile-avatar">KW</div><h3>Katherine Wombwell</h3></div>
+              <div class="profile-card"><div class="profile-avatar">LA</div><h3>Linlee Ammann</h3></div>
+              <div class="profile-card"><div class="profile-avatar">EA</div><h3>Ernesto Arellano-Perez</h3></div>
+              <div class="profile-card"><div class="profile-avatar">AB</div><h3>Agya Boakye-Boaten II</h3></div>
+              <div class="profile-card"><div class="profile-avatar">NC</div><h3>Nataliia Chorna</h3></div>
+              <div class="profile-card"><div class="profile-avatar">KC</div><h3>Katherin Cid-Hernandez</h3></div>
+              <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz-Mar</h3></div>
+              <div class="profile-card"><div class="profile-avatar">LG</div><h3>Liliana Guapia</h3></div>
+              <div class="profile-card"><div class="profile-avatar">WJ</div><h3>Wilson Jones</h3></div>
+              <div class="profile-card"><div class="profile-avatar">KM</div><h3>Kenny Malis</h3></div>
+              <div class="profile-card"><div class="profile-avatar">RE</div><h3>Roselyn Estevez Menendez</h3></div>
+              <div class="profile-card"><div class="profile-avatar">CN</div><h3>Christina Nguyen</h3></div>
+              <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3></div>
+              <div class="profile-card"><div class="profile-avatar">KR</div><h3>Kaitlyn Raby</h3></div>
+              <div class="profile-card"><div class="profile-avatar">AS</div><h3>Aydan Shelton</h3></div>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -314,6 +352,13 @@
     }
 
     render2023();
+
+    function toggleCohort(id) {
+      const body = document.getElementById(id);
+      const btn = body.previousElementSibling;
+      body.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
 
     function switchTab(name) {
       document.querySelectorAll('.dir-tab').forEach((btn, i) => {
