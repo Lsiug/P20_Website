@@ -324,7 +324,10 @@
             <h2>P20 Council Members</h2>
             <p>Representatives from partner organizations across the region.</p>
           </div>
-          <div class="grid-3">
+          <div class="ambassador-search-wrap" style="margin-bottom: 2rem;">
+            <input type="text" id="council-search" placeholder="Search by name or organization…" oninput="searchCouncil(this.value)" autocomplete="off" />
+          </div>
+          <div class="grid-3" id="council-grid">
             <div class="profile-card"><div class="profile-avatar">DM</div><h3>Dana Moore</h3><p class="profile-major">A-B Tech CC</p><p class="profile-bio">Associate Vice President of Instructional Services</p><a href="mailto:danabmoore@abtech.edu" class="btn-secondary">Contact</a></div>
             <div class="profile-card"><div class="profile-avatar">DB</div><h3>Diana Blackett</h3><p class="profile-major">Asheville Chamber of Commerce</p><p class="profile-bio">Workforce Partnership Specialist</p><a href="mailto:dblackett@ashevillechamber.org" class="btn-secondary">Contact</a></div>
             <div class="profile-card"><div class="profile-avatar">IC</div><h3>Dr. Ivry Cheeks</h3><p class="profile-major">Asheville City Schools</p><p class="profile-bio">Career &amp; Technical Education Director</p><a href="mailto:ivry.cheeks@acsgmail.net" class="btn-secondary">Contact</a></div>
@@ -450,6 +453,17 @@
     }
 
     render2023();
+
+    function searchCouncil(query) {
+      const grid = document.getElementById('council-grid');
+      const q = query.trim().toLowerCase();
+      const allCards = grid.querySelectorAll('.profile-card');
+      allCards.forEach(card => {
+        const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
+        const org  = card.querySelector('.profile-major')?.textContent.toLowerCase() || '';
+        card.style.display = (!q || name.includes(q) || org.includes(q)) ? '' : 'none';
+      });
+    }
 
     function searchAmbassadors(query) {
       const resultsEl = document.getElementById('search-results');
