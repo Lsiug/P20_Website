@@ -352,7 +352,7 @@
 
     function profileCard(item, showDelete = false) {
       const roleClass = item.role === 'senior' ? 'senior' : 'new';
-      const roleLabel = item.cohort === '2023' ? '2023' : (item.role === 'senior' ? 'Senior' : 'New');
+      const roleLabel = item.cohort === '2023' ? '' : (item.role === 'senior' ? 'Senior' : 'New');
       const deleteBtn = showDelete
         ? `<button class="btn-danger" onclick="deleteAmbassador(${item.id})">Remove</button>`
         : '';
@@ -360,7 +360,7 @@
         <div class="profile-card">
           <div class="profile-avatar">${initials(item.name)}</div>
           <h3>${item.name}</h3>
-          <span class="profile-role ${roleClass}">${roleLabel}</span>
+          ${roleLabel ? `<span class="profile-role ${roleClass}">${roleLabel}</span>` : ''}
           ${item.major ? `<p class="profile-major">${item.major}</p>` : ''}
           ${item.bio   ? `<p class="profile-bio">${item.bio}</p>` : ''}
           <a href="mailto:${item.email}" class="btn-secondary">Contact</a>
