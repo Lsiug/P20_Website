@@ -173,9 +173,12 @@
       margin-bottom: 1.5rem;
       position: relative;
     }
+    .ambassador-search-wrap {
+      position: relative;
+    }
     .ambassador-search-wrap input {
       width: 100%;
-      padding: 0.75rem 1.25rem;
+      padding: 0.75rem 3rem 0.75rem 1.25rem;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       font-size: 1rem;
@@ -188,6 +191,15 @@
       outline: none;
       border-color: var(--orange);
       box-shadow: 0 0 0 3px rgba(255, 154, 60, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      right: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.1rem;
+      pointer-events: none;
     }
     .search-results {
       margin-top: 1rem;
@@ -242,7 +254,8 @@
 
         <!-- Search bar -->
         <div class="ambassador-search-wrap">
-          <input type="text" id="ambassador-search" placeholder="Search ambassador by name or school…" oninput="searchAmbassadors(this.value)" autocomplete="off" />
+          <input type="text" id="ambassador-search" placeholder="Search ambassador by name or institution…" oninput="searchAmbassadors(this.value)" autocomplete="off" />
+          <span class="search-icon">&#128269;</span>
           <div id="search-results" class="search-results" style="display:none;"></div>
         </div>
 
@@ -325,7 +338,8 @@
             <p>Representatives from partner organizations across the region.</p>
           </div>
           <div class="ambassador-search-wrap" style="margin-bottom: 2rem;">
-            <input type="text" id="council-search" placeholder="Search by name or organization…" oninput="searchCouncil(this.value)" autocomplete="off" />
+            <input type="text" id="council-search" placeholder="Search by name or institution…" oninput="searchCouncil(this.value)" autocomplete="off" />
+            <span class="search-icon">&#128269;</span>
           </div>
           <div class="grid-3" id="council-grid">
             <div class="profile-card"><div class="profile-avatar">DM</div><h3>Dana Moore</h3><p class="profile-major">A-B Tech CC</p><p class="profile-bio">Associate Vice President of Instructional Services</p><a href="mailto:danabmoore@abtech.edu" class="btn-secondary">Contact</a></div>
