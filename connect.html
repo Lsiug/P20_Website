@@ -101,37 +101,61 @@
     .council-table a:hover {
       text-decoration: underline;
     }
+    .ambassador-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    .ambassador-intro h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .ambassador-intro p {
+      font-size: 1rem;
+      color: var(--muted);
+    }
     .cohort-accordion {
-      border: 1px solid #e2e8f0;
-      border-radius: 0.75rem;
-      margin-bottom: 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
       overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s;
+    }
+    .cohort-accordion:hover {
+      box-shadow: 0 4px 20px rgba(255, 154, 60, 0.18);
     }
     .cohort-toggle {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.5rem;
-      background: #f8fafc;
+      padding: 1.1rem 1.75rem;
+      background: var(--cream);
       border: none;
       cursor: pointer;
       font-size: 1.05rem;
-      font-weight: 600;
-      color: #1e293b;
+      font-weight: 700;
+      color: var(--text);
       text-align: left;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.01em;
     }
-    .cohort-toggle:hover { background: #eff6ff; color: #1e40af; }
-    .cohort-toggle.open  { background: #1e40af; color: #fff; }
+    .cohort-toggle:hover { background: var(--orange-light); color: var(--orange-hover); }
+    .cohort-toggle.open  { background: var(--orange); color: #fff; }
     .cohort-arrow {
-      font-size: 1rem;
+      font-size: 1.1rem;
       transition: transform 0.25s;
+      flex-shrink: 0;
     }
     .cohort-toggle.open .cohort-arrow { transform: rotate(90deg); }
     .cohort-body {
       display: none;
-      padding: 0 1.5rem;
+      background: var(--white);
+      padding: 0 1.75rem;
+      border-top: 1.5px solid var(--border);
     }
     .cohort-body.open { display: block; }
   </style>
@@ -151,6 +175,10 @@
 
     <section class="section">
       <div class="container">
+        <div class="ambassador-intro">
+          <h2>Student Ambassador Directory</h2>
+          <p>Browse ambassadors by cohort — click a year to expand the full list.</p>
+        </div>
 
         <!-- Fall 2023 Accordion -->
         <div class="cohort-accordion">
