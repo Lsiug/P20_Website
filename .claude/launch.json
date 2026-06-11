@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "P20 Website (static)",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["serve.py"],
+      "port": 3000,
+      "autoPort": true,
+      "cwd": "/Users/AuvaVaziri/P20_Website"
+    }
+  ]
+}
