@@ -27,11 +27,94 @@
     </div>
   </header>
 
+  <style>
+    .dir-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e2e8f0;
+      margin: 0 auto;
+      max-width: 1100px;
+      padding: 0 1.5rem;
+    }
+    .dir-tab {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      color: #64748b;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .dir-tab.active {
+      color: #1e40af;
+      border-bottom-color: #1e40af;
+    }
+    .dir-panel { display: none; }
+    .dir-panel.active { display: block; }
+    .dir-empty {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+    .council-table-wrap {
+      overflow-x: auto;
+    }
+    .council-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+    .council-table th {
+      background: #1e40af;
+      color: #fff;
+      text-align: left;
+      padding: 0.65rem 1rem;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+    .council-table th:last-child {
+      border-right: none;
+    }
+    .council-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+    .council-table td:last-child {
+      border-right: none;
+    }
+    .council-table tbody tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    .council-table tbody tr:hover td {
+      background: #eff6ff;
+    }
+    .council-table a {
+      color: #1e40af;
+      text-decoration: none;
+    }
+    .council-table a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
   <main>
     <div class="page-heading">
-      <h1>Ambassador Directory</h1>
-      <p>Get to know the P20 Ambassador community — new and senior members alike.</p>
+      <h1>Connect</h1>
+      <p>Get to know the P20 community — ambassadors and council members.</p>
     </div>
+
+    <div class="dir-tabs">
+      <button class="dir-tab active" onclick="switchTab('ambassador')">Ambassador Directory</button>
+      <button class="dir-tab" onclick="switchTab('council')">P20 Council Directory</button>
+    </div>
+
+    <div id="panel-ambassador" class="dir-panel active">
 
     <!-- Senior Ambassadors -->
     <section class="section">
@@ -85,75 +168,31 @@
     <section class="section section-cream">
       <div class="container">
         <div class="section-title">
-          <h2>2023 Student Ambassadors</h2>
+          <h2>Fall 2023 Student Ambassadors</h2>
           <p>Meet the students who joined the P20 Ambassador program in 2023.</p>
         </div>
         <div class="grid-3" id="cohort-2023">
-          <div class="profile-card"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><span class="profile-role new">2023</span><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AA</div><h3>Abbagail Allen</h3><span class="profile-role new">2023</span><a href="mailto:aallen1429@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><span class="profile-role new">2023</span><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AB</div><h3>Alexander Bickford</h3><span class="profile-role new">2023</span><a href="mailto:albickford@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AS</div><h3>Alexzandyr Shepherd</h3><span class="profile-role new">2023</span><a href="mailto:alexzandyrs@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AG</div><h3>Aniya Griffin</h3><span class="profile-role new">2023</span><a href="mailto:angriffin@acsgmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AC</div><h3>Ari Cohen</h3><span class="profile-role new">2023</span><a href="mailto:arcohen@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><span class="profile-role new">2023</span><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AP</div><h3>Aurora Perez-Martin</h3><span class="profile-role new">2023</span><a href="mailto:aperez-martin2222@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><span class="profile-role new">2023</span><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">BE</div><h3>Bjorian Eaker</h3><span class="profile-role new">2023</span><a href="mailto:bjeaker@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">BD</div><h3>Brennan Davidson</h3><span class="profile-role new">2023</span><a href="mailto:bdavidson2009@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CT</div><h3>Caden Trull</h3><span class="profile-role new">2023</span><a href="mailto:trullcaden@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CR</div><h3>Caroline Rizzo</h3><span class="profile-role new">2023</span><a href="mailto:caroline_rizzo@mhu.edu" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CH</div><h3>Cassidy Hull</h3><span class="profile-role new">2023</span><a href="mailto:cassidy_hull@mhu.edu" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CB</div><h3>Cate Boyette</h3><span class="profile-role new">2023</span><a href="mailto:cateboyette@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><span class="profile-role new">2023</span><a href="mailto:cdiazmar9138@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CS</div><h3>Clara Singleton</h3><span class="profile-role new">2023</span><a href="mailto:clara.singleton14@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">CQ</div><h3>Clennan Queen</h3><span class="profile-role new">2023</span><a href="mailto:clennan2007queen@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EC</div><h3>Eleura Clark</h3><span class="profile-role new">2023</span><a href="mailto:eclark@mcsstudent.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EE</div><h3>Ella Estrada</h3><span class="profile-role new">2023</span><a href="mailto:elestrada@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><span class="profile-role new">2023</span><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">ER</div><h3>Emily Rollins</h3><span class="profile-role new">2023</span><a href="mailto:emily_rollins@mhu.edu" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">ES</div><h3>Emily Serrano</h3><span class="profile-role new">2023</span><a href="mailto:emmily40ser@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EC</div><h3>Emma Cunningham</h3><span class="profile-role new">2023</span><a href="mailto:24ecunningham@s.tcsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EM</div><h3>Emma McBeath</h3><span class="profile-role new">2023</span><a href="mailto:emcbeath8335@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">EV</div><h3>Eric Velez</h3><span class="profile-role new">2023</span><a href="mailto:ericvelez@students.abtech.edu" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">FR</div><h3>Fanny Reynoso-Diaz</h3><span class="profile-role new">2023</span><a href="mailto:reynosodiaz189@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">GB</div><h3>Gabriella Bluestone</h3><span class="profile-role new">2023</span><a href="mailto:gabriellabluestone@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><span class="profile-role new">2023</span><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">IA</div><h3>Ian Abernethy</h3><span class="profile-role new">2023</span><a href="mailto:ianabernethy17@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">IE</div><h3>Isabela Emaus</h3><span class="profile-role new">2023</span><a href="mailto:25iemaus@s.tcsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">IA</div><h3>Isabella Antunes</h3><span class="profile-role new">2023</span><a href="mailto:isabella_antunes@icloud.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">IG</div><h3>Isabella Gravley</h3><span class="profile-role new">2023</span><a href="mailto:25igravley@tcsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">JL</div><h3>Jesus Lopez De Los Santos</h3><span class="profile-role new">2023</span><a href="mailto:25jdelossantos30@s.tcsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">JM</div><h3>Juniper Moore</h3><span class="profile-role new">2023</span><a href="mailto:Lmoore7665@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KO</div><h3>Kaitlyn Owen</h3><span class="profile-role new">2023</span><a href="mailto:kaitlynandwincher@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KR</div><h3>Kaylei Rathburn</h3><span class="profile-role new">2023</span><a href="mailto:krathburn1286@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><span class="profile-role new">2023</span><a href="mailto:kphillips2373@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><span class="profile-role new">2023</span><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">KB</div><h3>Kylie Brittain</h3><span class="profile-role new">2023</span><a href="mailto:24kbrittain@s.tcsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">LS</div><h3>Londyn Suber</h3><span class="profile-role new">2023</span><a href="mailto:Londyn071@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">LI</div><h3>Lucian Iavorschi</h3><span class="profile-role new">2023</span><a href="mailto:liavorschi9487@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MS</div><h3>Madalynne Senn</h3><span class="profile-role new">2023</span><a href="mailto:madalynne.senn@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MC</div><h3>Madison Corn</h3><span class="profile-role new">2023</span><a href="mailto:mcorn2374@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><span class="profile-role new">2023</span><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MS</div><h3>Mary Shelton</h3><span class="profile-role new">2023</span><a href="mailto:mshelton1070@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MM</div><h3>Melody Mitchem</h3><span class="profile-role new">2023</span><a href="mailto:Mmitchem7171@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MS</div><h3>Michael "Hilton" Swing</h3><span class="profile-role new">2023</span><a href="mailto:mswing8406@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">MM</div><h3>Michele Maloney</h3><span class="profile-role new">2023</span><a href="mailto:mmaloney0515@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><span class="profile-role new">2023</span><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">OG</div><h3>Olivia Guernsey</h3><span class="profile-role new">2023</span><a href="mailto:olguernsey@acsgmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">OM</div><h3>Owen McEntegart</h3><span class="profile-role new">2023</span><a href="mailto:ojm415@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">PM</div><h3>Paige Marino</h3><span class="profile-role new">2023</span><a href="mailto:paigem004@icloud.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">RE</div><h3>Rayne English</h3><span class="profile-role new">2023</span><a href="mailto:renglish0592@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><span class="profile-role new">2023</span><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SJ</div><h3>Samarra Jefferson</h3><span class="profile-role new">2023</span><a href="mailto:sajefferso@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SG</div><h3>Selah Grady</h3><span class="profile-role new">2023</span><a href="mailto:sgrady4291@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SB</div><h3>Shaun Bryson</h3><span class="profile-role new">2023</span><a href="mailto:byson0112@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SS</div><h3>Skyler Sorrell</h3><span class="profile-role new">2023</span><a href="mailto:sksorrell@acsgmail.net" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SS</div><h3>Soren Smith</h3><span class="profile-role new">2023</span><a href="mailto:ssmith7511@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">SM</div><h3>Stuart Maise</h3><span class="profile-role new">2023</span><a href="mailto:smaise8774@k12bcs.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">TF</div><h3>Talia Farooque</h3><span class="profile-role new">2023</span><a href="mailto:tafa1029@gmail.com" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">TP</div><h3>Tatum Peterkin</h3><span class="profile-role new">2023</span><a href="mailto:tpeterkin9502@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
-          <div class="profile-card"><div class="profile-avatar">TM</div><h3>Taylor McHone</h3><span class="profile-role new">2023</span><a href="mailto:tmchone2238@k12bcs.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">CB</div><h3>Cate Boyette</h3><a href="mailto:cateboyette@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><a href="mailto:cdiazmar9138@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">EC</div><h3>Eleura Clark</h3><a href="mailto:eclark@mcsstudent.net" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">EE</div><h3>Ella Estrada</h3><a href="mailto:elestrada@acsgmail.net" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">EV</div><h3>Eric Velez</h3><a href="mailto:ericvelez@students.abtech.edu" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">FR</div><h3>Fanny Reynoso-Diaz</h3><a href="mailto:reynosodiaz189@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><a href="mailto:kphillips2373@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">LI</div><h3>Lucian Iavorschi</h3><a href="mailto:liavorschi9487@k12bcs.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">MS</div><h3>Michael "Hilton" Swing</h3><a href="mailto:mswing8406@stu.hcpsnc.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">SM</div><h3>Stuart Maise</h3><a href="mailto:smaise8774@k12bcs.org" class="btn-secondary">Contact</a></div>
+          <div class="profile-card"><div class="profile-avatar">TM</div><h3>Taylor McHone</h3><a href="mailto:tmchone2238@k12bcs.org" class="btn-secondary">Contact</a></div>
         </div>
         <p id="cohort-2023-status" style="text-align:center;padding:1rem;display:none;">Loading from database…</p>
       </div>
@@ -198,6 +237,69 @@
         </div>
       </div>
     </section>
+
+    </div><!-- /panel-ambassador -->
+
+    <div id="panel-council" class="dir-panel">
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>P20 Council Members</h2>
+            <p>Representatives from partner organizations across the region.</p>
+          </div>
+          <div class="council-table-wrap">
+            <table class="council-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Organization</th>
+                  <th>Title</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Dana Moore</td><td>A-B Tech CC</td><td>Associate Vice President of Instructional Services</td><td><a href="mailto:danabmoore@abtech.edu">danabmoore@abtech.edu</a></td></tr>
+                <tr><td>Diana Blackett</td><td>Asheville Chamber of Commerce</td><td>Workforce Partnership Specialist</td><td><a href="mailto:dblackett@ashevillechamber.org">dblackett@ashevillechamber.org</a></td></tr>
+                <tr><td>Dr. Ivry Cheeks</td><td>Asheville City Schools</td><td>Career &amp; Technical Education Director</td><td><a href="mailto:ivry.cheeks@acsgmail.net">ivry.cheeks@acsgmail.net</a></td></tr>
+                <tr><td>Josh Kersey</td><td>Biltmore Farms</td><td>Senior HR Manager</td><td><a href="mailto:jkersey@biltmorefarms.com">jkersey@biltmorefarms.com</a></td></tr>
+                <tr><td>Dr. Laura Leatherwood</td><td>Blue Ridge CC</td><td>President</td><td><a href="mailto:leatherwood@blueridge.edu">leatherwood@blueridge.edu</a></td></tr>
+                <tr><td>Rachael Sawyer</td><td>Buncombe County</td><td>Director of Strategic Partnerships</td><td><a href="mailto:Rachael.sawyer@buncombenc.gov">Rachael.sawyer@buncombenc.gov</a></td></tr>
+                <tr><td>Dr. Jennifer Reed</td><td>Buncombe County Schools</td><td>Associate Superintendent of Curriculum and Instruction</td><td><a href="mailto:jennifer.reed@bcsemail.org">jennifer.reed@bcsemail.org</a></td></tr>
+                <tr><td></td><td>Buncombe Partnership for Children</td><td></td><td></td></tr>
+                <tr><td>Devon McCarthy-James</td><td>CFNC</td><td>Associate Outreach Director Western Region</td><td><a href="mailto:Devon.McCarthy-James@cfi.org">Devon.McCarthy-James@cfi.org</a></td></tr>
+                <tr><td>Robe Rode</td><td>City of Asheville</td><td>Assistant Director of Human Resources</td><td><a href="mailto:rrode@ashevillenc.gov">rrode@ashevillenc.gov</a></td></tr>
+                <tr><td>Samantha Cole</td><td>Commerce NC</td><td>Child Care Business Liaison</td><td><a href="mailto:samantha.cole@commerce.nc.gov">samantha.cole@commerce.nc.gov</a></td></tr>
+                <tr><td>Dr. Gene Loflin</td><td>Community Member</td><td></td><td><a href="mailto:william.e.loflin@gmail.com">william.e.loflin@gmail.com</a></td></tr>
+                <tr><td>Dr. Joseph Fox</td><td>Fox Management Consulting Enterprises</td><td>President &amp; CEO</td><td></td></tr>
+                <tr><td>Jorie Matijevich</td><td>HCA Healthcare - NC Division</td><td>Vice President, Human Resources</td><td><a href="mailto:jorie.matijevich@healthonecares.com">jorie.matijevich@healthonecares.com</a></td></tr>
+                <tr><td>John Mitchell</td><td>Henderson County</td><td>County Manager</td><td><a href="mailto:jmitchell@hendersoncountync.gov">jmitchell@hendersoncountync.gov</a></td></tr>
+                <tr><td>Emily Martin</td><td>Henderson County Partnership for Economic Development</td><td>Director of Industry Relations</td><td><a href="mailto:emilym@hcped.org">emilym@hcped.org</a></td></tr>
+                <tr><td>Scott Rhodes</td><td>Henderson County Public Schools</td><td>Assistant Superintendent for Human Resources</td><td><a href="mailto:wsrhodes@hcpsnc.org">wsrhodes@hcpsnc.org</a></td></tr>
+                <tr><td>Brandon Priester</td><td>Land of Sky Regional Council</td><td>Youth Business Services Representative, Mountain Area Workforce Development Board</td><td><a href="mailto:brandonp@landofsky.org">brandonp@landofsky.org</a></td></tr>
+                <tr><td>Dr. Will Hoffman</td><td>Madison County Schools</td><td>Superintendent</td><td><a href="mailto:whoffman@madisonk12.net">whoffman@madisonk12.net</a></td></tr>
+                <tr><td></td><td>Madison County Smart Start</td><td></td><td></td></tr>
+                <tr><td>Dr. Tracy Parkinson</td><td>Mars Hill University</td><td>Executive Vice President and Provost</td><td><a href="mailto:tracy_parkinson@mhu.edu">tracy_parkinson@mhu.edu</a></td></tr>
+                <tr><td>Dr. Denisha Bonds</td><td>Montreat College</td><td>Director of Career Development</td><td><a href="mailto:denisha.bonds@montreat.edu">denisha.bonds@montreat.edu</a></td></tr>
+                <tr><td>Pam Hartley</td><td>myFutureNC</td><td>Regional Impact Manager</td><td><a href="mailto:pam@myfuturenc.org">pam@myfuturenc.org</a></td></tr>
+                <tr><td>Wesley Downing</td><td>Pratt &amp; Whitney Asheville</td><td>Senior Human Resources Manager</td><td><a href="mailto:Wesley.downing@prattwhitney.com">Wesley.downing@prattwhitney.com</a></td></tr>
+                <tr><td>Samantha Sircey</td><td>South College</td><td>Campus President</td><td><a href="mailto:ssircey@south.edu">ssircey@south.edu</a></td></tr>
+                <tr><td></td><td>Smart Start of Transylvania County</td><td></td><td></td></tr>
+                <tr><td>Jaime Laughter</td><td>Transylvania County</td><td>County Manager</td><td><a href="mailto:jaime.laughter@transylvaniacounty.org">jaime.laughter@transylvaniacounty.org</a></td></tr>
+                <tr><td>Dr. Lisa Fletcher</td><td>Transylvania County Schools</td><td>Superintendent</td><td><a href="mailto:lfletcher@tcsnc.org">lfletcher@tcsnc.org</a></td></tr>
+                <tr><td>Lance Edwards</td><td>United Way</td><td>Senior Vice President, Community Impact</td><td><a href="mailto:lance.edwards@unitedwayabc.org">lance.edwards@unitedwayabc.org</a></td></tr>
+                <tr><td></td><td>UNC Health Pardee</td><td></td><td></td></tr>
+                <tr><td>Lisa Mann</td><td>UNC-Asheville</td><td>Director of Career Center</td><td><a href="mailto:mann@unca.edu">mann@unca.edu</a></td></tr>
+                <tr><td>Dr. Kevan Frazier</td><td>WCU</td><td>Executive Director, WCU at Biltmore Park</td><td><a href="mailto:kdfrazier@email.wcu.edu">kdfrazier@email.wcu.edu</a></td></tr>
+                <tr><td>Drew Pollick</td><td>WNC Human Resources Association</td><td>Founder/CEO of Craft HR Solutions</td><td><a href="mailto:drew@crafthr.com">drew@crafthr.com</a></td></tr>
+                <tr><td>Candie Sellers</td><td>WRESA</td><td>Elementary Coordinator for the Western Region Education Service Alliance (WRESA)</td><td><a href="mailto:csellers@wresa.org">csellers@wresa.org</a></td></tr>
+                <tr><td>Claudia Gutierrez</td><td>WWBC Program Associate</td><td>Program Associate</td><td><a href="mailto:cgutierrez@carolinasmallbusiness.org">cgutierrez@carolinasmallbusiness.org</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <!-- Add Profile Modal -->
@@ -298,6 +400,16 @@
 
     render2023();
     renderProfiles();
+
+    function switchTab(name) {
+      document.querySelectorAll('.dir-tab').forEach((btn, i) => {
+        const panels = ['ambassador', 'council'];
+        btn.classList.toggle('active', panels[i] === name);
+      });
+      document.querySelectorAll('.dir-panel').forEach(p => {
+        p.classList.toggle('active', p.id === 'panel-' + name);
+      });
+    }
 
     function openModal(id, role) {
       if (role) {
