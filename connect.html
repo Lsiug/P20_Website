@@ -485,8 +485,9 @@
       const allCards = document.querySelectorAll('.cohort-body .profile-card');
       const matches = [];
       allCards.forEach(card => {
-        const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
-        if (name.includes(q)) matches.push(card.outerHTML);
+        const name   = card.querySelector('h3')?.textContent.toLowerCase() || '';
+        const school = card.querySelector('.profile-major')?.textContent.toLowerCase() || '';
+        if (name.includes(q) || school.includes(q)) matches.push(card.outerHTML);
       });
 
       if (matches.length === 0) {
