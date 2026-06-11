@@ -8,24 +8,25 @@
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">P20 Ambassadors</a>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="connect.html" class="active">Connect</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="requests.html">Requests</a></li>
-        </ul>
-        <div class="nav-user" id="nav-user"></div>
-      </div>
-    </div>
-  </header>
+  <!-- Sidebar toggle button -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu">&#9776;</button>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
+    <a href="index.html" class="sidebar-logo">P20 Ambassadors</a>
+    <ul class="sidebar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="connect.html" class="active">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
 
   <style>
     .dir-tabs {
