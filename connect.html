@@ -116,46 +116,56 @@
       font-size: 1rem;
       color: var(--muted);
     }
-    .cohort-accordion {
+    .cohort-selector {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .cohort-tile {
+      flex: 1;
+      padding: 1.5rem 1rem;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: box-shadow 0.2s;
-    }
-    .cohort-accordion:hover {
-      box-shadow: 0 4px 20px rgba(255, 154, 60, 0.18);
-    }
-    .cohort-toggle {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.1rem 1.75rem;
       background: var(--cream);
-      border: none;
       cursor: pointer;
-      font-size: 1.05rem;
+      text-align: center;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text);
-      text-align: left;
-      transition: background 0.2s, color 0.2s;
+      box-shadow: var(--shadow);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
       letter-spacing: 0.01em;
     }
-    .cohort-toggle:hover { background: var(--orange-light); color: var(--orange-hover); }
-    .cohort-toggle.open  { background: var(--orange); color: #fff; }
-    .cohort-arrow {
-      font-size: 1.1rem;
-      transition: transform 0.25s;
-      flex-shrink: 0;
+    .cohort-tile:hover {
+      background: var(--orange-light);
+      color: var(--orange-hover);
+      box-shadow: 0 4px 20px rgba(255, 154, 60, 0.18);
+      transform: translateY(-2px);
     }
-    .cohort-toggle.open .cohort-arrow { transform: rotate(90deg); }
+    .cohort-tile.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      box-shadow: 0 4px 20px rgba(255, 154, 60, 0.3);
+    }
+    .cohort-tile .cohort-tile-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+      margin-bottom: 0.3rem;
+    }
+    .cohort-tile-year {
+      font-size: 1.15rem;
+    }
     .cohort-body {
       display: none;
       background: var(--white);
-      padding: 0 1.75rem;
-      border-top: 1.5px solid var(--border);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
     }
     .cohort-body.open { display: block; }
   </style>
@@ -180,14 +190,25 @@
           <p>Browse ambassadors by cohort — click a year to expand the full list.</p>
         </div>
 
-        <!-- Fall 2023 Accordion -->
-        <div class="cohort-accordion">
-          <button class="cohort-toggle" onclick="toggleCohort('cohort-2023-grid')">
-            <span>Fall 2023 Student Ambassadors</span>
-            <span class="cohort-arrow">▸</span>
+        <!-- Cohort selector tiles -->
+        <div class="cohort-selector">
+          <button class="cohort-tile" onclick="selectCohort('cohort-2023-grid', this)">
+            <div class="cohort-tile-label">Cohort</div>
+            <div class="cohort-tile-year">Fall 2023</div>
           </button>
-          <div class="cohort-body" id="cohort-2023-grid">
-            <div class="grid-3" style="padding: 1.5rem 0;">
+          <button class="cohort-tile" onclick="selectCohort('cohort-2024-grid', this)">
+            <div class="cohort-tile-label">Cohort</div>
+            <div class="cohort-tile-year">Spring 2024</div>
+          </button>
+          <button class="cohort-tile" onclick="selectCohort('cohort-2024-2025-grid', this)">
+            <div class="cohort-tile-label">Cohort</div>
+            <div class="cohort-tile-year">2024–2025</div>
+          </button>
+        </div>
+
+        <!-- Fall 2023 -->
+        <div class="cohort-body" id="cohort-2023-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
               <div class="profile-card"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
               <div class="profile-card"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
               <div class="profile-card"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
@@ -213,14 +234,9 @@
           </div>
         </div>
 
-        <!-- Spring 2024 Accordion -->
-        <div class="cohort-accordion">
-          <button class="cohort-toggle" onclick="toggleCohort('cohort-2024-grid')">
-            <span>Spring 2024 Student Ambassadors</span>
-            <span class="cohort-arrow">▸</span>
-          </button>
-          <div class="cohort-body" id="cohort-2024-grid">
-            <div class="grid-3" style="padding: 1.5rem 0;">
+        <!-- Spring 2024 -->
+        <div class="cohort-body" id="cohort-2024-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
               <div class="profile-card"><div class="profile-avatar">DS</div><h3>Douglas Swayze</h3></div>
               <div class="profile-card"><div class="profile-avatar">JU</div><h3>Jasmin Umanzor</h3></div>
               <div class="profile-card"><div class="profile-avatar">KW</div><h3>Katherine Wombwell</h3></div>
@@ -239,17 +255,11 @@
               <div class="profile-card"><div class="profile-avatar">KR</div><h3>Kaitlyn Raby</h3></div>
               <div class="profile-card"><div class="profile-avatar">AS</div><h3>Aydan Shelton</h3></div>
             </div>
-          </div>
         </div>
 
-        <!-- 2024-2025 Accordion -->
-        <div class="cohort-accordion">
-          <button class="cohort-toggle" onclick="toggleCohort('cohort-2024-2025-grid')">
-            <span>2024–2025 Student Ambassadors</span>
-            <span class="cohort-arrow">▸</span>
-          </button>
-          <div class="cohort-body" id="cohort-2024-2025-grid">
-            <div class="grid-3" style="padding: 1.5rem 0;">
+        <!-- 2024-2025 -->
+        <div class="cohort-body" id="cohort-2024-2025-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
               <div class="profile-card"><div class="profile-avatar">AO</div><h3>Aiden O'Donnell</h3></div>
               <div class="profile-card"><div class="profile-avatar">CB</div><h3>Charlie Bender</h3></div>
               <div class="profile-card"><div class="profile-avatar">CD</div><h3>Citlally Diaz-Mar</h3></div>
@@ -261,7 +271,6 @@
               <div class="profile-card"><div class="profile-avatar">SS</div><h3>Selah Simpson</h3></div>
               <div class="profile-card"><div class="profile-avatar">SW</div><h3>Shawn Ware</h3></div>
             </div>
-          </div>
         </div>
 
       </div>
@@ -403,11 +412,11 @@
 
     render2023();
 
-    function toggleCohort(id) {
-      const body = document.getElementById(id);
-      const btn = body.previousElementSibling;
-      body.classList.toggle('open');
-      btn.classList.toggle('open');
+    function selectCohort(id, tile) {
+      document.querySelectorAll('.cohort-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.cohort-tile').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('open');
+      tile.classList.add('active');
     }
 
     function switchTab(name) {
