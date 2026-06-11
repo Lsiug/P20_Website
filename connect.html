@@ -168,6 +168,39 @@
       box-shadow: var(--shadow);
     }
     .cohort-body.open { display: block; }
+    .ambassador-search-wrap {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .ambassador-search-wrap input {
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background: var(--white);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .ambassador-search-wrap input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 154, 60, 0.15);
+    }
+    .search-results {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .search-no-results {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-style: italic;
+      grid-column: 1 / -1;
+    }
   </style>
 
   <main>
@@ -204,6 +237,12 @@
             <div class="cohort-tile-label">Cohort</div>
             <div class="cohort-tile-year">2024–2025</div>
           </button>
+        </div>
+
+        <!-- Search bar -->
+        <div class="ambassador-search-wrap">
+          <input type="text" id="ambassador-search" placeholder="Search ambassador by name…" oninput="searchAmbassadors(this.value)" autocomplete="off" />
+          <div id="search-results" class="search-results" style="display:none;"></div>
         </div>
 
         <!-- Fall 2023 -->
@@ -412,7 +451,43 @@
 
     render2023();
 
+    function searchAmbassadors(query) {
+      const resultsEl = document.getElementById('search-results');
+      const cohortBodies = document.querySelectorAll('.cohort-body');
+      const tiles = document.querySelectorAll('.cohort-tile');
+      const q = query.trim().toLowerCase();
+
+      if (!q) {
+        resultsEl.style.display = 'none';
+        resultsEl.innerHTML = '';
+        return;
+      }
+
+      // Hide cohort panels while searching
+      cohortBodies.forEach(b => b.classList.remove('open'));
+      tiles.forEach(t => t.classList.remove('active'));
+
+      // Gather all profile cards across all cohorts
+      const allCards = document.querySelectorAll('.cohort-body .profile-card');
+      const matches = [];
+      allCards.forEach(card => {
+        const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
+        if (name.includes(q)) matches.push(card.outerHTML);
+      });
+
+      if (matches.length === 0) {
+        resultsEl.innerHTML = '<div class="search-no-results">No ambassadors found matching "<strong>' + query + '</strong>"</div>';
+      } else {
+        resultsEl.innerHTML = matches.join('');
+      }
+      resultsEl.style.display = 'grid';
+    }
+
     function selectCohort(id, tile) {
+      // Clear search when switching cohorts
+      document.getElementById('ambassador-search').value = '';
+      document.getElementById('search-results').style.display = 'none';
+      document.getElementById('search-results').innerHTML = '';
       document.querySelectorAll('.cohort-body').forEach(b => b.classList.remove('open'));
       document.querySelectorAll('.cohort-tile').forEach(t => t.classList.remove('active'));
       document.getElementById(id).classList.add('open');
