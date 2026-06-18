@@ -50,32 +50,40 @@
 
   </div>
 
-  <!-- ── VIEW 2: Applicant portal (after code validated) ── -->
-  <div id="view-portal" style="display:none; width:100%;">
+  <!-- ── VIEW 2: Applicant portal welcome ── -->
+  <div id="view-portal" style="display:none; width:100%; min-height:100vh; background:var(--navy); flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:1.5rem;">
+    <img src="images/p20logo.webp" alt="P20 Logo" style="width:90px; opacity:0.9;" />
+    <h1 style="color:#fff; font-size:3.5rem; font-weight:800; letter-spacing:0.04em;">WELCOME</h1>
+    <p style="color:rgba(255,255,255,0.7); font-size:1.1rem; max-width:420px;">You've entered the P20 Educational Ambassador applicant portal. Click below to begin your application.</p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem;">
+      <button class="btn-secondary" onclick="showApplication()">Start Application</button>
+      <button onclick="portalLogout()" style="background:transparent; border:1px solid rgba(255,255,255,0.35); color:rgba(255,255,255,0.7); padding:0.6rem 1.4rem; border-radius:30px; cursor:pointer; font-size:0.9rem;">Exit Portal</button>
+    </div>
+  </div>
 
-    <div class="portal-topbar">
-      <span id="portal-user-label"></span>
-      <button class="btn-logout" onclick="portalLogout()">Exit Portal</button>
+  <!-- ── VIEW 4: Application form ── -->
+  <div id="view-application" style="display:none; width:100%; background:var(--bg); min-height:100vh;">
+    <div style="background:var(--navy); padding:1.25rem 2rem; display:flex; align-items:center; justify-content:space-between;">
+      <img src="images/p20logo.webp" alt="P20 Logo" style="height:42px;" />
+      <button onclick="portalLogout()" style="background:transparent; border:1px solid rgba(255,255,255,0.35); color:rgba(255,255,255,0.75); padding:0.4rem 1rem; border-radius:30px; cursor:pointer; font-size:0.85rem;">Exit Portal</button>
     </div>
 
-    <main class="portal-main">
-      <div class="page-heading">
-        <h1 id="portal-welcome-msg">Welcome to your application portal</h1>
-        <p>Complete the form below to apply to become a P20 Educational Ambassador.</p>
-      </div>
+    <div class="page-heading">
+      <h1>Ambassador Application</h1>
+      <p>Answer each question thoughtfully — there are no right or wrong answers.</p>
+    </div>
 
-      <section class="section" style="padding-top:1rem;">
-        <div class="container">
-          <div class="form-card" style="max-width:680px;">
-            <h2>Ambassador Application</h2>
-            <p class="form-subtitle">All fields are required unless marked optional.</p>
+    <section class="section" style="padding-top:2rem;">
+      <div class="container">
+        <div class="form-card" style="max-width:720px;">
 
-            <div id="app-success" class="app-success" style="display:none;">
-              <strong>Application submitted!</strong>
-              Thank you — we'll review your application and be in touch soon.
-            </div>
+          <div id="app-success" style="display:none; background:var(--teal-light); border:1px solid var(--teal); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-bottom:1.5rem;">
+            <h2 style="color:var(--teal-hover); margin-bottom:0.5rem;">Application Submitted!</h2>
+            <p>Thank you — we'll review your application and be in touch soon.</p>
+          </div>
 
-            <form id="form-application">
+          <form id="form-application">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
               <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" id="app-name" readonly style="background:#f5f5f5; cursor:default;" />
@@ -83,6 +91,12 @@
               <div class="form-group">
                 <label>Email Address</label>
                 <input type="email" id="app-email" readonly style="background:#f5f5f5; cursor:default;" />
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div class="form-group">
+                <label for="app-school">School / Institution</label>
+                <input type="text" id="app-school" placeholder="e.g. A-B Tech, Mars Hill University" required />
               </div>
               <div class="form-group">
                 <label for="app-year">Year / Grade Level</label>
@@ -95,41 +109,43 @@
                   <option>Graduate Student</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="app-major">Major / Program of Study</label>
-                <input type="text" id="app-major" placeholder="e.g. Public Policy" required />
+            </div>
+
+            <hr style="border:none; border-top:1px solid var(--border); margin:1.25rem 0;" />
+            <p class="form-subtitle" style="margin-bottom:1.5rem;">Answer each question in your own words. Aim for 2–4 sentences minimum.</p>
+
+            <div class="form-group">
+              <label for="app-why">Why do you want to become a P20 Educational Ambassador? What draws you to this program?</label>
+              <textarea id="app-why" style="min-height:130px;" placeholder="Share your motivation and what you hope to contribute..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="app-adversity">Tell us about a time you faced adversity and how you overcame it. What did you learn from that experience?</label>
+              <textarea id="app-adversity" style="min-height:130px;" placeholder="Describe the challenge, your response, and the lesson you took away..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="app-impact">Describe a time you made a positive impact in your school or community. What was your role?</label>
+              <textarea id="app-impact" style="min-height:130px;" placeholder="What did you do, who did it help, and what was the outcome..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="app-workforce">What does "education to workforce" mean to you, and how do you hope to contribute to that mission in Western North Carolina?</label>
+              <textarea id="app-workforce" style="min-height:130px;" placeholder="Share your perspective on bridging education and career opportunities..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Availability <span style="font-weight:400; color:var(--muted);">(select all that apply)</span></label>
+              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.4rem;">
+                <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);"><input type="checkbox" name="avail" value="Weekday mornings" /> Weekday mornings</label>
+                <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);"><input type="checkbox" name="avail" value="Weekday afternoons" /> Weekday afternoons</label>
+                <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);"><input type="checkbox" name="avail" value="Evenings" /> Evenings</label>
+                <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);"><input type="checkbox" name="avail" value="Weekends" /> Weekends</label>
               </div>
-              <div class="form-group">
-                <label for="app-why">Why do you want to become an Educational Ambassador?</label>
-                <textarea id="app-why" style="min-height:130px;" placeholder="Share your motivation and what you hope to contribute to the program..." required></textarea>
-              </div>
-              <div class="form-group">
-                <label for="app-experience">Relevant experience or skills</label>
-                <textarea id="app-experience" style="min-height:110px;" placeholder="Describe any experience in education, leadership, community outreach, tutoring, etc." required></textarea>
-              </div>
-              <div class="form-group">
-                <label>Availability <span style="font-weight:400; color:var(--muted);">(select all that apply)</span></label>
-                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.4rem;">
-                  <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);">
-                    <input type="checkbox" name="avail" value="Weekday mornings" /> Weekday mornings
-                  </label>
-                  <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);">
-                    <input type="checkbox" name="avail" value="Weekday afternoons" /> Weekday afternoons
-                  </label>
-                  <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);">
-                    <input type="checkbox" name="avail" value="Evenings" /> Evenings
-                  </label>
-                  <label style="font-weight:400; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--text);">
-                    <input type="checkbox" name="avail" value="Weekends" /> Weekends
-                  </label>
-                </div>
-              </div>
-              <button type="submit" class="btn-primary" style="width:100%; margin-top:0.5rem;">Submit Application</button>
-            </form>
-          </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; margin-top:0.75rem;">Submit Application</button>
+          </form>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
     <footer>
       <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
@@ -245,12 +261,7 @@
     } else if (portalUser) {
       document.body.classList.remove('login-page');
       document.getElementById('view-entry').style.display = 'none';
-      document.getElementById('view-portal').style.display = 'block';
-      const firstName = portalUser.name.split(' ')[0];
-      document.getElementById('portal-welcome-msg').textContent = `Welcome to your application portal, ${firstName}!`;
-      document.getElementById('portal-user-label').textContent  = `\u{1F464} ${portalUser.name}`;
-      document.getElementById('app-name').value  = portalUser.name;
-      document.getElementById('app-email').value = portalUser.email;
+      document.getElementById('view-portal').style.display = 'flex';
 
     } else {
       document.getElementById('view-entry').style.display = 'flex';
@@ -291,34 +302,54 @@
       }
     });
 
-    /* ── Application form ── */
+
+    /* ── Show application form ── */
+    function showApplication() {
+      document.getElementById('view-portal').style.display = 'none';
+      document.getElementById('view-application').style.display = 'block';
+      document.getElementById('app-name').value  = portalUser.name;
+      document.getElementById('app-email').value = portalUser.email;
+    }
+
+    /* ── Application form submit ── */
     document.getElementById('form-application').addEventListener('submit', async function(e) {
       e.preventDefault();
       const avail = [...document.querySelectorAll('input[name="avail"]:checked')].map(cb => cb.value);
       const payload = {
         code:         portalUser.code,
+        school:       document.getElementById('app-school').value,
         year:         document.getElementById('app-year').value,
-        major:        document.getElementById('app-major').value,
         why:          document.getElementById('app-why').value,
-        experience:   document.getElementById('app-experience').value,
-        availability: avail.length ? avail.join(', ') : 'Not specified'
+        adversity:    document.getElementById('app-adversity').value,
+        impact:       document.getElementById('app-impact').value,
+        workforce:    document.getElementById('app-workforce').value,
+        availability: avail.length ? avail.join(', ') : 'Not specified',
       };
-
+      const btn = this.querySelector('[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
       try {
         const res = await fetch('/api/portal/applications', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify(payload)
+          body:    JSON.stringify(payload),
         });
-        if (res.ok) {
-          document.getElementById('form-application').style.display = 'none';
-          document.getElementById('app-success').style.display      = 'block';
+        if (res.status === 201) {
+          this.style.display = 'none';
+          document.getElementById('app-success').style.display = 'block';
+        } else if (res.status === 409) {
+          alert('Your application is already on file. Staff will be in touch soon.');
+          btn.disabled = false;
+          btn.textContent = 'Submit Application';
         } else {
-          const err = await res.json();
-          alert(err.error || 'Submission failed. Please try again.');
+          alert('Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Submit Application';
         }
       } catch {
         alert('Could not connect to server. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Submit Application';
       }
     });
 
@@ -395,23 +426,23 @@
         el.innerHTML = '<div class="empty-state">No applications submitted yet.</div>';
         return;
       }
+      const essay = (label, val) => val
+        ? `<div style="margin-bottom:1rem;"><strong>${label}</strong><p style="margin-top:0.3rem; white-space:pre-wrap; color:var(--text);">${val}</p></div>`
+        : '';
       el.innerHTML = apps.map(a => `
         <div class="card" style="margin-bottom:1.5rem;">
           <h3>${a.name}</h3>
           <p><a href="mailto:${a.email}">${a.email}</a></p>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin:0.75rem 0; font-size:0.92rem;">
+            <div><strong>School:</strong> ${a.school || '—'}</div>
             <div><strong>Year:</strong> ${a.year || '—'}</div>
-            <div><strong>Major:</strong> ${a.major || '—'}</div>
             <div style="grid-column:1/-1;"><strong>Availability:</strong> ${a.availability || '—'}</div>
           </div>
-          <div style="margin-bottom:0.75rem;">
-            <strong>Why ambassador?</strong>
-            <p style="margin-top:0.3rem; white-space:pre-wrap;">${a.why}</p>
-          </div>
-          <div>
-            <strong>Experience:</strong>
-            <p style="margin-top:0.3rem; white-space:pre-wrap;">${a.experience}</p>
-          </div>
+          <hr style="border:none; border-top:1px solid var(--border); margin:0.75rem 0;" />
+          ${essay('Why do you want to be an ambassador?', a.why)}
+          ${essay('Adversity &amp; what they learned:', a.adversity)}
+          ${essay('Positive impact in school or community:', a.impact)}
+          ${essay('Education to workforce — their perspective:', a.workforce)}
           <p class="card-meta" style="margin-top:0.75rem;">
             Submitted ${new Date(a.submitted_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
           </p>
