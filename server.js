@@ -42,6 +42,12 @@ db.exec(`
   );
 `);
 
+/* Seed demo access code so the portal always has one to demonstrate */
+db.prepare(`
+  INSERT OR IGNORE INTO portal_codes (code, name, email)
+  VALUES ('DEMO2025', 'Demo Applicant', 'demo@landofsky.org')
+`).run();
+
 app.use(express.json());
 
 /* ── Ambassador routes ── */
