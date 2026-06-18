@@ -24,6 +24,22 @@ db.exec(`
     data       TEXT NOT NULL,
     created_at TEXT DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS portal_codes (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    code       TEXT UNIQUE NOT NULL,
+    name       TEXT NOT NULL,
+    email      TEXT NOT NULL,
+    used       INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now'))
+  );
+
+  CREATE TABLE IF NOT EXISTS applications (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    code_id      INTEGER NOT NULL,
+    data         TEXT NOT NULL,
+    submitted_at TEXT DEFAULT (datetime('now'))
+  );
 `);
 
 app.use(express.json());
@@ -76,6 +92,67 @@ app.post('/api/store/:key', (req, res) => {
 app.delete('/api/store/:key/:id', (req, res) => {
   db.prepare('DELETE FROM items WHERE store = ? AND id = ?').run(req.params.key, req.params.id);
   res.json({ ok: true });
+});
+
+/* ── Portal routes ── */
+
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+app.post('/api/portal/validate', (req, res) => {
+  const { code } = req.body;
+  if (!code) return res.status(400).json({ error: 'code required' });
+  const record = db.prepare('SELECT * FROM portal_codes WHERE code = ?').get(code.trim().toUpperCase());
+  if (!record) return res.status(404).json({ error: 'Invalid code' });
+  res.json({ id: record.id, name: record.name, email: record.email, code: record.code });
+});
+
+app.get('/api/portal/codes', (req, res) => {
+  res.json(db.prepare('SELECT * FROM portal_codes ORDER BY created_at DESC').all());
+});
+
+app.post('/api/portal/codes', (req, res) => {
+  const { name, email } = req.body;
+  if (!name || !email) return res.status(400).json({ error: 'name and email required' });
+  let code, attempts = 0;
+  do { code = generateCode(); attempts++; } while (
+    db.prepare('SELECT id FROM portal_codes WHERE code = ?').get(code) && attempts < 10
+  );
+  db.prepare('INSERT INTO portal_codes (code, name, email) VALUES (?, ?, ?)').run(code, name, email);
+  res.status(201).json({ code, name, email });
+});
+
+app.delete('/api/portal/codes/:id', (req, res) => {
+  db.prepare('DELETE FROM portal_codes WHERE id = ?').run(req.params.id);
+  res.json({ ok: true });
+});
+
+app.post('/api/portal/applications', (req, res) => {
+  const { code, ...data } = req.body;
+  if (!code) return res.status(400).json({ error: 'code required' });
+  const record = db.prepare('SELECT * FROM portal_codes WHERE code = ?').get(code);
+  if (!record) return res.status(403).json({ error: 'Invalid code' });
+  if (db.prepare('SELECT id FROM applications WHERE code_id = ?').get(record.id)) {
+    return res.status(409).json({ error: 'Application already submitted for this code' });
+  }
+  const result = db.prepare('INSERT INTO applications (code_id, data) VALUES (?, ?)').run(
+    record.id, JSON.stringify({ ...data, name: record.name, email: record.email })
+  );
+  db.prepare('UPDATE portal_codes SET used = 1 WHERE id = ?').run(record.id);
+  res.status(201).json({ id: result.lastInsertRowid });
+});
+
+app.get('/api/portal/applications', (req, res) => {
+  const rows = db.prepare(`
+    SELECT a.id, a.data, a.submitted_at
+    FROM applications a
+    ORDER BY a.submitted_at DESC
+  `).all();
+  res.json(rows.map(r => ({ ...JSON.parse(r.data), id: r.id, submitted_at: r.submitted_at })));
 });
 
 app.use(express.static(path.join(__dirname)));

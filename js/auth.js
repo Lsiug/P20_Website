@@ -46,4 +46,12 @@ function p20InitHeader() {
     <span class="nav-username">&#128100; ${roleLabel}</span>
     <button class="btn-logout" onclick="p20Logout()">Log out</button>
   `;
+  if (user.role === 'staff') {
+    const pillLinks = document.querySelector('.pill-links');
+    if (pillLinks && !pillLinks.querySelector('a[href="apply.html"]')) {
+      const li = document.createElement('li');
+      li.innerHTML = '<a href="apply.html">Portal</a>';
+      pillLinks.appendChild(li);
+    }
+  }
 }
