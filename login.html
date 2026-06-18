@@ -13,6 +13,11 @@
   <h1 class="login-page-title">Educational Ambassadors</h1>
   <p class="login-welcome">Welcome back</p>
 
+  <div class="login-role-tabs">
+    <button class="login-role-tab active" id="tab-ambassador" onclick="selectLoginRole('ambassador', this)">Ambassador</button>
+    <button class="login-role-tab" id="tab-staff" onclick="selectLoginRole('staff', this)">Staff</button>
+  </div>
+
   <div class="login-card" style="position:relative; z-index:1;">
 
     <!-- Left: credentials -->
@@ -46,15 +51,32 @@
 
   </div>
 
-  <div class="login-hint" style="position:relative; z-index:1; width:350px; max-width:95%; height:95px; overflow:hidden; margin-top:-0.5rem; align-self: flex-start; margin-left: calc(50% - 375px);">
+  <p style="position:relative; z-index:1; font-size:0.88rem; margin-top:-0.25rem;">
+    Applying to the program? <a href="apply.html" style="color:var(--teal); font-weight:600; text-decoration:underline;">Enter applicant portal</a>
+  </p>
+
+  <div class="login-hint" id="login-hint" style="position:relative; z-index:1; width:350px; max-width:95%; height:70px; overflow:hidden; margin-top:-0.5rem; align-self: flex-start; margin-left: calc(50% - 375px);">
     <strong>Demo Credentials</strong>
-    Ambassador &mdash; user: <code>ambassador</code> &nbsp; pw: <code>p20amb</code><br />
-    Staff &mdash; user: <code>staff</code> &nbsp; pw: <code>p20staff</code>
+    <span id="login-hint-text">Ambassador &mdash; user: <code>ambassador</code> &nbsp; pw: <code>p20amb</code></span>
   </div>
 
   <script src="js/auth.js"></script>
   <script>
     if (p20GetUser()) window.location.href = 'index.html';
+
+    const ROLE_HINTS = {
+      ambassador: 'Ambassador &mdash; user: <code>ambassador</code> &nbsp; pw: <code>p20amb</code>',
+      staff:      'Staff &mdash; user: <code>staff</code> &nbsp; pw: <code>p20staff</code>'
+    };
+
+    function selectLoginRole(role, btn) {
+      document.querySelectorAll('.login-role-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('login-hint-text').innerHTML = ROLE_HINTS[role];
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('login-error').style.display = 'none';
+    }
 
     document.getElementById('login-form').addEventListener('submit', function(e) {
       e.preventDefault();

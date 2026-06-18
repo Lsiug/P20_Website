@@ -14,6 +14,7 @@
     <ul class="pill-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="news.html">News</a></li>
+      <li><a href="resources.html">Resources</a></li>
       <li><a href="connect.html">Connect</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="requests.html" class="active">Requests</a></li>
@@ -23,114 +24,107 @@
 
   <main>
     <div class="page-heading">
-      <h1>Requests</h1>
-      <p>Post a need, offer support, or request device and funding assistance.</p>
+      <h1>Community &amp; Support</h1>
+      <p id="page-heading-sub">Post a career question, offer support, or request device and funding assistance.</p>
     </div>
 
-    <!-- ── Section 1: Community Requests Board ── -->
     <section class="section">
       <div class="container">
-        <div class="section-title">
-          <h2>Community Requests Board</h2>
-          <p>Ask for guidance, offer resources, or start a collaboration.</p>
+
+        <!-- Section tabs -->
+        <div class="section-tabs">
+          <button class="section-tab active" onclick="switchSection('board')">Community Board</button>
+          <button class="section-tab" onclick="switchSection('device')">Device &amp; Funding Requests</button>
         </div>
 
-        <div class="form-card" style="margin-bottom:3rem;">
-          <h2>Post a Request</h2>
-          <p class="form-subtitle">Fill out the form and it will appear on the board below.</p>
-          <form id="form-board">
-            <div class="form-group">
-              <label for="b-name">Your Name</label>
-              <input type="text" id="b-name" placeholder="e.g. Sofia Nguyen" required />
-            </div>
-            <div class="form-group">
-              <label for="b-type">Request Type</label>
-              <select id="b-type">
-                <option>Guidance / Mentorship</option>
-                <option>Resource Offer</option>
-                <option>Resource Request</option>
-                <option>Collaboration</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="b-title">Title</label>
-              <input type="text" id="b-title" placeholder="e.g. Looking for a study buddy in Biology" required />
-            </div>
-            <div class="form-group">
-              <label for="b-desc">Description</label>
-              <textarea id="b-desc" placeholder="Describe what you need or what you're offering..." required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="b-email">Contact Email</label>
-              <input type="email" id="b-email" placeholder="your@email.edu" required />
-            </div>
-            <button type="submit" class="btn-primary">Submit Request</button>
-          </form>
-        </div>
-
-        <!-- Open Requests board -->
-        <div class="section-title">
-          <h2>Open Requests</h2>
-          <p>Recent posts from the community.</p>
-        </div>
-        <div class="grid-3" id="board-list">
-          <div class="empty-state">No requests yet. Be the first to post!</div>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- ── Section 2: Device & Funding Requests ── -->
-    <section class="section section-cream">
-      <div class="container">
-        <div class="section-title">
-          <h2>Device &amp; Funding Request</h2>
-          <p>Need a device or financial support? Submit a request for staff review.</p>
-        </div>
-
-        <div class="form-card" style="margin-bottom: 3rem;">
-          <h2>Submit a Device or Funding Request</h2>
-          <p class="form-subtitle">Complete all fields. Staff will review and contact you by email.</p>
-          <div class="staff-note">
-            <strong>Note:</strong> All device and funding requests are reviewed by program staff. You will be contacted once a decision has been made.
+        <!-- ── Tab 1: Community Board ── -->
+        <div id="tab-board" class="tab-panel active">
+          <div id="board-form-section" class="form-card" style="margin-bottom:2.5rem;">
+            <h2>Post to the Board</h2>
+            <p class="form-subtitle">Share a career question, offer support, or start a collaboration with fellow ambassadors.</p>
+            <form id="form-board">
+              <div class="form-group">
+                <label for="b-name">Your Name</label>
+                <input type="text" id="b-name" placeholder="e.g. Sofia Nguyen" required />
+              </div>
+              <div class="form-group">
+                <label for="b-type">Post Type</label>
+                <select id="b-type">
+                  <option>Career Question</option>
+                  <option>Resource Offer</option>
+                  <option>Collaboration Opportunity</option>
+                  <option>Event Idea</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="b-title">Title</label>
+                <input type="text" id="b-title" placeholder="e.g. Tips for applying to local internships?" required />
+              </div>
+              <div class="form-group">
+                <label for="b-desc">Details</label>
+                <textarea id="b-desc" placeholder="Describe what you need or what you're offering..." required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="b-email">Contact Email</label>
+                <input type="email" id="b-email" placeholder="your@email.edu" required />
+              </div>
+              <button type="submit" class="btn-primary">Post to Board</button>
+            </form>
           </div>
-          <form id="form-device">
-            <div class="form-group">
-              <label for="d-name">Full Name</label>
-              <input type="text" id="d-name" placeholder="e.g. Lucia Chen" required />
-            </div>
-            <div class="form-group">
-              <label for="d-email">Email Address</label>
-              <input type="email" id="d-email" placeholder="your@email.edu" required />
-            </div>
-            <div class="form-group">
-              <label for="d-device">Device / Resource Needed</label>
-              <select id="d-device">
-                <option>Laptop</option>
-                <option>Tablet</option>
-                <option>Hotspot / Internet Access</option>
-                <option>Headphones / Audio Equipment</option>
-                <option>Funding for Program Materials</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="d-reason">Reason &amp; Funding Justification</label>
-              <textarea id="d-reason" style="min-height:140px;" placeholder="Explain why you need this device or funding and how it will support your participation in the program..." required></textarea>
-            </div>
-            <button type="submit" class="btn-primary">Submit for Review</button>
-          </form>
-        </div>
 
-        <!-- Device requests list (visible to all logged-in; staff can approve/deny) -->
-        <div id="device-list-section" style="display:none;">
           <div class="section-title">
-            <h2>Submitted Device Requests</h2>
-            <p id="device-list-sub"></p>
+            <h2>Open Posts</h2>
+            <p>Recent questions, offers, and opportunities from the ambassador community.</p>
           </div>
-          <div id="device-list"></div>
+          <div class="grid-3" id="board-list">
+            <div class="empty-state">No posts yet. Be the first to share!</div>
+          </div>
+        </div>
+
+        <!-- ── Tab 2: Device & Funding Requests ── -->
+        <div id="tab-device" class="tab-panel">
+          <div id="device-form-section" class="form-card" style="margin-bottom:2.5rem;">
+            <h2>Submit a Device or Funding Request</h2>
+            <p class="form-subtitle">Complete all fields. Staff will review and contact you by email.</p>
+            <div class="staff-note">
+              <strong>Note:</strong> All device and funding requests are reviewed by program staff. You will be contacted once a decision has been made.
+            </div>
+            <form id="form-device">
+              <div class="form-group">
+                <label for="d-name">Full Name</label>
+                <input type="text" id="d-name" placeholder="e.g. Lucia Chen" required />
+              </div>
+              <div class="form-group">
+                <label for="d-email">Email Address</label>
+                <input type="email" id="d-email" placeholder="your@email.edu" required />
+              </div>
+              <div class="form-group">
+                <label for="d-device">Device / Resource Needed</label>
+                <select id="d-device">
+                  <option>Laptop</option>
+                  <option>Tablet</option>
+                  <option>Hotspot / Internet Access</option>
+                  <option>Headphones / Audio Equipment</option>
+                  <option>Funding for Program Materials</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="d-reason">Reason &amp; Funding Justification</label>
+                <textarea id="d-reason" style="min-height:140px;" placeholder="Explain why you need this device or funding and how it will support your participation in the program..." required></textarea>
+              </div>
+              <button type="submit" class="btn-primary">Submit for Review</button>
+            </form>
+          </div>
+
+          <div id="device-list-section" style="display:none;">
+            <div class="section-title">
+              <h2>Submitted Device Requests</h2>
+              <p id="device-list-sub"></p>
+            </div>
+            <div id="device-list"></div>
+          </div>
         </div>
 
       </div>
@@ -138,7 +132,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
   </footer>
 
   <script src="js/auth.js"></script>
@@ -150,50 +144,72 @@
 
     const isStaff = p20IsStaff();
 
+    if (isStaff) {
+      document.getElementById('board-form-section').style.display = 'none';
+      document.getElementById('device-form-section').style.display = 'none';
+      document.getElementById('page-heading-sub').textContent = 'Review community posts and manage device & funding request approvals.';
+    }
+
+    /* ── Tab switching ── */
+    function switchSection(name) {
+      document.querySelectorAll('.section-tab').forEach((btn, i) => {
+        btn.classList.toggle('active', i === (name === 'board' ? 0 : 1));
+      });
+      document.getElementById('tab-board').classList.toggle('active', name === 'board');
+      document.getElementById('tab-device').classList.toggle('active', name === 'device');
+      if (name === 'device') renderDeviceList();
+    }
+
     /* ── Board ── */
-    function renderBoard() {
-      const items = p20GetItems('p20_board');
+    async function renderBoard() {
+      const items = await p20GetItems('p20_board');
       const el = document.getElementById('board-list');
       if (!items.length) {
-        el.innerHTML = '<div class="empty-state">No requests yet. Be the first to post!</div>';
+        el.innerHTML = '<div class="empty-state">No posts yet. Be the first to share!</div>';
         return;
       }
-      const badgeClass = type => type === 'Resource Offer' ? 'orange' : '';
+      const tealTypes = ['Resource Offer', 'Collaboration Opportunity'];
       el.innerHTML = items.map(item => `
         <div class="card">
-          <span class="card-badge ${badgeClass(item.type)}">${item.type}</span>
+          <span class="card-badge ${tealTypes.includes(item.type) ? 'teal' : ''}">${item.type}</span>
           <h3>${item.title}</h3>
           <p>${item.desc}</p>
           <p class="card-meta">Posted by ${item.name} &mdash; ${item.publishedDate}</p>
-          <a href="mailto:${item.email}" class="btn-secondary">Respond</a>
+          <a href="mailto:${item.email}" class="btn-secondary">Respond via Email</a>
         </div>
       `).join('');
     }
 
     renderBoard();
 
-    document.getElementById('form-board').addEventListener('submit', function(e) {
+    document.getElementById('form-board').addEventListener('submit', async function(e) {
       e.preventDefault();
-      p20AddItem('p20_board', {
+      await p20AddItem('p20_board', {
         name:  document.getElementById('b-name').value,
         type:  document.getElementById('b-type').value,
         title: document.getElementById('b-title').value,
         desc:  document.getElementById('b-desc').value,
-        email: document.getElementById('b-email').value
+        email: document.getElementById('b-email').value,
       });
       renderBoard();
       this.reset();
     });
 
     /* ── Device Requests ── */
-    function renderDeviceList() {
-      const items = p20GetItems('p20_devices');
-      if (!items.length) return;
+    async function renderDeviceList() {
+      const items = await p20GetItems('p20_devices');
+
+      if (!items.length && !isStaff) return;
 
       document.getElementById('device-list-section').style.display = 'block';
       document.getElementById('device-list-sub').textContent = isStaff
         ? 'Review and approve or deny the requests below.'
         : 'Your submitted requests and their current status.';
+
+      if (!items.length) {
+        document.getElementById('device-list').innerHTML = '<div class="empty-state">No device requests submitted yet.</div>';
+        return;
+      }
 
       const el = document.getElementById('device-list');
       el.innerHTML = items.map(item => {
@@ -218,24 +234,22 @@
       }).join('');
     }
 
-    renderDeviceList();
-
-    document.getElementById('form-device').addEventListener('submit', function(e) {
+    document.getElementById('form-device').addEventListener('submit', async function(e) {
       e.preventDefault();
-      p20AddItem('p20_devices', {
+      await p20AddItem('p20_devices', {
         name:   document.getElementById('d-name').value,
         email:  document.getElementById('d-email').value,
         device: document.getElementById('d-device').value,
         reason: document.getElementById('d-reason').value,
-        status: 'pending'
+        status: 'pending',
       });
       renderDeviceList();
       this.reset();
       alert('Your request has been submitted and will be reviewed by staff.');
     });
 
-    function reviewDevice(id, status) {
-      p20UpdateItem('p20_devices', id, { status });
+    async function reviewDevice(id, status) {
+      await p20UpdateItem('p20_devices', id, { status });
       renderDeviceList();
     }
   </script>

@@ -14,6 +14,7 @@
     <ul class="pill-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="news.html">News</a></li>
+      <li><a href="resources.html">Resources</a></li>
       <li><a href="connect.html" class="active">Connect</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="requests.html">Requests</a></li>
@@ -24,10 +25,67 @@
   <main>
     <div class="page-heading">
       <h1>Ambassador Directory</h1>
-      <p>Get to know the P20 Ambassador community — new and senior members alike.</p>
+      <p>Connect with current ambassadors, alumni, and P20 Council members across Western North Carolina.</p>
+    </div>
+
+    <!-- Directory tabs -->
+    <div class="dir-tabs">
+      <button class="dir-tab active" onclick="switchTab('ambassador')">Ambassadors</button>
+      <button class="dir-tab" onclick="switchTab('council')">P20 Council</button>
     </div>
 
     <div id="panel-ambassador" class="dir-panel active">
+
+    <!-- Mentorship Banner -->
+    <section class="section" style="padding-bottom:0;">
+      <div class="container">
+        <div class="mentorship-banner">
+          <div>
+            <h2>Find a Mentor</h2>
+            <p>New to the program? Submit a mentorship request and connect with a senior or alumni ambassador who can guide your journey.</p>
+          </div>
+          <button class="btn-secondary" onclick="toggleMentorship()">Request Mentorship</button>
+        </div>
+
+        <!-- Mentorship request form (hidden by default) -->
+        <div id="mentorship-form-wrap" style="display:none; margin-bottom:2rem;">
+          <div class="form-card">
+            <h2>Mentorship Request</h2>
+            <p class="form-subtitle">Tell us a bit about yourself and what you're looking for in a mentor.</p>
+            <form id="form-mentorship">
+              <div class="form-group">
+                <label for="m-name">Your Name</label>
+                <input type="text" id="m-name" placeholder="e.g. Sofia Nguyen" required />
+              </div>
+              <div class="form-group">
+                <label for="m-email">Contact Email</label>
+                <input type="email" id="m-email" placeholder="your@email.edu" required />
+              </div>
+              <div class="form-group">
+                <label for="m-goals">What are your goals?</label>
+                <textarea id="m-goals" placeholder="What do you hope to gain from mentorship? (career goals, skills, guidance area...)" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="m-avail">Availability</label>
+                <input type="text" id="m-avail" placeholder="e.g. Weekday evenings, weekend afternoons" required />
+              </div>
+              <button type="submit" class="btn-primary">Submit Request</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Open mentorship requests (visible to senior/alumni/staff) -->
+        <div id="mentorship-requests-wrap" style="display:none; margin-bottom:2rem;">
+          <div class="section-title" style="text-align:left;">
+            <h2>Open Mentorship Requests</h2>
+            <p>Ambassadors seeking mentorship — reach out to offer support.</p>
+          </div>
+          <div class="grid-3" id="mentorship-list">
+            <div class="empty-state">No open mentorship requests.</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Senior Ambassadors -->
     <section class="section">
@@ -78,7 +136,7 @@
     </section>
 
     <!-- 2023 Student Ambassadors -->
-    <section class="section section-cream">
+    <section class="section section-alt">
       <div class="container">
         <div class="section-title">
           <h2>Fall 2023 Student Ambassadors</h2>
@@ -112,7 +170,7 @@
     </section>
 
     <!-- New Ambassadors -->
-    <section class="section section-cream">
+    <section class="section section-alt">
       <div class="container">
         <div class="section-title">
           <h2>New Ambassadors</h2>
@@ -147,6 +205,22 @@
             <p class="profile-bio">Interested in education reform and community building. Looking for a senior mentor to learn from!</p>
             <a href="mailto:lchen@example.edu" class="btn-secondary">Contact</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alumni Ambassadors -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-title">
+          <h2>Alumni Ambassadors</h2>
+          <p>Former ambassadors who have moved on to careers, college, and community — still part of the P20 family.</p>
+        </div>
+        <div class="admin-bar" id="admin-bar-alumni">
+          <button class="btn-primary" onclick="openModal('modal-profile', 'alumni')">+ Add Alumni Profile</button>
+        </div>
+        <div class="grid-3" id="dynamic-alumni">
+          <div class="empty-state">Alumni profiles will appear here once added.</div>
         </div>
       </div>
     </section>
@@ -244,7 +318,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 Educational Ambassadors &mdash; Connecting ambassadors, one step at a time.</p>
+    <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
   </footer>
 
   <script src="js/auth.js"></script>
@@ -254,9 +328,13 @@
     p20RequireLogin();
     p20InitHeader();
 
-    if (p20GetUser()) {
+    const isStaff = p20IsStaff();
+    const user = p20GetUser();
+
+    if (user) {
       document.getElementById('admin-bar-senior').style.display = 'flex';
       document.getElementById('admin-bar-new').style.display = 'flex';
+      document.getElementById('admin-bar-alumni').style.display = 'flex';
     }
 
     function initials(name) {
@@ -264,10 +342,11 @@
     }
 
     function profileCard(item, showDelete = false) {
-      const roleClass = item.role === 'senior' ? 'senior' : 'new';
-      const roleLabel = item.cohort === '2023' ? '' : (item.role === 'senior' ? 'Senior' : 'New');
+      const roleMap = { senior: 'Senior', new: 'New', alumni: 'Alumni' };
+      const roleClass = item.role || 'new';
+      const roleLabel = item.cohort === '2023' ? '' : (roleMap[item.role] || '');
       const deleteBtn = showDelete
-        ? `<button class="btn-danger" onclick="deleteAmbassador(${item.id})">Remove</button>`
+        ? `<button class="btn-deny" style="font-size:0.78rem;padding:0.3rem 0.7rem;" onclick="deleteAmbassador(${item.id})">Remove</button>`
         : '';
       return `
         <div class="profile-card">
@@ -282,8 +361,6 @@
       `;
     }
 
-    const isStaff = p20IsStaff();
-
     async function render2023() {
       const status = document.getElementById('cohort-2023-status');
       const grid   = document.getElementById('cohort-2023');
@@ -296,12 +373,17 @@
     }
 
     async function renderProfiles() {
-      const [seniors, newAmbs] = await Promise.all([
+      const [seniors, newAmbs, alumni] = await Promise.all([
         p20GetAmbassadors({ cohort: 'dynamic', role: 'senior' }),
         p20GetAmbassadors({ cohort: 'dynamic', role: 'new' }),
+        p20GetAmbassadors({ cohort: 'dynamic', role: 'alumni' }),
       ]);
       document.getElementById('dynamic-senior').innerHTML = seniors.map(r => profileCard(r, isStaff)).join('');
       document.getElementById('dynamic-new').innerHTML    = newAmbs.map(r => profileCard(r, isStaff)).join('');
+      const alumniEl = document.getElementById('dynamic-alumni');
+      alumniEl.innerHTML = alumni.length
+        ? alumni.map(r => profileCard(r, isStaff)).join('')
+        : '<div class="empty-state">Alumni profiles will appear here once added.</div>';
     }
 
     async function deleteAmbassador(id) {
@@ -314,10 +396,61 @@
     render2023();
     renderProfiles();
 
+    /* === Mentorship === */
+    async function renderMentorshipRequests() {
+      const items = await p20GetItems('p20_mentorship');
+      const el = document.getElementById('mentorship-list');
+      if (!items.length) {
+        el.innerHTML = '<div class="empty-state">No open mentorship requests.</div>';
+        return;
+      }
+      el.innerHTML = items.map(item => `
+        <div class="card">
+          <span class="card-badge teal">Mentorship Request</span>
+          <h3>${item.name}</h3>
+          <p>${item.goals}</p>
+          <p class="card-meta">Availability: ${item.avail} &mdash; ${item.publishedDate}</p>
+          <a href="mailto:${item.email}" class="btn-secondary">Offer to Mentor</a>
+          ${isStaff ? `<button class="btn-deny" style="margin-top:0.5rem;font-size:0.78rem;padding:0.3rem 0.7rem;" onclick="removeMentorRequest(${item.id})">Remove</button>` : ''}
+        </div>
+      `).join('');
+    }
+
+    async function removeMentorRequest(id) {
+      if (!confirm('Mark this request as fulfilled?')) return;
+      await p20RemoveItem('p20_mentorship', id);
+      renderMentorshipRequests();
+    }
+
+    function toggleMentorship() {
+      const formWrap = document.getElementById('mentorship-form-wrap');
+      const requestsWrap = document.getElementById('mentorship-requests-wrap');
+      const isOpen = formWrap.style.display !== 'none';
+      formWrap.style.display = isOpen ? 'none' : 'block';
+      if (!isOpen) {
+        requestsWrap.style.display = 'block';
+        renderMentorshipRequests();
+      }
+    }
+
+    document.getElementById('form-mentorship').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await p20AddItem('p20_mentorship', {
+        name:  document.getElementById('m-name').value,
+        email: document.getElementById('m-email').value,
+        goals: document.getElementById('m-goals').value,
+        avail: document.getElementById('m-avail').value,
+      });
+      this.reset();
+      document.getElementById('mentorship-form-wrap').style.display = 'none';
+      document.getElementById('mentorship-requests-wrap').style.display = 'block';
+      renderMentorshipRequests();
+      alert('Your mentorship request has been submitted. A senior or alumni ambassador will reach out soon.');
+    });
+
     function switchTab(name) {
-      document.querySelectorAll('.dir-tab').forEach((btn, i) => {
-        const panels = ['ambassador', 'council'];
-        btn.classList.toggle('active', panels[i] === name);
+      document.querySelectorAll('.dir-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(name));
       });
       document.querySelectorAll('.dir-panel').forEach(p => {
         p.classList.toggle('active', p.id === 'panel-' + name);
@@ -327,8 +460,8 @@
     function openModal(id, role) {
       if (role) {
         document.getElementById('p-role-value').value = role;
-        document.getElementById('modal-profile-title').textContent =
-          role === 'senior' ? 'Add Senior Ambassador Profile' : 'Add New Ambassador Profile';
+        const labels = { senior: 'Add Senior Ambassador Profile', new: 'Add New Ambassador Profile', alumni: 'Add Alumni Profile' };
+        document.getElementById('modal-profile-title').textContent = labels[role] || 'Add Profile';
       }
       document.getElementById(id).style.display = 'flex';
     }

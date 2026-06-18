@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources — Educational Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <a href="index.html" class="p20-logo"><img src="images/p20logo.webp" alt="P20 Logo" /></a>
+
+  <nav class="pill-nav" id="pill-nav">
+    <ul class="pill-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
+
+  <main>
+    <div class="page-heading">
+      <h1>Resource Library</h1>
+      <p>Curated tools, links, and guides to help you navigate the education-to-workforce journey.</p>
+    </div>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="admin-bar" id="admin-bar">
+          <button class="btn-primary" onclick="openModal('modal-resource')">+ Add Resource</button>
+        </div>
+
+        <!-- Category filter tabs -->
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="Career Readiness">Career Readiness</button>
+          <button class="filter-tab" data-filter="Higher Education">Higher Education</button>
+          <button class="filter-tab" data-filter="Workforce Pathways">Workforce Pathways</button>
+          <button class="filter-tab" data-filter="Community Partners">Community Partners</button>
+        </div>
+
+        <!-- Ambassador-added resources -->
+        <div class="grid-3" id="dynamic-resources" style="margin-bottom: 1.5rem;"></div>
+
+        <!-- Seed resources -->
+        <div class="grid-3" id="seed-resources">
+          <div class="resource-card" data-category="Career Readiness">
+            <span class="card-badge">Career Readiness</span>
+            <h3>Resume Builder — myFutureNC</h3>
+            <p>Step-by-step resume guide tailored for NC students. Includes templates, tips, and employer expectations.</p>
+            <div class="resource-actions">
+              <a href="https://www.myfuturenc.org" target="_blank" class="btn-primary">Visit Resource</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+          <div class="resource-card" data-category="Career Readiness">
+            <span class="card-badge">Career Readiness</span>
+            <h3>Interview Prep Workshop Materials</h3>
+            <p>Slides and worksheets from the P20 Leadership &amp; Communication Workshop — practice your interview skills.</p>
+            <div class="resource-actions">
+              <a href="#" class="btn-primary">Download</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+          <div class="resource-card" data-category="Higher Education">
+            <span class="card-badge">Higher Education</span>
+            <h3>CFNC — College &amp; Financial Aid</h3>
+            <p>North Carolina's official portal for college planning, applications, and financial aid information.</p>
+            <div class="resource-actions">
+              <a href="https://www.cfnc.org" target="_blank" class="btn-primary">Visit Resource</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+          <div class="resource-card" data-category="Workforce Pathways">
+            <span class="card-badge">Workforce Pathways</span>
+            <h3>A-B Tech Continuing Education</h3>
+            <p>Asheville-Buncombe Technical CC programs for workforce training, certifications, and apprenticeships.</p>
+            <div class="resource-actions">
+              <a href="https://www.abtech.edu" target="_blank" class="btn-primary">Visit Resource</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+          <div class="resource-card" data-category="Workforce Pathways">
+            <span class="card-badge">Workforce Pathways</span>
+            <h3>NCWorks — Job Board &amp; Career Centers</h3>
+            <p>NC's official workforce development platform. Find jobs, apprenticeships, and local career support centers.</p>
+            <div class="resource-actions">
+              <a href="https://www.ncworks.gov" target="_blank" class="btn-primary">Visit Resource</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+          <div class="resource-card" data-category="Community Partners">
+            <span class="card-badge">Community Partners</span>
+            <h3>Land of Sky Regional Council</h3>
+            <p>Our home organization — learn about the Mountain Area Workforce Development Board and regional initiatives.</p>
+            <div class="resource-actions">
+              <a href="https://www.landofsky.org" target="_blank" class="btn-primary">Visit Resource</a>
+            </div>
+            <span class="resource-meta">Added by Staff</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Resource Modal -->
+  <div class="modal-overlay" id="modal-resource" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-resource')">&times;</button>
+      <h3>Add Resource</h3>
+      <form id="form-resource">
+        <div class="form-group">
+          <label for="r-category">Category</label>
+          <select id="r-category">
+            <option>Career Readiness</option>
+            <option>Higher Education</option>
+            <option>Workforce Pathways</option>
+            <option>Community Partners</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="r-title">Title</label>
+          <input type="text" id="r-title" placeholder="Resource name" required />
+        </div>
+        <div class="form-group">
+          <label for="r-desc">Description</label>
+          <textarea id="r-desc" placeholder="What is this resource and how does it help?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="r-url">Link (URL)</label>
+          <input type="text" id="r-url" placeholder="https://..." />
+        </div>
+        <button type="submit" class="btn-primary">Add Resource</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    p20RequireLogin();
+    p20InitHeader();
+
+    const isStaff = p20IsStaff();
+    if (p20GetUser()) {
+      document.getElementById('admin-bar').style.display = 'flex';
+    }
+
+    let activeFilter = 'all';
+
+    async function renderResources() {
+      const items = await p20GetItems('p20_resources');
+      const container = document.getElementById('dynamic-resources');
+      const filtered = activeFilter === 'all' ? items : items.filter(i => i.category === activeFilter);
+      container.innerHTML = filtered.map(item => {
+        const deleteBtn = isStaff
+          ? `<button class="btn-deny" style="font-size:0.78rem;padding:0.3rem 0.7rem;" onclick="deleteResource(${item.id})">Remove</button>`
+          : '';
+        const linkBtn = item.url
+          ? `<a href="${item.url}" target="_blank" class="btn-primary">Visit Resource</a>`
+          : '';
+        return `
+          <div class="resource-card" data-category="${item.category}">
+            <span class="card-badge">${item.category}</span>
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="resource-actions">${linkBtn}${deleteBtn}</div>
+            <span class="resource-meta">${item.publishedDate} &mdash; ${item.author}</span>
+          </div>
+        `;
+      }).join('') || '';
+
+      // Apply seed visibility
+      const seedCards = document.querySelectorAll('#seed-resources .resource-card');
+      seedCards.forEach(card => {
+        const cat = card.dataset.category;
+        card.style.display = (activeFilter === 'all' || cat === activeFilter) ? '' : 'none';
+      });
+    }
+
+    renderResources();
+
+    document.getElementById('filter-tabs').addEventListener('click', function(e) {
+      const btn = e.target.closest('.filter-tab');
+      if (!btn) return;
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      renderResources();
+    });
+
+    async function deleteResource(id) {
+      if (!confirm('Remove this resource?')) return;
+      await p20RemoveItem('p20_resources', id);
+      renderResources();
+    }
+
+    document.getElementById('form-resource').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await p20AddItem('p20_resources', {
+        category: document.getElementById('r-category').value,
+        title:    document.getElementById('r-title').value,
+        desc:     document.getElementById('r-desc').value,
+        url:      document.getElementById('r-url').value,
+      });
+      renderResources();
+      this.reset();
+      closeModal('modal-resource');
+    });
+
+    function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+  </script>
+</body>
+</html>
