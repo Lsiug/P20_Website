@@ -1,37 +1,34 @@
-/* Thin async wrapper around the Express/SQLite API. */
-
 async function p20GetItems(key) {
-  const res = await fetch(`/api/store/${encodeURIComponent(key)}`);
-  return res.ok ? res.json() : [];
+  return JSON.parse(localStorage.getItem(key) || '[]');
 }
 
 async function p20AddItem(key, item) {
   const user = p20GetUser();
-  const payload = {
+  const items = await p20GetItems(key);
+  const newItem = {
     ...item,
+    id: Date.now(),
     author: user ? user.name : 'Ambassador',
     publishedDate: new Date().toLocaleDateString('en-US', {
       month: 'long', day: 'numeric', year: 'numeric'
     }),
   };
-  const res = await fetch(`/api/store/${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  return res.ok ? res.json() : null;
+  items.unshift(newItem);
+  localStorage.setItem(key, JSON.stringify(items));
+  return newItem;
 }
 
 async function p20RemoveItem(key, id) {
-  await fetch(`/api/store/${encodeURIComponent(key)}/${id}`, { method: 'DELETE' });
+  const items = await p20GetItems(key);
+  localStorage.setItem(key, JSON.stringify(items.filter(i => i.id !== id)));
 }
 
 async function p20UpdateItem(key, id, updates) {
   const items = await p20GetItems(key);
-  const item = items.find(i => i.id === id);
-  if (!item) return;
-  await p20RemoveItem(key, id);
-  await p20AddItem(key, { ...item, ...updates });
+  const idx = items.findIndex(i => i.id === id);
+  if (idx === -1) return;
+  items[idx] = { ...items[idx], ...updates };
+  localStorage.setItem(key, JSON.stringify(items));
 }
 
 /* Ambassador-specific helpers */

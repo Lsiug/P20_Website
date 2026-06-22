@@ -71,14 +71,19 @@
               </div>
               <button type="submit" class="btn-primary">Post to Board</button>
             </form>
+            <div id="board-success" style="display:none; text-align:center; padding:2rem 1rem;">
+              <p style="font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.5rem;">Post Submitted!</p>
+              <p style="color:var(--muted); margin-bottom:1.5rem;">Your post has been received and will be reviewed by staff.</p>
+              <button class="btn-secondary" onclick="document.getElementById('board-success').style.display='none'; document.getElementById('form-board').style.display='block';">Post Another</button>
+            </div>
           </div>
 
-          <div class="section-title">
-            <h2>Open Posts</h2>
-            <p>Recent questions, offers, and opportunities from the ambassador community.</p>
-          </div>
-          <div class="grid-3" id="board-list">
-            <div class="empty-state">No posts yet. Be the first to share!</div>
+          <div id="board-list-section" style="display:none;">
+            <div class="section-title">
+              <h2>Open Posts</h2>
+              <p>Recent questions, offers, and opportunities from the ambassador community.</p>
+            </div>
+            <div class="grid-3" id="board-list"></div>
           </div>
         </div>
 
@@ -116,6 +121,10 @@
               </div>
               <button type="submit" class="btn-primary">Submit for Review</button>
             </form>
+            <div id="device-success" style="display:none; text-align:center; padding:2rem 1rem;">
+              <p style="font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.5rem;">Request Submitted!</p>
+              <p style="color:var(--muted);">Your request has been received and is pending staff review. You will be contacted by email once a decision has been made.</p>
+            </div>
           </div>
 
           <div id="device-list-section" style="display:none;">
@@ -162,10 +171,12 @@
 
     /* ── Board ── */
     async function renderBoard() {
+      if (!isStaff) return;
       const items = await p20GetItems('p20_board');
+      document.getElementById('board-list-section').style.display = 'block';
       const el = document.getElementById('board-list');
       if (!items.length) {
-        el.innerHTML = '<div class="empty-state">No posts yet. Be the first to share!</div>';
+        el.innerHTML = '<div class="empty-state">No posts yet.</div>';
         return;
       }
       const tealTypes = ['Resource Offer', 'Collaboration Opportunity'];
@@ -181,6 +192,7 @@
     }
 
     renderBoard();
+    renderDeviceList();
 
     document.getElementById('form-board').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -191,15 +203,17 @@
         desc:  document.getElementById('b-desc').value,
         email: document.getElementById('b-email').value,
       });
-      renderBoard();
       this.reset();
+      this.style.display = 'none';
+      document.getElementById('board-success').style.display = 'block';
+      renderBoard();
     });
 
     /* ── Device Requests ── */
     async function renderDeviceList() {
       const items = await p20GetItems('p20_devices');
 
-      if (!items.length && !isStaff) return;
+      if (!items.length) return;
 
       document.getElementById('device-list-section').style.display = 'block';
       document.getElementById('device-list-sub').textContent = isStaff
@@ -243,9 +257,10 @@
         reason: document.getElementById('d-reason').value,
         status: 'pending',
       });
-      renderDeviceList();
       this.reset();
-      alert('Your request has been submitted and will be reviewed by staff.');
+      this.style.display = 'none';
+      document.getElementById('device-success').style.display = 'block';
+      renderDeviceList();
     });
 
     async function reviewDevice(id, status) {
