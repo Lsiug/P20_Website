@@ -112,8 +112,12 @@
           <p>Real students from across Western North Carolina making a difference.</p>
         </div>
       </div>
-      <div class="carousel-track-wrapper">
-        <div class="carousel-track" id="carousel-track"></div>
+      <div class="carousel-container">
+        <button class="carousel-btn" id="carousel-prev" aria-label="Previous">&#8592;</button>
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="carousel-track"></div>
+        </div>
+        <button class="carousel-btn" id="carousel-next" aria-label="Next">&#8594;</button>
       </div>
       <div style="text-align:center; margin-top:2.5rem;">
         <a href="connect.html" class="btn-secondary">See All Ambassadors &rarr;</a>
@@ -166,15 +170,35 @@
           ];
 
           const track = document.getElementById('carousel-track');
+          const prevBtn = document.getElementById('carousel-prev');
+          const nextBtn = document.getElementById('carousel-next');
           function slugify(n) { return n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
-          const items = [...ambassadors, ...ambassadors];
-          items.forEach(a => {
+
+          ambassadors.forEach(a => {
             const el = document.createElement('a');
             el.className = 'carousel-card';
             el.href = `connect.html#amb-${slugify(a.name)}`;
             el.innerHTML = `<div class="carousel-avatar">${a.initials}</div><span class="carousel-name">${a.name}</span>`;
             track.appendChild(el);
           });
+
+          const VISIBLE = 4;
+          let current = 0;
+          const maxPage = Math.ceil(ambassadors.length / VISIBLE) - 1;
+
+          function updateCarousel() {
+            const card = track.querySelector('.carousel-card');
+            const gap = 24;
+            const cardWidth = card ? card.offsetWidth : 190;
+            track.style.transform = `translateX(-${current * VISIBLE * (cardWidth + gap)}px)`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current >= maxPage;
+          }
+
+          prevBtn.addEventListener('click', () => { if (current > 0) { current--; updateCarousel(); } });
+          nextBtn.addEventListener('click', () => { if (current < maxPage) { current++; updateCarousel(); } });
+          window.addEventListener('resize', () => updateCarousel());
+          updateCarousel();
         })();
       </script>
     </section>
