@@ -5,12 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Educational Ambassadors</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .animated-underline {
+      background-image: linear-gradient(90deg, rgba(74,222,128,0.45), rgba(34,197,94,0.45));
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      background-position: 0 100%;
+      padding: 0 4px;
+      border-radius: 3px;
+      animation: highlight-sweep 1s ease forwards 0.4s;
+    }
+    @keyframes highlight-sweep {
+      from { background-size: 0% 82%; }
+      to   { background-size: 100% 82%; }
+    }
+  </style>
 </head>
 <body class="page-home">
 
-  <a href="index.html" class="p20-logo"><img src="images/p20logo.webp" alt="P20 Logo" /></a>
-
   <nav class="pill-nav" id="pill-nav">
+    <a href="index.html" class="p20-logo"><img src="images/p20logo.webp" alt="P20 Logo" /></a>
     <ul class="pill-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="news.html">News</a></li>
@@ -25,7 +39,7 @@
   <main>
     <section class="hero">
       <div class="hero-content">
-        <h1>Building Western North Carolina's Future Workforce —<br>One Ambassador at a Time</h1>
+        <h1>Building Western North Carolina's Future Workforce —<br><span class="animated-underline">One Ambassador at a Time</span></h1>
         <p style="color:rgba(255,255,255,0.85);font-size:1.15rem;max-width:600px;margin:0 auto 2rem;">Land of Sky's P20 Educational Ambassador Program connects students to careers through peer mentorship, workforce resources, and community partnerships.</p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
           <a href="resources.html" class="btn-primary">Explore Resources</a>
@@ -37,19 +51,19 @@
     <div class="stat-bar">
       <div class="container">
         <div class="stat-item">
-          <span class="stat-number">60+</span>
+          <span class="stat-number" data-target="60" data-suffix="+">0</span>
           <span class="stat-label">Ambassadors</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">4</span>
+          <span class="stat-number" data-target="4" data-suffix="">0</span>
           <span class="stat-label">Counties Served</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">30+</span>
+          <span class="stat-number" data-target="30" data-suffix="+">0</span>
           <span class="stat-label">Partner Organizations</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">3</span>
+          <span class="stat-number" data-target="3" data-suffix="">0</span>
           <span class="stat-label">Cohorts</span>
         </div>
       </div>
@@ -95,46 +109,74 @@
       <div class="container">
         <div class="section-title">
           <h2>Meet the Ambassadors</h2>
-          <p>Get to know the senior ambassadors who make this program what it is.</p>
-        </div>
-        <div class="grid-3">
-          <div class="profile-card">
-            <div class="profile-avatar">ML</div>
-            <h3>Maria Lopez</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Public Policy, Junior</p>
-            <p class="profile-bio">Passionate about education equity and connecting students to resources. Happy to chat about navigating campus life.</p>
-            <a href="mailto:mlopez@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">JK</div>
-            <h3>James Kim</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Computer Science, Senior</p>
-            <p class="profile-bio">Tech enthusiast and first-gen student. Loves helping new ambassadors find their footing and build confidence.</p>
-            <a href="mailto:jkim@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">AT</div>
-            <h3>Aisha Torres</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Communications, Sophomore</p>
-            <p class="profile-bio">Storyteller and community organizer. Ask me about events, outreach, or how to get involved beyond the classroom.</p>
-            <a href="mailto:atorres@example.edu" class="btn-secondary">Contact</a>
-          </div>
-          <div class="profile-card">
-            <div class="profile-avatar">RP</div>
-            <h3>Ryan Patel</h3>
-            <span class="profile-role senior">Senior</span>
-            <p class="profile-major">Biology, Junior</p>
-            <p class="profile-bio">Pre-med student who found community through the ambassador program. Open to mentoring and study sessions.</p>
-            <a href="mailto:rpatel@example.edu" class="btn-secondary">Contact</a>
-          </div>
-        </div>
-        <div style="text-align:center; margin-top:2.5rem;">
-          <a href="connect.html" class="btn-secondary">See All Ambassadors &rarr;</a>
+          <p>Real students from across Western North Carolina making a difference.</p>
         </div>
       </div>
+      <div class="carousel-track-wrapper">
+        <div class="carousel-track" id="carousel-track"></div>
+      </div>
+      <div style="text-align:center; margin-top:2.5rem;">
+        <a href="connect.html" class="btn-secondary">See All Ambassadors &rarr;</a>
+      </div>
+      <script>
+        (function () {
+          const ambassadors = [
+            { initials: 'AM', name: 'Aaron Marquez-Cruz' },
+            { initials: 'AB', name: 'Abigail Blankenship' },
+            { initials: 'AG', name: 'Ashleigh Grieves' },
+            { initials: 'AA', name: 'Azendae Aiken' },
+            { initials: 'CB', name: 'Cate Boyette' },
+            { initials: 'CD', name: 'Citlally Diaz-Mar' },
+            { initials: 'EC', name: 'Eleura Clark' },
+            { initials: 'EE', name: 'Ella Estrada' },
+            { initials: 'EH', name: 'Emily Hazzard' },
+            { initials: 'EV', name: 'Eric Velez' },
+            { initials: 'FR', name: 'Fanny Reynoso-Diaz' },
+            { initials: 'HA', name: 'Heidi Anugrah' },
+            { initials: 'KP', name: 'Kaylie Phillips' },
+            { initials: 'KJ', name: 'Kimberly Jones' },
+            { initials: 'LI', name: 'Lucian Iavorschi' },
+            { initials: 'MH', name: 'Marion Hawsey' },
+            { initials: 'MS', name: 'Michael Swing' },
+            { initials: 'NL', name: 'Natalia Lopez' },
+            { initials: 'RF', name: 'Rodion Floresku' },
+            { initials: 'SM', name: 'Stuart Maise' },
+            { initials: 'TM', name: 'Taylor McHone' },
+            { initials: 'DS', name: 'Douglas Swayze' },
+            { initials: 'JU', name: 'Jasmin Umanzor' },
+            { initials: 'KW', name: 'Katherine Wombwell' },
+            { initials: 'LA', name: 'Linlee Ammann' },
+            { initials: 'EA', name: 'Ernesto Arellano-Perez' },
+            { initials: 'NC', name: 'Nataliia Chorna' },
+            { initials: 'KC', name: 'Katherin Cid-Hernandez' },
+            { initials: 'LG', name: 'Liliana Guapia' },
+            { initials: 'WJ', name: 'Wilson Jones' },
+            { initials: 'KM', name: 'Kenny Malis' },
+            { initials: 'RE', name: 'Roselyn Estevez Menendez' },
+            { initials: 'CN', name: 'Christina Nguyen' },
+            { initials: 'KR', name: 'Kaitlyn Raby' },
+            { initials: 'AS', name: 'Aydan Shelton' },
+            { initials: 'AO', name: "Aiden O'Donnell" },
+            { initials: 'GM', name: 'Greysen Motley' },
+            { initials: 'JR', name: 'Jemma Richards' },
+            { initials: 'KC', name: 'Kyla Christensen' },
+            { initials: 'ML', name: 'Matthew Lupo' },
+            { initials: 'SS', name: 'Selah Simpson' },
+            { initials: 'SW', name: 'Shawn Ware' },
+          ];
+
+          const track = document.getElementById('carousel-track');
+          function slugify(n) { return n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+          const items = [...ambassadors, ...ambassadors];
+          items.forEach(a => {
+            const el = document.createElement('a');
+            el.className = 'carousel-card';
+            el.href = `connect.html#amb-${slugify(a.name)}`;
+            el.innerHTML = `<div class="carousel-avatar">${a.initials}</div><span class="carousel-name">${a.name}</span>`;
+            track.appendChild(el);
+          });
+        })();
+      </script>
     </section>
   </main>
 
@@ -147,6 +189,39 @@
   <script>
     p20RequireLogin();
     p20InitHeader();
+  </script>
+  <script>
+    (function () {
+      const stats = document.querySelectorAll('.stat-number[data-target]');
+      let animated = false;
+
+      function easeOutQuad(t) { return t * (2 - t); }
+
+      function animateStats() {
+        if (animated) return;
+        animated = true;
+        const duration = 1800;
+        const start = performance.now();
+
+        stats.forEach(el => {
+          const target = +el.dataset.target;
+          const suffix = el.dataset.suffix || '';
+          function step(now) {
+            const t = Math.min((now - start) / duration, 1);
+            const value = Math.round(easeOutQuad(t) * target);
+            el.textContent = value + (t === 1 ? suffix : '');
+            if (t < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }
+
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(e => e.isIntersecting)) animateStats();
+      }, { threshold: 0.3 });
+
+      stats.forEach(el => observer.observe(el));
+    })();
   </script>
 </body>
 </html>
