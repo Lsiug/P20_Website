@@ -978,11 +978,91 @@ footer a { color: var(--teal); }
 .mentorship-banner .btn-secondary:hover { background: var(--teal-hover); }
 
 /* === Resource cards === */
+.profile-card:has(.council-badge-blue) {
+  border-left: 3px solid #93c5fd;
+}
+.council-badge-blue {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 0.85rem;
+  background: rgba(239, 246, 255, 0.9);
+  color: #1d4ed8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(147, 197, 253, 0.6);
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+}
+
+.profile-card:has(.council-badge-green) {
+  border-left: 3px solid #86efac;
+}
+.council-badge-green {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 0.85rem;
+  background: rgba(240, 253, 244, 0.9);
+  color: #15803d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(134, 239, 172, 0.6);
+  box-shadow: 0 1px 3px rgba(22, 163, 74, 0.1);
+}
+
+.profile-card:has(.council-badge-orange) {
+  border-left: 3px solid #fdba74;
+}
+.council-badge-orange {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 0.85rem;
+  background: rgba(255, 247, 237, 0.9);
+  color: #c2410c;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(253, 186, 116, 0.6);
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.1);
+}
+
+.profile-card:has(.council-highlight-badge) {
+  border-left: 3px solid #f9a8d4;
+}
+.council-highlight-badge {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 0.85rem;
+  background: rgba(253, 242, 248, 0.9);
+  color: #be185d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(249, 168, 212, 0.6);
+  box-shadow: 0 1px 3px rgba(236, 72, 153, 0.1);
+}
+
+.paying-college-section {
+  margin-top: 2.5rem;
+}
+
 .resource-subsection-title {
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--navy);
-  margin: 0 0 1.5rem;
+  margin: 1.75rem 0 1.5rem;
   background-color: rgba(74, 222, 128, 0.35);
   padding: 0.4rem 1rem;
   border-radius: 6px;
