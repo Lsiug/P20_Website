@@ -147,12 +147,13 @@
   <script src="js/storage.js"></script>
   <script src="js/script.js"></script>
   <script>
-    p20RequireLogin();
-    p20InitHeader();
-
-    if (p20GetUser()) {
-      document.getElementById('admin-bar').style.display = 'flex';
-    }
+    (async function() {
+      await p20RequireLogin();
+      p20InitHeader();
+      if (p20GetUser()) {
+        document.getElementById('admin-bar').style.display = 'flex';
+      }
+    })();
 
     async function renderEvents() {
       const items = await p20GetItems('p20_events');

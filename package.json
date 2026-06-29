@@ -21,8 +21,11 @@
   },
   "homepage": "https://github.com/Lsiug/P20_Website#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.10.0",
-    "express": "^5.2.1"
+    "connect-sqlite3": "^0.9.16",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
   },
   "allowScripts": {
     "better-sqlite3@12.10.0": true

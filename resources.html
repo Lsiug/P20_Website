@@ -264,15 +264,18 @@
   <script src="js/storage.js"></script>
   <script src="js/script.js"></script>
   <script>
-    p20RequireLogin();
-    p20InitHeader();
-
-    const isStaff = p20IsStaff();
-    if (p20GetUser()) {
-      document.getElementById('admin-bar').style.display = 'flex';
-    }
-
+    let isStaff = false;
     let activeFilter = 'all';
+
+    (async function() {
+      await p20RequireLogin();
+      p20InitHeader();
+      isStaff = p20IsStaff();
+      if (p20GetUser()) {
+        document.getElementById('admin-bar').style.display = 'flex';
+      }
+      renderResources();
+    })();
 
     async function renderResources() {
       const items = await p20GetItems('p20_resources');
@@ -303,8 +306,6 @@
         card.style.display = (activeFilter === 'all' || cat === activeFilter) ? '' : 'none';
       });
     }
-
-    renderResources();
 
     function updatePayingSection(filter) {
       document.querySelectorAll('[data-category-section]').forEach(section => {

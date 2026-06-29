@@ -335,6 +335,8 @@ textarea { resize: vertical; min-height: 100px; }
 }
 .form-card h2 { margin-bottom: 0.4rem; }
 .form-card .form-subtitle { margin-bottom: 1.5rem; font-size: 0.95rem; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 540px) { .form-row-2 { grid-template-columns: 1fr; } }
 
 .staff-note {
   background: var(--navy-light);
@@ -538,6 +540,7 @@ footer a { color: var(--teal); }
   gap: 1rem;
   padding: 3rem 1rem;
   position: relative;
+  overflow-y: auto;
 }
 .login-page::before {
   content: '';
@@ -601,15 +604,15 @@ footer a { color: var(--teal); }
   background: rgba(255,255,255,0.3);
 }
 .login-forgot {
-  display: block;
-  text-align: center;
   font-size: 0.85rem;
   color: rgba(255,255,255,0.8);
-  margin-top: 0.5rem;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .login-forgot:hover { color: var(--white); }
+.login-portal-hint { font-size: 0.83rem; color: rgba(255,255,255,0.7); margin: 0; }
+.login-portal-hint a { color: rgba(255,255,255,0.95); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.login-portal-hint a:hover { color: var(--white); }
 .login-card {
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
@@ -620,11 +623,10 @@ footer a { color: var(--teal); }
   padding: 0;
   width: 750px;
   max-width: 95%;
-  height: 280px;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  overflow: hidden;
 }
 .login-col-left {
   flex: 1;
@@ -702,35 +704,15 @@ footer a { color: var(--teal); }
 }
 .login-hint strong { display: block; margin-bottom: 0.2rem; color: var(--navy); }
 
-/* === Login Role Tabs === */
-.login-role-tabs {
-  display: flex;
-  gap: 0.5rem;
+/* === Login Below-Card Links === */
+.login-below-card {
+  text-align: center;
   position: relative;
   z-index: 1;
-}
-.login-role-tab {
-  padding: 0.55rem 1.75rem;
-  border-radius: 30px;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 600;
-  font-size: 0.92rem;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-.login-role-tab.active {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: var(--white);
-  box-shadow: 0 2px 10px rgba(30, 58, 95, 0.4);
-}
-.login-role-tab:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* === Nav User (inside sidebar) === */
@@ -752,6 +734,30 @@ footer a { color: var(--teal); }
   width: fit-content;
 }
 .btn-logout:hover { background: rgba(255, 255, 255, 0.28); }
+.nav-profile-link {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.nav-profile-link:hover { background: rgba(255,255,255,0.15); }
+
+.nav-admin-link {
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  transition: background 0.2s;
+}
+.nav-admin-link:hover { background: rgba(255,255,255,0.25); }
 
 /* === Admin Bar === */
 .admin-bar {

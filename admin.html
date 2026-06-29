@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Educational Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
+    .stat-card .stat-num { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
+    .stat-card .stat-lbl { font-size: 0.82rem; color: var(--muted); margin-top: 0.3rem; }
+    .stat-card.alert .stat-num { color: #dc2626; }
+
+    .admin-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 860px) { .admin-panels { grid-template-columns: 1fr; } }
+
+    .admin-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .admin-panel-header { background: var(--navy); color: #fff; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .admin-panel-header h2 { font-size: 1rem; font-weight: 700; margin: 0; }
+    .admin-panel-body { padding: 1.25rem 1.5rem; max-height: 420px; overflow-y: auto; }
+
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .admin-table th { text-align: left; padding: 0.4rem 0.6rem; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    .admin-table td { padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .admin-table tr:last-child td { border-bottom: none; }
+
+    .add-user-toggle { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); color: #fff; border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+    .add-user-form { background: var(--bg); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; display: none; }
+    .add-user-form .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .add-user-form .form-group { margin-bottom: 0.6rem; }
+    .add-user-form label { font-size: 0.78rem; font-weight: 600; display: block; margin-bottom: 0.2rem; }
+    .add-user-form input, .add-user-form select { font-size: 0.85rem; padding: 0.4rem 0.6rem; }
+    .add-user-form .btn-primary { font-size: 0.85rem; padding: 0.5rem 1.2rem; }
+
+    .req-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; margin-bottom: 0.75rem; }
+    .req-card h4 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .req-card p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .req-card .staff-actions { display: flex; gap: 0.5rem; }
+
+    .code-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .code-row:last-child { border-bottom: none; }
+    .code-badge { font-family: monospace; background: var(--navy-light); color: var(--navy); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem; }
+
+    .new-code-form { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .new-code-form input { flex: 1; min-width: 120px; font-size: 0.85rem; padding: 0.4rem 0.75rem; }
+    .new-code-form .btn-primary { font-size: 0.82rem; padding: 0.45rem 1rem; white-space: nowrap; }
+
+    .empty-admin { text-align: center; color: var(--muted); padding: 1.5rem; font-size: 0.9rem; }
+
+    .user-status-active { color: #16a34a; font-weight: 600; font-size: 0.8rem; }
+    .user-status-inactive { color: #dc2626; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="pill-nav" id="pill-nav">
+    <a href="admin.html" class="p20-logo"><img src="images/p20logo.webp" alt="P20 Logo" /></a>
+    <ul class="pill-links">
+      <li><a href="admin.html" class="active">Dashboard</a></li>
+      <li><a href="index.html">Ambassador Hub</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
+
+  <main>
+    <div class="page-heading">
+      <h1>Admin Dashboard</h1>
+      <p id="admin-welcome">Staff control panel — manage users, review requests, and oversee program activity.</p>
+    </div>
+
+    <section class="section">
+      <div class="container">
+
+        <!-- Stats -->
+        <div class="admin-stats" id="admin-stats">
+          <div class="stat-card"><div class="stat-num" id="stat-users">—</div><div class="stat-lbl">Active Ambassadors</div></div>
+          <div class="stat-card alert" id="stat-reqs-card"><div class="stat-num" id="stat-reqs">—</div><div class="stat-lbl">Pending Requests</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-board">—</div><div class="stat-lbl">Board Posts</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-events">—</div><div class="stat-lbl">Events</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-codes">—</div><div class="stat-lbl">Unused Portal Codes</div></div>
+        </div>
+
+        <!-- Panels -->
+        <div class="admin-panels">
+
+          <!-- Manage Users -->
+          <div class="admin-panel">
+            <div class="admin-panel-header">
+              <h2>&#128100; Manage Users</h2>
+              <button class="add-user-toggle" onclick="toggleAddUser()">+ Add User</button>
+            </div>
+            <div class="admin-panel-body">
+              <div class="add-user-form" id="add-user-form">
+                <div id="add-user-error" style="color:#dc2626;font-size:0.82rem;margin-bottom:0.5rem;display:none;"></div>
+                <div id="add-user-ok" style="color:#16a34a;font-size:0.82rem;margin-bottom:0.5rem;display:none;"></div>
+                <form id="form-add-user">
+                  <div class="form-row-2">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="u-name" placeholder="Sofia Nguyen" required /></div>
+                    <div class="form-group"><label>Username</label><input type="text" id="u-username" placeholder="snguyen" required autocomplete="off" /></div>
+                  </div>
+                  <div class="form-row-2">
+                    <div class="form-group"><label>Email</label><input type="email" id="u-email" placeholder="sofia@email.edu" required /></div>
+                    <div class="form-group"><label>Role</label><select id="u-role"><option value="ambassador">Ambassador</option><option value="staff">Staff</option></select></div>
+                  </div>
+                  <div class="form-group"><label>Temporary Password</label><input type="password" id="u-password" placeholder="Set a temporary password" required autocomplete="new-password" /></div>
+                  <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+              </div>
+              <table class="admin-table">
+                <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th></th></tr></thead>
+                <tbody id="user-table-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem;">Loading…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pending Device Requests -->
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h2>&#128187; Device &amp; Funding Requests</h2></div>
+            <div class="admin-panel-body" id="panel-requests">
+              <div class="empty-admin">Loading…</div>
+            </div>
+          </div>
+
+          <!-- Community Board -->
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h2>&#128172; Community Board</h2></div>
+            <div class="admin-panel-body" id="panel-board">
+              <div class="empty-admin">Loading…</div>
+            </div>
+          </div>
+
+          <!-- Portal Codes -->
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h2>&#128273; Portal Access Codes</h2></div>
+            <div class="admin-panel-body">
+              <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Send accepted ambassadors this link to register: <a href="portal.html" target="_blank" style="color:var(--navy);font-weight:600;">portal.html</a></p>
+              <form class="new-code-form" id="form-new-code">
+                <input type="text" id="code-name" placeholder="Applicant name" required />
+                <input type="email" id="code-email" placeholder="Applicant email" required />
+                <button type="submit" class="btn-primary">Generate Code</button>
+              </form>
+              <div id="panel-codes"><div class="empty-admin">Loading…</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    /* ── Init ── */
+    (async function() {
+      const user = await fetch('/api/auth/me').then(r => r.ok ? r.json() : null).catch(() => null);
+      if (!user) { window.location.href = 'login.html'; return; }
+      if (user.role !== 'staff') { window.location.href = 'index.html'; return; }
+      sessionStorage.setItem('p20_user', JSON.stringify(user));
+      p20InitHeader();
+      document.getElementById('admin-welcome').textContent = `Welcome back, ${user.name}. Here's what's happening in the program.`;
+      loadStats();
+      loadUsers();
+      loadRequests();
+      loadBoard();
+      loadCodes();
+    })();
+
+    /* ── Stats ── */
+    async function loadStats() {
+      const s = await fetch('/api/admin/stats').then(r => r.json()).catch(() => ({}));
+      document.getElementById('stat-users').textContent  = s.users ?? '—';
+      document.getElementById('stat-reqs').textContent   = s.pendingReqs ?? '—';
+      document.getElementById('stat-board').textContent  = s.boardPosts ?? '—';
+      document.getElementById('stat-events').textContent = s.events ?? '—';
+      document.getElementById('stat-codes').textContent  = s.portalCodes ?? '—';
+      if (!s.pendingReqs) document.getElementById('stat-reqs-card').classList.remove('alert');
+    }
+
+    /* ── Users ── */
+    function toggleAddUser() {
+      const f = document.getElementById('add-user-form');
+      f.style.display = f.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function loadUsers() {
+      const users = await fetch('/api/auth/users').then(r => r.json()).catch(() => []);
+      const tbody = document.getElementById('user-table-body');
+      if (!users.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-admin">No users yet.</td></tr>'; return; }
+      tbody.innerHTML = users.map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td style="color:var(--muted);">${u.username}</td>
+          <td><span class="card-badge ${u.role === 'staff' ? 'teal' : ''}" style="font-size:0.72rem;">${u.role}</span></td>
+          <td><span class="user-status-active">Active</span></td>
+          <td>${u.username !== 'admin' ? `<button class="btn-deny" style="font-size:0.72rem;padding:0.2rem 0.55rem;" onclick="deleteUser(${u.id}, '${u.name.replace(/'/g, "\\'")}')">Delete</button>` : ''}</td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('form-add-user').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const errEl = document.getElementById('add-user-error');
+      const okEl  = document.getElementById('add-user-ok');
+      errEl.style.display = okEl.style.display = 'none';
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      const res = await fetch('/api/auth/users', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('u-name').value,
+          username: document.getElementById('u-username').value,
+          email: document.getElementById('u-email').value,
+          role: document.getElementById('u-role').value,
+          password: document.getElementById('u-password').value,
+        }),
+      });
+      btn.disabled = false;
+      if (res.ok) {
+        okEl.textContent = 'Account created successfully.';
+        okEl.style.display = 'block';
+        this.reset();
+        loadUsers();
+        loadStats();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        errEl.textContent = err.error || 'Failed to create user.';
+        errEl.style.display = 'block';
+      }
+    });
+
+    async function deleteUser(id, name) {
+      if (!confirm(`Permanently delete ${name}? This cannot be undone.`)) return;
+      await fetch(`/api/auth/users/${id}`, { method: 'DELETE' });
+      loadUsers(); loadStats();
+    }
+
+    /* ── Device Requests ── */
+    async function loadRequests() {
+      const items = await p20GetItems('p20_devices');
+      const el = document.getElementById('panel-requests');
+      if (!items.length) { el.innerHTML = '<div class="empty-admin">No device requests yet.</div>'; return; }
+      el.innerHTML = items.map(item => {
+        const sc = item.status || 'pending';
+        const sl = sc.charAt(0).toUpperCase() + sc.slice(1);
+        const btns = sc === 'pending' ? `
+          <div class="staff-actions">
+            <button class="btn-approve" onclick="reviewDevice(${item.id},'approved')">Approve</button>
+            <button class="btn-deny" onclick="reviewDevice(${item.id},'denied')">Deny</button>
+          </div>` : '';
+        return `<div class="req-card">
+          <span class="status-badge ${sc}">${sl}</span>
+          <h4>${item.device}</h4>
+          <p><strong>${item.name}</strong> &mdash; <a href="mailto:${item.email}">${item.email}</a></p>
+          <p>${item.reason}</p>
+          ${btns}
+        </div>`;
+      }).join('');
+    }
+
+    async function reviewDevice(id, status) {
+      await p20UpdateItem('p20_devices', id, { status });
+      loadRequests(); loadStats();
+    }
+
+    /* ── Community Board ── */
+    async function loadBoard() {
+      const items = await p20GetItems('p20_board');
+      const el = document.getElementById('panel-board');
+      if (!items.length) { el.innerHTML = '<div class="empty-admin">No posts yet.</div>'; return; }
+      const teal = ['Resource Offer', 'Collaboration Opportunity'];
+      el.innerHTML = items.map(item => `
+        <div class="req-card">
+          <span class="card-badge ${teal.includes(item.type) ? 'teal' : ''}">${item.type}</span>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+          <p>Posted by ${item.name} &mdash; <a href="mailto:${item.email}">${item.email}</a></p>
+        </div>
+      `).join('');
+    }
+
+    /* ── Portal Codes ── */
+    async function loadCodes() {
+      const codes = await fetch('/api/portal/codes').then(r => r.json()).catch(() => []);
+      const el = document.getElementById('panel-codes');
+      if (!codes.length) { el.innerHTML = '<div class="empty-admin">No codes yet.</div>'; return; }
+      el.innerHTML = codes.map(c => `
+        <div class="code-row">
+          <div>
+            <span class="code-badge">${c.code}</span>
+            <span style="margin-left:0.5rem;font-size:0.83rem;">${c.name}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="font-size:0.78rem;color:${c.used ? '#16a34a' : 'var(--muted)'};">${c.used ? 'Used' : 'Unused'}</span>
+            <button class="btn-deny" style="font-size:0.72rem;padding:0.2rem 0.55rem;" onclick="deleteCode(${c.id})">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('form-new-code').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      await fetch('/api/portal/codes', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: document.getElementById('code-name').value, email: document.getElementById('code-email').value }),
+      });
+      btn.disabled = false;
+      this.reset();
+      loadCodes(); loadStats();
+    });
+
+    async function deleteCode(id) {
+      if (!confirm('Delete this portal code?')) return;
+      await fetch(`/api/portal/codes/${id}`, { method: 'DELETE' });
+      loadCodes(); loadStats();
+    }
+  </script>
+</body>
+</html>

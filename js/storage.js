@@ -1,34 +1,36 @@
 async function p20GetItems(key) {
-  return JSON.parse(localStorage.getItem(key) || '[]');
+  const res = await fetch(`/api/store/${key}`);
+  return res.ok ? res.json() : [];
 }
 
 async function p20AddItem(key, item) {
   const user = p20GetUser();
-  const items = await p20GetItems(key);
-  const newItem = {
+  const payload = {
     ...item,
-    id: Date.now(),
     author: user ? user.name : 'Ambassador',
     publishedDate: new Date().toLocaleDateString('en-US', {
       month: 'long', day: 'numeric', year: 'numeric'
     }),
   };
-  items.unshift(newItem);
-  localStorage.setItem(key, JSON.stringify(items));
-  return newItem;
+  const res = await fetch(`/api/store/${key}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  return res.ok ? res.json() : null;
 }
 
 async function p20RemoveItem(key, id) {
-  const items = await p20GetItems(key);
-  localStorage.setItem(key, JSON.stringify(items.filter(i => i.id !== id)));
+  await fetch(`/api/store/${key}/${id}`, { method: 'DELETE' });
 }
 
 async function p20UpdateItem(key, id, updates) {
-  const items = await p20GetItems(key);
-  const idx = items.findIndex(i => i.id === id);
-  if (idx === -1) return;
-  items[idx] = { ...items[idx], ...updates };
-  localStorage.setItem(key, JSON.stringify(items));
+  const res = await fetch(`/api/store/${key}/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates),
+  });
+  return res.ok ? res.json() : null;
 }
 
 /* Ambassador-specific helpers */

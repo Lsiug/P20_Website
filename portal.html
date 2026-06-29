@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ambassador Registration — Educational Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
+
+    .portal-wrap { width: 100%; max-width: 480px; }
+
+    .portal-logo { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    .portal-logo img { height: 52px; }
+
+    .portal-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; box-shadow: var(--shadow); }
+    .portal-card h1 { font-size: 1.4rem; margin-bottom: 0.4rem; color: var(--navy); }
+    .portal-card p.subtitle { color: var(--muted); margin-bottom: 1.75rem; font-size: 0.92rem; line-height: 1.6; }
+
+    .code-input { font-family: monospace; font-size: 1.3rem; letter-spacing: 0.15em; text-align: center; text-transform: uppercase; }
+
+    .welcome-banner { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .welcome-banner .wb-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+    .welcome-banner p { margin: 0; font-size: 0.9rem; }
+    .welcome-banner strong { color: var(--navy); }
+
+    .readonly-field { background: var(--bg); color: var(--muted); cursor: not-allowed; }
+
+    .portal-step { display: none; }
+    .portal-step.active { display: block; }
+
+    .portal-error { color: #dc2626; font-size: 0.87rem; margin-top: 0.35rem; display: none; }
+
+    .portal-actions { margin-top: 1.5rem; }
+    .portal-actions .btn-primary { width: 100%; justify-content: center; }
+
+    .portal-back { background: none; border: none; color: var(--muted); font-size: 0.83rem; cursor: pointer; padding: 0; margin-top: 0.75rem; text-decoration: underline; }
+    .portal-back:hover { color: var(--navy); }
+
+    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .login-link a { color: var(--navy); font-weight: 600; text-decoration: none; }
+    .login-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="portal-wrap">
+    <div class="portal-logo">
+      <img src="images/p20logo.webp" alt="P20 Logo" />
+    </div>
+
+    <div class="portal-card">
+
+      <!-- Step 1: Enter Code -->
+      <div class="portal-step active" id="step-code">
+        <h1>Ambassador Access Portal</h1>
+        <p class="subtitle">Enter the access code you received from the P20 team to register your ambassador account.</p>
+        <form id="form-code">
+          <div class="form-group">
+            <label for="access-code">Access Code</label>
+            <input type="text" id="access-code" class="code-input" placeholder="e.g. XP7K2M9Q" maxlength="12" autocomplete="off" required />
+            <div class="portal-error" id="code-error"></div>
+          </div>
+          <div class="portal-actions">
+            <button type="submit" class="btn-primary" id="btn-code">Continue &rarr;</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 2: Create Account -->
+      <div class="portal-step" id="step-register">
+        <h1>Create Your Account</h1>
+        <p class="subtitle">You're in. Set up your login credentials below.</p>
+
+        <div class="welcome-banner" id="welcome-banner">
+          <div class="wb-avatar" id="wb-avatar">??</div>
+          <p>Welcome, <strong id="wb-name">—</strong>!<br /><span style="color:var(--muted);font-size:0.83rem;" id="wb-email"></span></p>
+        </div>
+
+        <form id="form-register">
+          <div class="form-group">
+            <label for="reg-username">Choose a Username</label>
+            <input type="text" id="reg-username" placeholder="e.g. snguyen" autocomplete="username" required />
+            <div class="portal-error" id="username-error"></div>
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" placeholder="At least 8 characters" autocomplete="new-password" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-confirm">Confirm Password</label>
+            <input type="password" id="reg-confirm" placeholder="Re-enter your password" autocomplete="new-password" required />
+            <div class="portal-error" id="confirm-error"></div>
+          </div>
+          <div class="portal-error" id="register-error"></div>
+          <div class="portal-actions">
+            <button type="submit" class="btn-primary" id="btn-register">Create Account &rarr;</button>
+          </div>
+          <button type="button" class="portal-back" onclick="goBack()">← Use a different code</button>
+        </form>
+      </div>
+
+    </div>
+
+    <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    let validatedCode = null;
+    let validatedRecord = null;
+
+    function initials(name) {
+      return (name || '').split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '??';
+    }
+
+    function showStep(id) {
+      document.querySelectorAll('.portal-step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function goBack() {
+      validatedCode = null;
+      validatedRecord = null;
+      showStep('step-code');
+      document.getElementById('access-code').value = '';
+      document.getElementById('code-error').style.display = 'none';
+    }
+
+    document.getElementById('form-code').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-code');
+      const errEl = document.getElementById('code-error');
+      const code = document.getElementById('access-code').value.trim().toUpperCase();
+      errEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+
+      const res = await fetch('/api/portal/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Continue →';
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        errEl.textContent = err.error || 'Invalid or unrecognized code. Please check and try again.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const record = await res.json();
+
+      if (record.used) {
+        errEl.textContent = 'This code has already been used. Contact the P20 team if you think this is an error.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      validatedCode = code;
+      validatedRecord = record;
+
+      document.getElementById('wb-avatar').textContent = initials(record.name);
+      document.getElementById('wb-name').textContent = record.name;
+      document.getElementById('wb-email').textContent = record.email;
+
+      showStep('step-register');
+    });
+
+    document.getElementById('form-register').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-register');
+      const usernameErr = document.getElementById('username-error');
+      const confirmErr  = document.getElementById('confirm-error');
+      const registerErr = document.getElementById('register-error');
+      usernameErr.style.display = confirmErr.style.display = registerErr.style.display = 'none';
+
+      const username = document.getElementById('reg-username').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirm  = document.getElementById('reg-confirm').value;
+
+      if (password !== confirm) {
+        confirmErr.textContent = 'Passwords do not match.';
+        confirmErr.style.display = 'block';
+        return;
+      }
+      if (password.length < 8) {
+        confirmErr.textContent = 'Password must be at least 8 characters.';
+        confirmErr.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Creating account…';
+
+      const res = await fetch('/api/portal/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: validatedCode, username, password }),
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Create Account →';
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        if (err.error && err.error.includes('Username')) {
+          usernameErr.textContent = err.error;
+          usernameErr.style.display = 'block';
+        } else {
+          registerErr.textContent = err.error || 'Registration failed. Please try again.';
+          registerErr.style.display = 'block';
+        }
+        return;
+      }
+
+      const user = await res.json();
+      sessionStorage.setItem('p20_user', JSON.stringify(user));
+      window.location.href = 'onboarding.html';
+    });
+
+    (async function() {
+      const res = await fetch('/api/auth/me').catch(() => null);
+      if (res && res.ok) {
+        const user = await res.json();
+        if (user.role === 'staff') { window.location.href = 'admin.html'; return; }
+        if (!user.onboarding_complete) { window.location.href = 'onboarding.html'; return; }
+        window.location.href = 'index.html';
+      }
+    })();
+  </script>
+</body>
+</html>

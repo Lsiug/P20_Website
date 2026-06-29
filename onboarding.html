@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome — Educational Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
+
+    .onboard-wrap { width: 100%; max-width: 560px; }
+
+    .onboard-logo { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    .onboard-logo img { height: 52px; }
+
+    .step-indicators { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; }
+    .step-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
+    .step-dot.active { background: var(--navy); }
+    .step-dot.done { background: var(--teal); }
+
+    .onboard-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; box-shadow: var(--shadow); }
+    .onboard-card h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--navy); }
+    .onboard-card p { color: var(--muted); margin-bottom: 1.75rem; line-height: 1.6; }
+
+    .welcome-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+
+    .color-swatches { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: border-color 0.15s; }
+    .color-swatch.selected { border-color: var(--text); }
+
+    .onboard-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+
+    .profile-preview-mini { background: var(--light, #f4f6f9); border-radius: 12px; padding: 1.25rem; text-align: center; margin-bottom: 1.5rem; }
+    .profile-preview-mini .mini-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 1.1rem; margin: 0 auto 0.75rem; }
+    .profile-preview-mini h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+    .profile-preview-mini p { font-size: 0.83rem; color: var(--muted); margin: 0; }
+
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .error-msg { color: #dc2626; font-size: 0.88rem; margin-top: 0.5rem; display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="onboard-wrap">
+    <div class="onboard-logo">
+      <img src="images/p20logo.webp" alt="P20 Logo" />
+    </div>
+
+    <div class="step-indicators">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <div class="onboard-card">
+
+      <!-- Step 1: Welcome -->
+      <div class="step-panel active" id="step-1">
+        <div class="welcome-avatar" id="welcome-avatar">??</div>
+        <h1 style="text-align:center;">Welcome to P20! 👋</h1>
+        <p style="text-align:center;">You're joining the P20 Educational Ambassador Program. Before you enter the hub, let's take two minutes to set up your profile so other ambassadors can connect with you.</p>
+        <div class="onboard-actions">
+          <button class="btn-primary" onclick="goStep(2)">Get Started &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Profile Setup -->
+      <div class="step-panel" id="step-2">
+        <h1>Set up your profile</h1>
+        <p>This is how you'll appear in the Ambassador Directory. You can always update it later from "My Profile".</p>
+        <form id="form-onboard">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="o-name">Display Name</label>
+              <input type="text" id="o-name" placeholder="e.g. Sofia Nguyen" required />
+            </div>
+            <div class="form-group">
+              <label for="o-cohort">Cohort Year</label>
+              <select id="o-cohort">
+                <option value="">Select…</option>
+                <option value="2023">Fall 2023</option>
+                <option value="2024">Spring 2024</option>
+                <option value="2024-2025">2024–2025</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="o-institution">School / Institution</label>
+              <input type="text" id="o-institution" placeholder="e.g. AB Tech" />
+            </div>
+            <div class="form-group">
+              <label for="o-major">Major / Field</label>
+              <input type="text" id="o-major" placeholder="e.g. Business" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="o-bio">Short Bio <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+            <textarea id="o-bio" placeholder="Tell other ambassadors about yourself…" style="min-height:80px;"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Avatar Color</label>
+            <div class="color-swatches" id="o-color-swatches">
+              <div class="color-swatch selected" data-color="#1E3A5F" style="background:#1E3A5F;"></div>
+              <div class="color-swatch" data-color="#00A878" style="background:#00A878;"></div>
+              <div class="color-swatch" data-color="#2a5298" style="background:#2a5298;"></div>
+              <div class="color-swatch" data-color="#0e7490" style="background:#0e7490;"></div>
+              <div class="color-swatch" data-color="#7c3aed" style="background:#7c3aed;"></div>
+              <div class="color-swatch" data-color="#b45309" style="background:#b45309;"></div>
+              <div class="color-swatch" data-color="#be123c" style="background:#be123c;"></div>
+              <div class="color-swatch" data-color="#15803d" style="background:#15803d;"></div>
+            </div>
+          </div>
+          <div class="error-msg" id="step2-error"></div>
+          <div class="onboard-actions">
+            <button type="submit" class="btn-primary" id="btn-step2">Save &amp; Continue &rarr;</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3: Done -->
+      <div class="step-panel" id="step-3">
+        <div class="profile-preview-mini">
+          <div class="mini-avatar" id="done-avatar" style="background:#1E3A5F;">??</div>
+          <h3 id="done-name">Your Name</h3>
+          <p id="done-institution"></p>
+          <p id="done-bio" style="margin-top:0.4rem;font-style:italic;"></p>
+        </div>
+        <h1 style="text-align:center;">You're all set! 🎉</h1>
+        <p style="text-align:center;">Your profile is live in the Ambassador Directory. You can update it anytime from "My Profile" in the navigation bar.</p>
+        <div class="onboard-actions" style="justify-content:center;">
+          <button class="btn-primary" id="btn-enter" onclick="enterHub()">Enter the Ambassador Hub &rarr;</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    let selectedColor = '#1E3A5F';
+    let currentUser = null;
+
+    function initials(name) {
+      return (name || '').split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '??';
+    }
+
+    function setDot(step) {
+      [1,2,3].forEach(i => {
+        const dot = document.getElementById(`dot-${i}`);
+        dot.className = 'step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+      });
+    }
+
+    function goStep(n) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(`step-${n}`).classList.add('active');
+      setDot(n);
+    }
+
+    document.querySelectorAll('#o-color-swatches .color-swatch').forEach(sw => {
+      sw.addEventListener('click', function() {
+        document.querySelectorAll('#o-color-swatches .color-swatch').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedColor = this.dataset.color;
+      });
+    });
+
+    document.getElementById('form-onboard').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-step2');
+      const errEl = document.getElementById('step2-error');
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      errEl.style.display = 'none';
+
+      const name = document.getElementById('o-name').value.trim();
+      const res = await fetch('/api/auth/me/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          institution:  document.getElementById('o-institution').value.trim(),
+          major:        document.getElementById('o-major').value.trim(),
+          bio:          document.getElementById('o-bio').value.trim(),
+          cohort:       document.getElementById('o-cohort').value,
+          avatar_color: selectedColor,
+        }),
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Save & Continue →';
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        errEl.textContent = err.error || 'Failed to save profile. Please try again.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const profile = await res.json();
+      document.getElementById('done-avatar').textContent = initials(profile.name);
+      document.getElementById('done-avatar').style.background = profile.avatar_color || selectedColor;
+      document.getElementById('done-name').textContent = profile.name;
+      document.getElementById('done-institution').textContent = profile.institution || '';
+      document.getElementById('done-bio').textContent = profile.bio || '';
+      const stored = JSON.parse(sessionStorage.getItem('p20_user') || '{}');
+      sessionStorage.setItem('p20_user', JSON.stringify({ ...stored, name: profile.name }));
+      goStep(3);
+    });
+
+    async function enterHub() {
+      document.getElementById('btn-enter').disabled = true;
+      await fetch('/api/auth/complete-onboarding', { method: 'POST' });
+      const stored = JSON.parse(sessionStorage.getItem('p20_user') || '{}');
+      sessionStorage.setItem('p20_user', JSON.stringify({ ...stored, onboarding_complete: 1 }));
+      window.location.href = 'index.html';
+    }
+
+    async function init() {
+      const res = await fetch('/api/auth/me').catch(() => null);
+      if (!res || !res.ok) { window.location.href = 'login.html'; return; }
+      currentUser = await res.json();
+      if (currentUser.role === 'staff') { window.location.href = 'admin.html'; return; }
+      if (currentUser.onboarding_complete) { window.location.href = 'index.html'; return; }
+      sessionStorage.setItem('p20_user', JSON.stringify(currentUser));
+      const av = document.getElementById('welcome-avatar');
+      av.textContent = initials(currentUser.name);
+      document.querySelector('#step-1 h1').textContent = `Welcome, ${currentUser.name}! 👋`;
+      document.getElementById('o-name').value = currentUser.name || '';
+    }
+
+    init();
+  </script>
+</body>
+</html>

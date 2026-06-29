@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — Educational Ambassadors</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 720px) { .profile-layout { grid-template-columns: 1fr; } }
+
+    .profile-preview-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 90px;
+    }
+    .profile-preview-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 auto 1rem;
+    }
+    .profile-preview-card h3 { font-size: 1.15rem; margin-bottom: 0.25rem; }
+    .profile-preview-card .preview-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .profile-preview-card .preview-bio { font-size: 0.88rem; color: var(--text); margin-top: 0.75rem; line-height: 1.5; }
+    .preview-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; }
+
+    .color-swatches { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .color-swatch {
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+      border: 3px solid transparent; transition: border-color 0.15s;
+    }
+    .color-swatch.selected { border-color: var(--text); }
+
+    .save-bar {
+      display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;
+    }
+    .save-status { font-size: 0.88rem; color: var(--teal); font-weight: 600; }
+    .save-status.error { color: #dc2626; }
+  </style>
+</head>
+<body>
+
+  <nav class="pill-nav" id="pill-nav">
+    <a href="index.html" class="p20-logo"><img src="images/p20logo.webp" alt="P20 Logo" /></a>
+    <ul class="pill-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="connect.html">Connect</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="requests.html">Requests</a></li>
+    </ul>
+    <div class="nav-user" id="nav-user"></div>
+  </nav>
+
+  <main>
+    <div class="page-heading">
+      <h1>My Profile</h1>
+      <p>Fill in your details — your profile card will appear in the Ambassador Directory for others to find you.</p>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="profile-layout">
+
+          <!-- Preview card -->
+          <div>
+            <p class="preview-label">Preview — how others see you</p>
+            <div class="profile-preview-card">
+              <div class="profile-preview-avatar" id="preview-avatar" style="background:#1E3A5F;">??</div>
+              <h3 id="preview-name">Your Name</h3>
+              <p class="preview-meta" id="preview-institution"></p>
+              <p class="preview-meta" id="preview-major"></p>
+              <p class="preview-bio" id="preview-bio"></p>
+            </div>
+          </div>
+
+          <!-- Edit form -->
+          <div class="form-card" style="max-width:100%;">
+            <h2>Edit Your Profile</h2>
+            <p class="form-subtitle">This information is visible to all ambassadors in the directory.</p>
+
+            <div id="profile-error" class="login-error" style="display:none;"></div>
+            <div id="profile-success" class="login-error" style="display:none; background:#d1fae5; color:#065f46; border-color:#6ee7b7;"></div>
+
+            <form id="form-profile">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="p-name">Display Name</label>
+                  <input type="text" id="p-name" placeholder="e.g. Sofia Nguyen" required />
+                </div>
+                <div class="form-group">
+                  <label for="p-cohort">Cohort Year</label>
+                  <select id="p-cohort">
+                    <option value="">Select cohort…</option>
+                    <option value="2023">Fall 2023</option>
+                    <option value="2024">Spring 2024</option>
+                    <option value="2024-2025">2024–2025</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="p-institution">School / Institution</label>
+                  <input type="text" id="p-institution" placeholder="e.g. AB Tech, UNC Asheville" />
+                </div>
+                <div class="form-group">
+                  <label for="p-major">Major / Field of Study</label>
+                  <input type="text" id="p-major" placeholder="e.g. Business Administration" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="p-bio">Short Bio</label>
+                <textarea id="p-bio" placeholder="Tell other ambassadors a little about yourself — your goals, interests, or what you love about the program." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Avatar Color</label>
+                <div class="color-swatches" id="color-swatches">
+                  <div class="color-swatch selected" data-color="#1E3A5F" style="background:#1E3A5F;" title="Navy"></div>
+                  <div class="color-swatch" data-color="#00A878" style="background:#00A878;" title="Teal"></div>
+                  <div class="color-swatch" data-color="#2a5298" style="background:#2a5298;" title="Blue"></div>
+                  <div class="color-swatch" data-color="#0e7490" style="background:#0e7490;" title="Cyan"></div>
+                  <div class="color-swatch" data-color="#7c3aed" style="background:#7c3aed;" title="Purple"></div>
+                  <div class="color-swatch" data-color="#b45309" style="background:#b45309;" title="Amber"></div>
+                  <div class="color-swatch" data-color="#be123c" style="background:#be123c;" title="Rose"></div>
+                  <div class="color-swatch" data-color="#15803d" style="background:#15803d;" title="Green"></div>
+                </div>
+              </div>
+              <div class="save-bar">
+                <button type="submit" class="btn-primary">Save Profile</button>
+                <span class="save-status" id="save-status"></span>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    let selectedColor = '#1E3A5F';
+
+    function initials(name) {
+      return (name || '').split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '??';
+    }
+
+    function updatePreview() {
+      const name = document.getElementById('p-name').value || 'Your Name';
+      const institution = document.getElementById('p-institution').value;
+      const major = document.getElementById('p-major').value;
+      const bio = document.getElementById('p-bio').value;
+      document.getElementById('preview-name').textContent = name;
+      document.getElementById('preview-avatar').textContent = initials(name);
+      document.getElementById('preview-avatar').style.background = selectedColor;
+      document.getElementById('preview-institution').textContent = institution;
+      document.getElementById('preview-major').textContent = major;
+      document.getElementById('preview-bio').textContent = bio;
+    }
+
+    document.querySelectorAll('.color-swatch').forEach(swatch => {
+      swatch.addEventListener('click', function() {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedColor = this.dataset.color;
+        updatePreview();
+      });
+    });
+
+    ['p-name', 'p-institution', 'p-major', 'p-bio'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updatePreview);
+    });
+
+    async function loadProfile() {
+      await p20RequireLogin();
+      p20InitHeader();
+      const res = await fetch('/api/auth/me/profile');
+      if (!res.ok) return;
+      const profile = await res.json();
+
+      document.getElementById('p-name').value = profile.name || '';
+      document.getElementById('p-institution').value = profile.institution || '';
+      document.getElementById('p-major').value = profile.major || '';
+      document.getElementById('p-bio').value = profile.bio || '';
+      document.getElementById('p-cohort').value = profile.cohort || '';
+
+      if (profile.avatar_color) {
+        selectedColor = profile.avatar_color;
+        document.querySelectorAll('.color-swatch').forEach(s => {
+          s.classList.toggle('selected', s.dataset.color === selectedColor);
+        });
+      }
+      updatePreview();
+    }
+
+    document.getElementById('form-profile').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      const status = document.getElementById('save-status');
+      btn.disabled = true;
+      status.textContent = 'Saving…';
+      status.className = 'save-status';
+
+      const res = await fetch('/api/auth/me/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:         document.getElementById('p-name').value.trim(),
+          institution:  document.getElementById('p-institution').value.trim(),
+          major:        document.getElementById('p-major').value.trim(),
+          bio:          document.getElementById('p-bio').value.trim(),
+          cohort:       document.getElementById('p-cohort').value,
+          avatar_color: selectedColor,
+        }),
+      });
+
+      btn.disabled = false;
+      if (res.ok) {
+        status.textContent = 'Profile saved!';
+        updatePreview();
+        const updated = await res.json();
+        sessionStorage.setItem('p20_user', JSON.stringify({
+          ...JSON.parse(sessionStorage.getItem('p20_user') || '{}'),
+          name: updated.name
+        }));
+      } else {
+        const err = await res.json().catch(() => ({}));
+        status.textContent = err.error || 'Failed to save.';
+        status.className = 'save-status error';
+      }
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>

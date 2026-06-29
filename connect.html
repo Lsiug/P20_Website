@@ -189,7 +189,7 @@
       <section class="section">
         <div class="container">
           <div class="ambassador-intro">
-            <h2>Ambassador Directory</h2>
+            <h2>Full Directory</h2>
             <p>Browse ambassadors by cohort — click a year to expand the full list.</p>
           </div>
 
@@ -374,15 +374,18 @@
   <script src="js/storage.js"></script>
   <script src="js/script.js"></script>
   <script>
-    p20RequireLogin();
-    p20InitHeader();
+    let isStaff = false;
 
-    const isStaff = p20IsStaff();
-    const user = p20GetUser();
-
-    if (user) {
-      document.getElementById('admin-bar-alumni').style.display = 'flex';
-    }
+    (async function() {
+      await p20RequireLogin();
+      p20InitHeader();
+      isStaff = p20IsStaff();
+      const user = p20GetUser();
+      if (user) {
+        document.getElementById('admin-bar-alumni').style.display = 'flex';
+      }
+      renderAlumni();
+    })();
 
     function initials(name) {
       return name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2);
@@ -415,8 +418,6 @@
         ? alumni.map(r => profileCard(r, isStaff)).join('')
         : '<div class="empty-state">Alumni profiles will appear here once added.</div>';
     }
-
-    renderAlumni();
 
     async function deleteAmbassador(id) {
       if (!confirm('Remove this ambassador?')) return;
@@ -565,6 +566,16 @@
     if (location.hash) {
       const target = document.querySelector(location.hash);
       if (target) {
+        const cohortBody = target.closest('.cohort-body');
+        if (cohortBody) {
+          cohortBody.classList.add('open');
+          const cohortId = cohortBody.id;
+          document.querySelectorAll('.cohort-tile').forEach(t => {
+            if (t.getAttribute('onclick') && t.getAttribute('onclick').includes(cohortId)) {
+              t.classList.add('active');
+            }
+          });
+        }
         setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
         target.style.outline = '3px solid #3b82f6';
         target.style.borderRadius = '10px';
