@@ -171,9 +171,12 @@
       p20InitHeader();
       const user = p20GetUser();
       if (user) {
-        document.getElementById('admin-bar').style.display = 'flex';
         _isStaffNews = user.role === 'staff';
+        if (_isStaffNews) {
+          document.getElementById('admin-bar').style.display = 'flex';
+        }
       }
+      renderNews();
     })();
 
     async function renderNews() {
@@ -208,8 +211,6 @@
         card.style.display = (activeFilter === 'all' || activeFilter === type) ? '' : 'none';
       });
     }
-
-    renderNews();
 
     document.getElementById('filter-tabs').addEventListener('click', function(e) {
       const btn = e.target.closest('.filter-tab');
