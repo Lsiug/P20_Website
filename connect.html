@@ -226,7 +226,7 @@
           <div class="mentorship-banner">
             <div>
               <h2>Find a Mentor</h2>
-              <p>New to the program? Submit a mentorship request and connect with a senior or alumni ambassador who can guide your journey.</p>
+              <p>New to the program? Submit a mentorship request and connect with a council member or alumni ambassador who can guide your journey.</p>
             </div>
             <button class="btn-secondary" onclick="toggleMentorship()">Request Mentorship</button>
           </div>
@@ -366,6 +366,9 @@
     </div>
   </div>
 
+  <!-- Floating Edit Page button (staff only) -->
+  <button class="edit-mode-fab" id="edit-mode-fab" onclick="toggleEditMode()">&#9998; Edit Page</button>
+
   <footer>
     <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
   </footer>
@@ -384,8 +387,48 @@
       if (user) {
         document.getElementById('admin-bar-alumni').style.display = 'flex';
       }
+      if (isStaff) {
+        document.getElementById('edit-mode-fab').style.display = 'flex';
+        await applySeedOverrides('connect');
+        injectCohortDeleteButtons();
+      }
       renderAlumni();
     })();
+
+    /* ── Seed admin helpers ── */
+    async function applySeedOverrides(page) {
+      const hidden = await p20GetItems('p20_hidden_seeds');
+      hidden.filter(h => h.page === page).forEach(h => {
+        const el = document.getElementById(h.seedId);
+        if (el) el.remove();
+      });
+    }
+
+    function injectCohortDeleteButtons() {
+      document.querySelectorAll('.cohort-body .profile-card, #council-grid .profile-card').forEach(card => {
+        const seedId = card.id;
+        if (!seedId || card.querySelector('.seed-card-actions')) return;
+        const actions = document.createElement('div');
+        actions.className = 'seed-card-actions';
+        actions.innerHTML = `<button class="btn-icon-delete" onclick="deleteSeedCard('connect','${seedId}')">Remove</button>`;
+        card.style.position = 'relative';
+        card.appendChild(actions);
+      });
+    }
+
+    async function deleteSeedCard(page, seedId) {
+      if (!confirm('Remove this profile? It will be hidden for everyone.')) return;
+      await p20AddItem('p20_hidden_seeds', { page, seedId });
+      const el = document.getElementById(seedId);
+      if (el) el.remove();
+    }
+
+    function toggleEditMode() {
+      document.body.classList.toggle('edit-mode');
+      const fab = document.getElementById('edit-mode-fab');
+      fab.classList.toggle('active');
+      fab.textContent = document.body.classList.contains('edit-mode') ? '✓ Done Editing' : '✏ Edit Page';
+    }
 
     function initials(name) {
       return name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2);

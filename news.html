@@ -48,42 +48,66 @@
 
         <!-- Seed articles -->
         <div class="grid-3" id="seed-news">
-          <div class="card" data-type="news">
+          <div class="card" data-type="news" data-seed-id="news-welcome-ambassadors">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-welcome-ambassadors')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-welcome-ambassadors')">Delete</button>
+            </div>
             <span class="card-badge">Announcement</span>
             <h3>Welcome, New Ambassadors!</h3>
             <p>We're thrilled to welcome the newest cohort of Educational Ambassadors. Get ready for an exciting year of connection and growth.</p>
             <p class="card-meta">June 5, 2026</p>
             <a href="#" class="btn-secondary">Read more</a>
           </div>
-          <div class="card" data-type="news">
+          <div class="card" data-type="news" data-seed-id="news-spotlight-maria">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-spotlight-maria')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-spotlight-maria')">Delete</button>
+            </div>
             <span class="card-badge">Spotlight</span>
             <h3>Senior Ambassador Spotlight: Maria L.</h3>
             <p>Maria shares her journey from new ambassador to team lead, and her tips for making the most of the program.</p>
             <p class="card-meta">May 28, 2026</p>
             <a href="#" class="btn-secondary">Read more</a>
           </div>
-          <div class="card" data-type="news">
+          <div class="card" data-type="news" data-seed-id="news-spring-mixer">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-spring-mixer')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-spring-mixer')">Delete</button>
+            </div>
             <span class="card-badge">Update</span>
             <h3>Spring Mixer Recap</h3>
             <p>Over 40 ambassadors gathered for the Spring Mixer last week. Here's a look back at the highlights and new connections made.</p>
             <p class="card-meta">May 18, 2026</p>
             <a href="#" class="btn-secondary">Read more</a>
           </div>
-          <div class="card guide-card" data-type="guide">
+          <div class="card guide-card" data-type="guide" data-seed-id="news-resume-guide">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-resume-guide')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-resume-guide')">Delete</button>
+            </div>
             <span class="card-badge guide">Workforce Guide</span>
             <h3>How to Write a Resume That Gets Noticed</h3>
             <p>Senior Ambassador James K. walks through the essential elements of a standout resume — from formatting basics to tailoring for specific roles.</p>
             <p class="card-meta">May 10, 2026 &mdash; James Kim</p>
             <a href="#" class="btn-secondary">Read Guide</a>
           </div>
-          <div class="card guide-card" data-type="guide">
+          <div class="card guide-card" data-type="guide" data-seed-id="news-community-college-guide">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-community-college-guide')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-community-college-guide')">Delete</button>
+            </div>
             <span class="card-badge guide">Workforce Guide</span>
             <h3>Navigating Community College as a First-Gen Student</h3>
             <p>Tips from Ambassador Maria L. on registering for classes, finding advisors, and making the most of your A-B Tech or Blue Ridge CC experience.</p>
             <p class="card-meta">April 30, 2026 &mdash; Maria Lopez</p>
             <a href="#" class="btn-secondary">Read Guide</a>
           </div>
-          <div class="card" data-type="news">
+          <div class="card" data-type="news" data-seed-id="news-leadership-training">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEditModal('news-leadership-training')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('news','news-leadership-training')">Delete</button>
+            </div>
             <span class="card-badge">Event</span>
             <h3>Leadership Training — Save the Date</h3>
             <p>A full-day leadership training for senior ambassadors is scheduled for late June. Details and sign-up coming soon.</p>
@@ -95,6 +119,37 @@
       </div>
     </section>
   </main>
+
+  <!-- Floating Edit Page button (staff only) -->
+  <button class="edit-mode-fab" id="edit-mode-fab" onclick="toggleEditMode()">&#9998; Edit Page</button>
+
+  <!-- Edit Seed News Modal -->
+  <div class="modal-overlay" id="modal-edit-seed-news" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-edit-seed-news')">&times;</button>
+      <h3>Edit Card</h3>
+      <form id="form-edit-seed-news">
+        <input type="hidden" id="esn-seed-id" />
+        <div class="form-group">
+          <label for="esn-badge">Category / Badge</label>
+          <input type="text" id="esn-badge" placeholder="e.g. Announcement" required />
+        </div>
+        <div class="form-group">
+          <label for="esn-title">Title</label>
+          <input type="text" id="esn-title" placeholder="Card headline" required />
+        </div>
+        <div class="form-group">
+          <label for="esn-excerpt">Excerpt</label>
+          <textarea id="esn-excerpt" placeholder="Short description..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="esn-meta">Date / Meta line</label>
+          <input type="text" id="esn-meta" placeholder="e.g. June 5, 2026" />
+        </div>
+        <button type="submit" class="btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Publish News Modal -->
   <div class="modal-overlay" id="modal-news" style="display:none;">
@@ -174,11 +229,81 @@
         _isStaffNews = user.role === 'staff';
         if (_isStaffNews) {
           document.getElementById('admin-bar').style.display = 'flex';
+          const fab = document.getElementById('edit-mode-fab');
+          fab.style.display = 'flex';
+          await applySeedOverrides('news');
         }
       }
       renderNews();
     })();
 
+    /* ── Seed admin helpers ── */
+    async function applySeedOverrides(page) {
+      const [hidden, edits] = await Promise.all([
+        p20GetItems('p20_hidden_seeds'),
+        p20GetItems('p20_seed_edits'),
+      ]);
+      hidden.filter(h => h.page === page).forEach(h => {
+        const el = document.querySelector(`[data-seed-id="${h.seedId}"]`);
+        if (el) el.remove();
+      });
+      edits.filter(e => e.page === page).forEach(applySeedEdit);
+    }
+
+    function applySeedEdit(e) {
+      const el = document.querySelector(`[data-seed-id="${e.seedId}"]`);
+      if (!el) return;
+      if (e.badge)  el.querySelector('.card-badge').textContent = e.badge;
+      if (e.title)  el.querySelector('h3').textContent = e.title;
+      if (e.excerpt) el.querySelector('p:not(.card-meta)').textContent = e.excerpt;
+      if (e.meta)   { const m = el.querySelector('.card-meta'); if (m) m.textContent = e.meta; }
+    }
+
+    async function deleteSeedCard(page, seedId) {
+      if (!confirm('Remove this card? It will be hidden for everyone.')) return;
+      await p20AddItem('p20_hidden_seeds', { page, seedId });
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (el) el.remove();
+    }
+
+    function openSeedEditModal(seedId) {
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (!el) return;
+      document.getElementById('esn-seed-id').value  = seedId;
+      document.getElementById('esn-badge').value    = el.querySelector('.card-badge')?.textContent || '';
+      document.getElementById('esn-title').value    = el.querySelector('h3')?.textContent || '';
+      document.getElementById('esn-excerpt').value  = el.querySelector('p:not(.card-meta)')?.textContent || '';
+      document.getElementById('esn-meta').value     = el.querySelector('.card-meta')?.textContent || '';
+      openModal('modal-edit-seed-news');
+    }
+
+    document.getElementById('form-edit-seed-news').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const seedId = document.getElementById('esn-seed-id').value;
+      const fields = {
+        page:    'news',
+        seedId,
+        badge:   document.getElementById('esn-badge').value,
+        title:   document.getElementById('esn-title').value,
+        excerpt: document.getElementById('esn-excerpt').value,
+        meta:    document.getElementById('esn-meta').value,
+      };
+      // Remove any prior edit for this seedId then add fresh
+      const existing = (await p20GetItems('p20_seed_edits')).find(x => x.page === 'news' && x.seedId === seedId);
+      if (existing) await p20RemoveItem('p20_seed_edits', existing.id);
+      await p20AddItem('p20_seed_edits', fields);
+      applySeedEdit(fields);
+      closeModal('modal-edit-seed-news');
+    });
+
+    function toggleEditMode() {
+      document.body.classList.toggle('edit-mode');
+      const fab = document.getElementById('edit-mode-fab');
+      fab.classList.toggle('active');
+      fab.textContent = document.body.classList.contains('edit-mode') ? '✓ Done Editing' : '✏ Edit Page';
+    }
+
+    /* ── Dynamic news ── */
     async function renderNews() {
       const items = await p20GetItems('p20_news');
       const container = document.getElementById('dynamic-news');

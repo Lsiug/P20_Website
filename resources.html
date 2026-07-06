@@ -444,6 +444,33 @@
     </div>
   </div>
 
+  <!-- Floating Edit Page button (staff only) -->
+  <button class="edit-mode-fab" id="edit-mode-fab" onclick="toggleEditMode()">&#9998; Edit Page</button>
+
+  <!-- Edit Seed Resource Modal -->
+  <div class="modal-overlay" id="modal-edit-seed-resource" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-edit-seed-resource')">&times;</button>
+      <h3>Edit Resource</h3>
+      <form id="form-edit-seed-resource">
+        <input type="hidden" id="esr-seed-id" />
+        <div class="form-group">
+          <label for="esr-title">Title</label>
+          <input type="text" id="esr-title" placeholder="Resource name" required />
+        </div>
+        <div class="form-group">
+          <label for="esr-desc">Description</label>
+          <textarea id="esr-desc" placeholder="What is this resource and how does it help?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="esr-url">Link (URL)</label>
+          <input type="text" id="esr-url" placeholder="https://..." />
+        </div>
+        <button type="submit" class="btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
   <footer>
     <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
   </footer>
@@ -461,6 +488,11 @@
       isStaff = p20IsStaff();
       if (p20GetUser()) {
         document.getElementById('admin-bar').style.display = 'flex';
+      }
+      if (isStaff) {
+        document.getElementById('edit-mode-fab').style.display = 'flex';
+        await applySeedOverrides('resources');
+        injectSeedResourceButtons();
       }
       renderResources();
     })();
@@ -511,6 +543,91 @@
       renderResources();
       updatePayingSection(activeFilter);
     });
+
+    /* ── Seed admin helpers ── */
+    function slugify(str) {
+      return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function injectSeedResourceButtons() {
+      document.querySelectorAll('.resource-card[data-category]').forEach(card => {
+        const title = card.querySelector('h3')?.textContent || '';
+        const seedId = 'res-' + slugify(title);
+        card.dataset.seedId = seedId;
+        if (!card.querySelector('.seed-card-actions')) {
+          const actions = document.createElement('div');
+          actions.className = 'seed-card-actions';
+          actions.innerHTML = `
+            <button class="btn-icon-edit" onclick="openSeedResourceEdit('${seedId}')">Edit</button>
+            <button class="btn-icon-delete" onclick="deleteSeedCard('resources','${seedId}')">Delete</button>
+          `;
+          card.appendChild(actions);
+        }
+      });
+    }
+
+    async function applySeedOverrides(page) {
+      const [hidden, edits] = await Promise.all([
+        p20GetItems('p20_hidden_seeds'),
+        p20GetItems('p20_seed_edits'),
+      ]);
+      hidden.filter(h => h.page === page).forEach(h => {
+        const el = document.querySelector(`[data-seed-id="${h.seedId}"]`);
+        if (el) el.remove();
+      });
+      edits.filter(e => e.page === page).forEach(applySeedResourceEdit);
+    }
+
+    function applySeedResourceEdit(e) {
+      const el = document.querySelector(`[data-seed-id="${e.seedId}"]`);
+      if (!el) return;
+      if (e.title) el.querySelector('h3').textContent = e.title;
+      if (e.desc)  el.querySelector('p').textContent  = e.desc;
+      if (e.url) {
+        const a = el.querySelector('.resource-actions a');
+        if (a) a.href = e.url;
+      }
+    }
+
+    async function deleteSeedCard(page, seedId) {
+      if (!confirm('Remove this resource? It will be hidden for everyone.')) return;
+      await p20AddItem('p20_hidden_seeds', { page, seedId });
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (el) el.remove();
+    }
+
+    function openSeedResourceEdit(seedId) {
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (!el) return;
+      document.getElementById('esr-seed-id').value = seedId;
+      document.getElementById('esr-title').value   = el.querySelector('h3')?.textContent || '';
+      document.getElementById('esr-desc').value    = el.querySelector('p')?.textContent || '';
+      document.getElementById('esr-url').value     = el.querySelector('.resource-actions a')?.href || '';
+      openModal('modal-edit-seed-resource');
+    }
+
+    document.getElementById('form-edit-seed-resource').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const seedId = document.getElementById('esr-seed-id').value;
+      const fields = {
+        page: 'resources', seedId,
+        title: document.getElementById('esr-title').value,
+        desc:  document.getElementById('esr-desc').value,
+        url:   document.getElementById('esr-url').value,
+      };
+      const existing = (await p20GetItems('p20_seed_edits')).find(x => x.page === 'resources' && x.seedId === seedId);
+      if (existing) await p20RemoveItem('p20_seed_edits', existing.id);
+      await p20AddItem('p20_seed_edits', fields);
+      applySeedResourceEdit(fields);
+      closeModal('modal-edit-seed-resource');
+    });
+
+    function toggleEditMode() {
+      document.body.classList.toggle('edit-mode');
+      const fab = document.getElementById('edit-mode-fab');
+      fab.classList.toggle('active');
+      fab.textContent = document.body.classList.contains('edit-mode') ? '✓ Done Editing' : '✏ Edit Page';
+    }
 
     async function deleteResource(id) {
       if (!confirm('Remove this resource?')) return;

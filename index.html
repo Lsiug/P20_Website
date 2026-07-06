@@ -50,19 +50,19 @@
 
     <div class="stat-bar">
       <div class="container">
-        <div class="stat-item">
+        <div class="stat-item" id="stat-ambassadors">
           <span class="stat-number" data-target="60" data-suffix="+">0</span>
           <span class="stat-label">Ambassadors</span>
         </div>
-        <div class="stat-item">
+        <div class="stat-item" id="stat-counties">
           <span class="stat-number" data-target="4" data-suffix="">0</span>
           <span class="stat-label">Counties Served</span>
         </div>
-        <div class="stat-item">
+        <div class="stat-item" id="stat-partners">
           <span class="stat-number" data-target="30" data-suffix="+">0</span>
           <span class="stat-label">Partner Organizations</span>
         </div>
-        <div class="stat-item">
+        <div class="stat-item" id="stat-cohorts">
           <span class="stat-number" data-target="3" data-suffix="">0</span>
           <span class="stat-label">Cohorts</span>
         </div>
@@ -204,17 +204,79 @@
     </section>
   </main>
 
+  <!-- Floating Edit Page button (staff only) -->
+  <button class="edit-mode-fab" id="edit-mode-fab" onclick="toggleEditMode()">&#9998; Edit Page</button>
+
   <footer>
     <p>&copy; 2026 Land of Sky P20 Educational Ambassadors &mdash; Building Western North Carolina's future workforce.</p>
   </footer>
 
   <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
   <script src="js/script.js"></script>
   <script>
     (async function() {
       await p20RequireLogin();
       p20InitHeader();
+      const user = p20GetUser();
+      if (user && user.role === 'staff') {
+        document.getElementById('edit-mode-fab').style.display = 'flex';
+        await applyHomeOverrides();
+      }
     })();
+  </script>
+  <script>
+    async function applyHomeOverrides() {
+      const settings = await p20GetItems('p20_site_settings');
+      settings.forEach(s => {
+        if (s.key === 'home-stat-ambassadors') updateStatDisplay('stat-ambassadors', s.value);
+        if (s.key === 'home-stat-counties')    updateStatDisplay('stat-counties', s.value);
+        if (s.key === 'home-stat-partners')    updateStatDisplay('stat-partners', s.value);
+        if (s.key === 'home-stat-cohorts')     updateStatDisplay('stat-cohorts', s.value);
+      });
+    }
+
+    function updateStatDisplay(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const num = el.querySelector('.stat-number');
+      if (num) { num.dataset.target = value; num.textContent = value + (num.dataset.suffix || ''); }
+    }
+
+    function toggleEditMode() {
+      document.body.classList.toggle('edit-mode');
+      const fab = document.getElementById('edit-mode-fab');
+      fab.classList.toggle('active');
+      fab.textContent = document.body.classList.contains('edit-mode') ? '✓ Done Editing' : '✏ Edit Page';
+      // Make stat numbers editable
+      document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+        el.contentEditable = document.body.classList.contains('edit-mode') ? 'true' : 'false';
+        el.classList.toggle('editable-inline', document.body.classList.contains('edit-mode'));
+      });
+      document.querySelectorAll('.stat-label').forEach(el => {
+        el.contentEditable = document.body.classList.contains('edit-mode') ? 'true' : 'false';
+        el.classList.toggle('editable-inline', document.body.classList.contains('edit-mode'));
+      });
+    }
+
+    // Save stat edits on blur
+    document.addEventListener('blur', async function(e) {
+      const el = e.target;
+      if (!el.classList.contains('stat-number') && !el.classList.contains('stat-label')) return;
+      const statItem = el.closest('.stat-item');
+      if (!statItem) return;
+      const numEl = statItem.querySelector('.stat-number');
+      const labelEl = statItem.querySelector('.stat-label');
+      const idx = Array.from(document.querySelectorAll('.stat-item')).indexOf(statItem);
+      const keys = ['home-stat-ambassadors','home-stat-counties','home-stat-partners','home-stat-cohorts'];
+      const key = keys[idx];
+      if (!key) return;
+      const value = numEl.textContent.replace(/[^0-9]/g,'');
+      const label = labelEl.textContent.trim();
+      const existing = (await p20GetItems('p20_site_settings')).find(s => s.key === key);
+      if (existing) await p20RemoveItem('p20_site_settings', existing.id);
+      await p20AddItem('p20_site_settings', { key, value, label });
+    }, true);
   </script>
   <script>
     (function () {

@@ -39,7 +39,11 @@
 
         <!-- Seed events -->
         <div class="event-list" id="seed-events">
-          <div class="event-card">
+          <div class="event-card" data-seed-id="event-orientation">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEventEdit('event-orientation')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('events','event-orientation')">Delete</button>
+            </div>
             <div class="event-date-badge"><div class="month">Jun</div><div class="day">18</div></div>
             <div class="event-info">
               <span class="card-badge">Orientation</span>
@@ -49,7 +53,11 @@
               <a href="#" class="btn-secondary">RSVP</a>
             </div>
           </div>
-          <div class="event-card">
+          <div class="event-card" data-seed-id="event-mixer">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEventEdit('event-mixer')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('events','event-mixer')">Delete</button>
+            </div>
             <div class="event-date-badge"><div class="month">Jun</div><div class="day">25</div></div>
             <div class="event-info">
               <span class="card-badge">Social / Mixer</span>
@@ -59,7 +67,11 @@
               <a href="#" class="btn-secondary">RSVP</a>
             </div>
           </div>
-          <div class="event-card">
+          <div class="event-card" data-seed-id="event-workshop">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEventEdit('event-workshop')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('events','event-workshop')">Delete</button>
+            </div>
             <div class="event-date-badge"><div class="month">Jul</div><div class="day">8</div></div>
             <div class="event-info">
               <span class="card-badge">Workshop</span>
@@ -69,7 +81,11 @@
               <a href="#" class="btn-secondary">RSVP</a>
             </div>
           </div>
-          <div class="event-card">
+          <div class="event-card" data-seed-id="event-planning">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEventEdit('event-planning')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('events','event-planning')">Delete</button>
+            </div>
             <div class="event-date-badge"><div class="month">Jul</div><div class="day">22</div></div>
             <div class="event-info">
               <span class="card-badge">Planning Session</span>
@@ -79,7 +95,11 @@
               <a href="#" class="btn-secondary">RSVP</a>
             </div>
           </div>
-          <div class="event-card">
+          <div class="event-card" data-seed-id="event-kickoff">
+            <div class="seed-card-actions">
+              <button class="btn-icon-edit" onclick="openSeedEventEdit('event-kickoff')">Edit</button>
+              <button class="btn-icon-delete" onclick="deleteSeedCard('events','event-kickoff')">Delete</button>
+            </div>
             <div class="event-date-badge"><div class="month">Aug</div><div class="day">5</div></div>
             <div class="event-info">
               <span class="card-badge">Community Event</span>
@@ -95,6 +115,9 @@
     </section>
   </main>
 
+  <!-- Floating Edit Page button (staff only) -->
+  <button class="edit-mode-fab" id="edit-mode-fab" onclick="toggleEditMode()">&#9998; Edit Page</button>
+
   <!-- Edit Event Modal -->
   <div class="modal-overlay" id="modal-edit-event" style="display:none;">
     <div class="modal">
@@ -102,6 +125,8 @@
       <h3>Edit Event</h3>
       <form id="form-edit-event">
         <input type="hidden" id="ee-id" />
+        <input type="hidden" id="ee-is-seed" value="" />
+        <input type="hidden" id="ee-seed-id" value="" />
         <div class="form-group">
           <label for="ee-type">Event Type</label>
           <select id="ee-type">
@@ -193,14 +218,75 @@
   <script src="js/script.js"></script>
   <script>
     let _currentEvents = [];
+    let _isStaffEvents = false;
 
     (async function() {
       await p20RequireLogin();
       p20InitHeader();
-      if (p20GetUser()) {
+      const user = p20GetUser();
+      if (user) {
         document.getElementById('admin-bar').style.display = 'flex';
+        _isStaffEvents = user.role === 'staff';
+        if (_isStaffEvents) {
+          document.getElementById('edit-mode-fab').style.display = 'flex';
+          await applySeedOverrides('events');
+        }
       }
+      renderEvents();
     })();
+
+    /* ── Seed admin helpers ── */
+    async function applySeedOverrides(page) {
+      const [hidden, edits] = await Promise.all([
+        p20GetItems('p20_hidden_seeds'),
+        p20GetItems('p20_seed_edits'),
+      ]);
+      hidden.filter(h => h.page === page).forEach(h => {
+        const el = document.querySelector(`[data-seed-id="${h.seedId}"]`);
+        if (el) el.remove();
+      });
+      edits.filter(e => e.page === page).forEach(applySeedEventEdit);
+    }
+
+    function applySeedEventEdit(e) {
+      const el = document.querySelector(`[data-seed-id="${e.seedId}"]`);
+      if (!el) return;
+      if (e.type)     { const b = el.querySelector('.card-badge'); if (b) b.textContent = e.type; }
+      if (e.month)    { const m = el.querySelector('.month'); if (m) m.textContent = e.month; }
+      if (e.day)      { const d = el.querySelector('.day'); if (d) d.textContent = e.day; }
+      if (e.title)    { const h = el.querySelector('h3'); if (h) h.textContent = e.title; }
+      if (e.location) { const l = el.querySelector('.event-location'); if (l) l.textContent = e.location; }
+      if (e.desc)     { const p = el.querySelector('.event-info p:not(.event-location):not(.card-meta)'); if (p) p.textContent = e.desc; }
+    }
+
+    async function deleteSeedCard(page, seedId) {
+      if (!confirm('Remove this item? It will be hidden for everyone.')) return;
+      await p20AddItem('p20_hidden_seeds', { page, seedId });
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (el) el.remove();
+    }
+
+    function openSeedEventEdit(seedId) {
+      const el = document.querySelector(`[data-seed-id="${seedId}"]`);
+      if (!el) return;
+      document.getElementById('ee-is-seed').value  = '1';
+      document.getElementById('ee-seed-id').value  = seedId;
+      document.getElementById('ee-id').value        = '';
+      document.getElementById('ee-type').value      = el.querySelector('.card-badge')?.textContent || '';
+      document.getElementById('ee-month').value     = el.querySelector('.month')?.textContent || '';
+      document.getElementById('ee-day').value       = el.querySelector('.day')?.textContent || '';
+      document.getElementById('ee-title').value     = el.querySelector('h3')?.textContent || '';
+      document.getElementById('ee-location').value  = el.querySelector('.event-location')?.textContent || '';
+      document.getElementById('ee-desc').value      = el.querySelector('.event-info p:not(.event-location):not(.card-meta)')?.textContent || '';
+      openModal('modal-edit-event');
+    }
+
+    function toggleEditMode() {
+      document.body.classList.toggle('edit-mode');
+      const fab = document.getElementById('edit-mode-fab');
+      fab.classList.toggle('active');
+      fab.textContent = document.body.classList.contains('edit-mode') ? '✓ Done Editing' : '✏ Edit Page';
+    }
 
     async function renderEvents() {
       const user = p20GetUser();
@@ -255,8 +341,6 @@
       openModal('modal-edit-event');
     }
 
-    renderEvents();
-
     document.getElementById('form-event').addEventListener('submit', async function(e) {
       e.preventDefault();
       await p20AddItem('p20_events', {
@@ -274,16 +358,27 @@
 
     document.getElementById('form-edit-event').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const id = document.getElementById('ee-id').value;
-      await p20UpdateItem('p20_events', id, {
+      const isSeed  = document.getElementById('ee-is-seed').value === '1';
+      const seedId  = document.getElementById('ee-seed-id').value;
+      const fields  = {
         type:     document.getElementById('ee-type').value,
         month:    document.getElementById('ee-month').value,
         day:      document.getElementById('ee-day').value,
         title:    document.getElementById('ee-title').value,
         location: document.getElementById('ee-location').value,
         desc:     document.getElementById('ee-desc').value,
-      });
-      renderEvents();
+      };
+      if (isSeed) {
+        const existing = (await p20GetItems('p20_seed_edits')).find(x => x.page === 'events' && x.seedId === seedId);
+        if (existing) await p20RemoveItem('p20_seed_edits', existing.id);
+        await p20AddItem('p20_seed_edits', { page: 'events', seedId, ...fields });
+        applySeedEventEdit({ seedId, ...fields });
+        document.getElementById('ee-is-seed').value = '';
+      } else {
+        const id = document.getElementById('ee-id').value;
+        await p20UpdateItem('p20_events', id, fields);
+        renderEvents();
+      }
       closeModal('modal-edit-event');
     });
 
