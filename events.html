@@ -95,6 +95,51 @@
     </section>
   </main>
 
+  <!-- Edit Event Modal -->
+  <div class="modal-overlay" id="modal-edit-event" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-edit-event')">&times;</button>
+      <h3>Edit Event</h3>
+      <form id="form-edit-event">
+        <input type="hidden" id="ee-id" />
+        <div class="form-group">
+          <label for="ee-type">Event Type</label>
+          <select id="ee-type">
+            <option>Orientation</option>
+            <option>Workshop</option>
+            <option>Social / Mixer</option>
+            <option>Planning Session</option>
+            <option>Community Event</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="ee-month">Month (3 letters)</label>
+            <input type="text" id="ee-month" placeholder="e.g. Aug" maxlength="3" required />
+          </div>
+          <div class="form-group">
+            <label for="ee-day">Day</label>
+            <input type="text" id="ee-day" placeholder="e.g. 15" maxlength="2" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ee-title">Event Name</label>
+          <input type="text" id="ee-title" placeholder="e.g. Fall Welcome Mixer" required />
+        </div>
+        <div class="form-group">
+          <label for="ee-location">Location &amp; Time</label>
+          <input type="text" id="ee-location" placeholder="e.g. Student Union — 4:00 PM" required />
+        </div>
+        <div class="form-group">
+          <label for="ee-desc">Description</label>
+          <textarea id="ee-desc" placeholder="What's happening at this event?" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Add Event Modal -->
   <div class="modal-overlay" id="modal-event" style="display:none;">
     <div class="modal">
@@ -147,6 +192,8 @@
   <script src="js/storage.js"></script>
   <script src="js/script.js"></script>
   <script>
+    let _currentEvents = [];
+
     (async function() {
       await p20RequireLogin();
       p20InitHeader();
@@ -156,24 +203,56 @@
     })();
 
     async function renderEvents() {
+      const user = p20GetUser();
       const items = await p20GetItems('p20_events');
+      _currentEvents = items;
       const container = document.getElementById('dynamic-events');
-      container.innerHTML = items.map(item => `
-        <div class="event-card">
-          <div class="event-date-badge">
-            <div class="month">${item.month}</div>
-            <div class="day">${item.day}</div>
+      container.innerHTML = items.map(item => {
+        const isAuthor = user && item.author_username && item.author_username === user.username;
+        const isStaff  = user && user.role === 'staff';
+        const canEdit   = isAuthor || isStaff;
+        const canDelete = isAuthor || isStaff;
+        return `
+          <div class="event-card">
+            ${(canEdit || canDelete) ? `
+              <div class="event-card-corner-actions">
+                ${canEdit   ? `<button class="btn-icon-edit"   onclick="openEditModal(${item.id})">Edit</button>` : ''}
+                ${canDelete ? `<button class="btn-icon-delete" onclick="deleteEvent(${item.id})">Delete</button>` : ''}
+              </div>` : ''}
+            <div class="event-date-badge">
+              <div class="month">${item.month}</div>
+              <div class="day">${item.day}</div>
+            </div>
+            <div class="event-info">
+              ${item.type ? `<span class="card-badge">${item.type}</span>` : ''}
+              <h3>${item.title}</h3>
+              <p class="event-location">${item.location}</p>
+              <p>${item.desc}</p>
+              <p class="card-meta">Added by ${item.author}</p>
+              <a href="#" class="btn-secondary">RSVP</a>
+            </div>
           </div>
-          <div class="event-info">
-            ${item.type ? `<span class="card-badge">${item.type}</span>` : ''}
-            <h3>${item.title}</h3>
-            <p class="event-location">${item.location}</p>
-            <p>${item.desc}</p>
-            <p class="card-meta">Added by ${item.author}</p>
-            <a href="#" class="btn-secondary">RSVP</a>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    async function deleteEvent(id) {
+      if (!confirm('Delete this event?')) return;
+      await p20RemoveItem('p20_events', id);
+      renderEvents();
+    }
+
+    function openEditModal(id) {
+      const item = _currentEvents.find(e => e.id === id);
+      if (!item) return;
+      document.getElementById('ee-id').value       = id;
+      document.getElementById('ee-type').value     = item.type || '';
+      document.getElementById('ee-month').value    = item.month || '';
+      document.getElementById('ee-day').value      = item.day || '';
+      document.getElementById('ee-title').value    = item.title || '';
+      document.getElementById('ee-location').value = item.location || '';
+      document.getElementById('ee-desc').value     = item.desc || '';
+      openModal('modal-edit-event');
     }
 
     renderEvents();
@@ -191,6 +270,21 @@
       renderEvents();
       this.reset();
       closeModal('modal-event');
+    });
+
+    document.getElementById('form-edit-event').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('ee-id').value;
+      await p20UpdateItem('p20_events', id, {
+        type:     document.getElementById('ee-type').value,
+        month:    document.getElementById('ee-month').value,
+        day:      document.getElementById('ee-day').value,
+        title:    document.getElementById('ee-title').value,
+        location: document.getElementById('ee-location').value,
+        desc:     document.getElementById('ee-desc').value,
+      });
+      renderEvents();
+      closeModal('modal-edit-event');
     });
 
     function openModal(id)  { document.getElementById(id).style.display = 'flex'; }

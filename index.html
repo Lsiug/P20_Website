@@ -174,12 +174,11 @@
           const nextBtn = document.getElementById('carousel-next');
           function slugify(n) { return n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 
-          const avatarColors = ['#1E3A5F', '#00A878', '#2a5298', '#0e7490'];
-          ambassadors.forEach((a, i) => {
+          ambassadors.forEach((a) => {
             const el = document.createElement('a');
             el.className = 'carousel-card';
             el.href = `connect.html#amb-${slugify(a.name)}`;
-            el.innerHTML = `<div class="carousel-avatar" style="background:${avatarColors[i % avatarColors.length]}">${a.initials}</div><span class="carousel-name">${a.name}</span>`;
+            el.innerHTML = `<div class="carousel-avatar">${a.initials}</div><span class="carousel-name">${a.name}</span>`;
             track.appendChild(el);
           });
 

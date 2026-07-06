@@ -8,6 +8,7 @@ async function p20AddItem(key, item) {
   const payload = {
     ...item,
     author: user ? user.name : 'Ambassador',
+    author_username: user ? user.username : null,
     publishedDate: new Date().toLocaleDateString('en-US', {
       month: 'long', day: 'numeric', year: 'numeric'
     }),

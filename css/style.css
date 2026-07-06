@@ -361,6 +361,8 @@ textarea { resize: vertical; min-height: 100px; }
 .carousel-viewport {
   overflow: hidden;
   flex: 1;
+  padding-top: 6px;
+  margin-top: -6px;
 }
 .carousel-track {
   display: flex;
@@ -468,6 +470,10 @@ textarea { resize: vertical; min-height: 100px; }
   gap: 2rem;
 }
 
+#dynamic-events:not(:empty) {
+  margin-bottom: 2rem;
+}
+
 .event-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -479,6 +485,7 @@ textarea { resize: vertical; min-height: 100px; }
   gap: 2rem;
   align-items: flex-start;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 .event-card:hover {
   transform: translateY(-3px);
@@ -506,6 +513,38 @@ textarea { resize: vertical; min-height: 100px; }
   margin-bottom: 0.75rem;
 }
 .event-info p   { font-size: 0.95rem; margin-bottom: 1.1rem; }
+
+.event-card-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+
+.event-card-corner-actions {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-icon-edit,
+.btn-icon-delete {
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+.btn-icon-edit {
+  background: #e8edf5;
+  color: var(--navy);
+}
+.btn-icon-edit:hover { background: #d0daea; }
+.btn-icon-delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.btn-icon-delete:hover { background: #fca5a5; }
 
 /* === Footer === */
 footer {
