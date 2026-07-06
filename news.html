@@ -164,12 +164,15 @@
   <script src="js/script.js"></script>
   <script>
     let activeFilter = 'all';
+    let _isStaffNews = false;
 
     (async function() {
       await p20RequireLogin();
       p20InitHeader();
-      if (p20GetUser()) {
+      const user = p20GetUser();
+      if (user) {
         document.getElementById('admin-bar').style.display = 'flex';
+        _isStaffNews = user.role === 'staff';
       }
     })();
 
@@ -182,6 +185,9 @@
         const badgeLabel = isGuide ? 'Workforce Guide' : (item.category || 'News');
         const cardClass = isGuide ? 'card guide-card' : 'card';
         const show = activeFilter === 'all' || activeFilter === (isGuide ? 'guide' : 'news');
+        const deleteBtn = _isStaffNews
+          ? `<button class="btn-icon-delete" style="margin-top:0.75rem;" onclick="deleteNews(${item.id})">Delete</button>`
+          : '';
         return `
           <div class="${cardClass}" data-type="${isGuide ? 'guide' : 'news'}" style="${show ? '' : 'display:none'}">
             <span class="card-badge ${badgeClass}">${badgeLabel}</span>
@@ -189,6 +195,7 @@
             <p>${item.excerpt}</p>
             <p class="card-meta">${item.publishedDate} &mdash; ${item.author}</p>
             <a href="#" class="btn-secondary">${isGuide ? 'Read Guide' : 'Read more'}</a>
+            ${deleteBtn}
           </div>
         `;
       }).join('');
@@ -238,6 +245,12 @@
       this.reset();
       closeModal('modal-guide');
     });
+
+    async function deleteNews(id) {
+      if (!confirm('Delete this post?')) return;
+      await p20RemoveItem('p20_news', id);
+      renderNews();
+    }
 
     function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
