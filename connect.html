@@ -136,6 +136,90 @@
     <!-- ── AMBASSADORS PANEL ── -->
     <div id="panel-ambassador" class="dir-panel active">
 
+      <!-- Ambassador Directory by Cohort -->
+      <section class="section">
+        <div class="container">
+          <div class="ambassador-intro">
+            <h2>Ambassador Directory</h2>
+            <p>Browse ambassadors by cohort — click a year to expand the full list.</p>
+          </div>
+
+          <!-- Cohort selector tiles -->
+          <div class="cohort-selector">
+            <button class="cohort-tile" onclick="selectCohort('cohort-2023-grid', this)">
+              <div class="cohort-tile-label">Cohort</div>
+              <div class="cohort-tile-year">Fall 2023</div>
+            </button>
+            <button class="cohort-tile" onclick="selectCohort('cohort-2024-grid', this)">
+              <div class="cohort-tile-label">Cohort</div>
+              <div class="cohort-tile-year">Spring 2024</div>
+            </button>
+            <button class="cohort-tile" onclick="selectCohort('cohort-2024-2025-grid', this)">
+              <div class="cohort-tile-label">Cohort</div>
+              <div class="cohort-tile-year">2024–2025</div>
+            </button>
+          </div>
+
+          <!-- Search bar -->
+          <div class="ambassador-search-wrap">
+            <input type="text" id="ambassador-search" placeholder="Search ambassador by name or institution…" oninput="searchAmbassadors(this.value)" autocomplete="off" />
+            <span class="search-icon">&#128269;</span>
+            <div id="search-results" class="search-results" style="display:none;"></div>
+          </div>
+
+          <!-- Fall 2023 -->
+          <div class="cohort-body" id="cohort-2023-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
+              <div class="profile-card" id="amb-abigail-blankenship"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><p class="profile-major">Madison Early College High School</p><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-aaron-marquez-cruz"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><p class="profile-major">Buncombe County Early College</p><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-ashleigh-grieves"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><p class="profile-major">Brevard High School</p><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-azendae-aiken"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-emily-hazzard"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><p class="profile-major">Hendersonville High School</p><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-heidi-anugrah"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><p class="profile-major">Blue Ridge Community College</p><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-kimberly-jones"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><p class="profile-major">Mars Hill University</p><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-marion-hawsey"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><p class="profile-major">Blue Ridge Community College</p><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-natalia-lopez"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><p class="profile-major">Clyde A. Erwin High School</p><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-rodion-floresku"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><p class="profile-major">Buncombe County Early College</p><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
+            </div>
+          </div>
+
+          <!-- Spring 2024 -->
+          <div class="cohort-body" id="cohort-2024-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
+              <div class="profile-card" id="amb-agya-boakye-boaten-ii"><div class="profile-avatar">AB</div><h3>Agya Boakye-Boaten II</h3><p class="profile-major">School of Inquiry and Life Sciences (SILSA)</p><a href="mailto:agyakofiboaten@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-aydan-shelton"><div class="profile-avatar">AS</div><h3>Aydan Shelton</h3><p class="profile-major">Buncombe County Early College</p><a href="mailto:ashelton5676@k12bcs.org" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-christina-nguyen"><div class="profile-avatar">CN</div><h3>Christina Nguyen</h3><p class="profile-major">North Henderson High School</p><a href="mailto:misschristina188@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-citlally-diaz-mar-2024"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><p class="profile-major">North Henderson High School</p><a href="mailto:citlamar2406@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-douglas-swayze"><div class="profile-avatar">DS</div><h3>Douglas Swayze</h3><p class="profile-major">Montreat College</p><a href="mailto:douglasswayze@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-ernesto-arellano-perez"><div class="profile-avatar">EA</div><h3>Ernesto Arellano-Perez</h3><p class="profile-major">Buncombe County Early College</p><a href="mailto:ernestoa2025@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-jasmin-umanzor"><div class="profile-avatar">JU</div><h3>Jasmin Umanzor</h3><p class="profile-major">Mars Hill University</p><a href="mailto:jasminumanzor320@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-katherin-cid-hernandez"><div class="profile-avatar">KC</div><h3>Katherin Cid-Hernandez</h3><p class="profile-major">Henderson County Early College</p><a href="mailto:katherincidhernandez@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-katherine-wombwell"><div class="profile-avatar">KW</div><h3>Katherine Wombwell</h3><p class="profile-major">Montreat College</p><a href="mailto:katherine.marie.2021@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-kaylie-phillips"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><p class="profile-major">West Henderson High School</p><a href="mailto:eilyakphillips@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-kenny-malis"><div class="profile-avatar">KM</div><h3>Kenny Malis</h3><p class="profile-major">Henderson County Early College</p><a href="mailto:kencamboy@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-liliana-guapia"><div class="profile-avatar">LG</div><h3>Liliana Guapia</h3><p class="profile-major">Buncombe County Early College</p><a href="mailto:guapia2095@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-linlee-ammann"><div class="profile-avatar">LA</div><h3>Linlee Ammann</h3><a href="mailto:linleeammann@icloud.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-wilson-jones"><div class="profile-avatar">WJ</div><h3>Wilson Jones</h3><p class="profile-major">Martin L. Nesbitt, Jr. Discovery Academy</p><a href="mailto:joneswil0128@icloud.com" class="btn-secondary">Contact</a></div>
+            </div>
+          </div>
+
+          <!-- 2024–2025 -->
+          <div class="cohort-body" id="cohort-2024-2025-grid">
+            <div class="grid-3" style="padding: 0.25rem 0;">
+              <div class="profile-card" id="amb-aiden-o-donnell"><div class="profile-avatar">AO</div><h3>Aiden O'Donnell</h3><p class="profile-major">Asheville High School</p><a href="mailto:alwaysaidan2007@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-charlie-bender"><div class="profile-avatar">CB</div><h3>Charlie Bender</h3><p class="profile-major">Madison Early College High School</p><a href="mailto:cbender3127@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-citlally-diaz-mar-2025"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><p class="profile-major">North Henderson High School</p><a href="mailto:citlamar2406@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-erin-mitchell"><div class="profile-avatar">EM</div><h3>Erin Mitchell</h3><p class="profile-major">Asheville-Buncombe Technical Community College</p><a href="mailto:erinmitchell5@yahoo.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-greysen-motley"><div class="profile-avatar">GM</div><h3>Greysen Motley</h3><p class="profile-major">Brevard High School</p><a href="mailto:greysenemotley@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-jemma-richards"><div class="profile-avatar">JR</div><h3>Jemma Richards</h3><p class="profile-major">North Buncombe High School</p><a href="mailto:jemmarichords0@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-kyla-christensen"><div class="profile-avatar">KC</div><h3>Kyla Christensen</h3><p class="profile-major">Hendersonville High School</p><a href="mailto:kyla.kath04@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-matthew-lupo"><div class="profile-avatar">ML</div><h3>Matthew Lupo</h3><p class="profile-major">West Henderson High School</p><a href="mailto:matthew.r.lupo@gmail.com" class="btn-secondary">Contact</a></div>
+              <div class="profile-card" id="amb-shawn-ware"><div class="profile-avatar">SW</div><h3>Shawn Ware</h3><p class="profile-major">West Henderson High School</p><a href="mailto:Shawnware2007@gmail.com" class="btn-secondary">Contact</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Mentorship Banner -->
       <section class="section" style="padding-bottom:0;">
         <div class="container">
@@ -185,90 +269,6 @@
         </div>
       </section>
 
-      <!-- Ambassador Directory by Cohort -->
-      <section class="section">
-        <div class="container">
-          <div class="ambassador-intro">
-            <h2>Full Directory</h2>
-            <p>Browse ambassadors by cohort — click a year to expand the full list.</p>
-          </div>
-
-          <!-- Cohort selector tiles -->
-          <div class="cohort-selector">
-            <button class="cohort-tile" onclick="selectCohort('cohort-2023-grid', this)">
-              <div class="cohort-tile-label">Cohort</div>
-              <div class="cohort-tile-year">Fall 2023</div>
-            </button>
-            <button class="cohort-tile" onclick="selectCohort('cohort-2024-grid', this)">
-              <div class="cohort-tile-label">Cohort</div>
-              <div class="cohort-tile-year">Spring 2024</div>
-            </button>
-            <button class="cohort-tile" onclick="selectCohort('cohort-2024-2025-grid', this)">
-              <div class="cohort-tile-label">Cohort</div>
-              <div class="cohort-tile-year">2024–2025</div>
-            </button>
-          </div>
-
-          <!-- Search bar -->
-          <div class="ambassador-search-wrap">
-            <input type="text" id="ambassador-search" placeholder="Search ambassador by name or institution…" oninput="searchAmbassadors(this.value)" autocomplete="off" />
-            <span class="search-icon">&#128269;</span>
-            <div id="search-results" class="search-results" style="display:none;"></div>
-          </div>
-
-          <!-- Fall 2023 -->
-          <div class="cohort-body" id="cohort-2023-grid">
-            <div class="grid-3" style="padding: 0.25rem 0;">
-              <div class="profile-card" id="amb-abigail-blankenship"><div class="profile-avatar">AB</div><h3>Abigail Blankenship</h3><a href="mailto:ablankenship5798@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-aaron-marquez-cruz"><div class="profile-avatar">AM</div><h3>Aaron Marquez-Cruz</h3><a href="mailto:Aaronmarcuz75@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-ashleigh-grieves"><div class="profile-avatar">AG</div><h3>Ashleigh Grieves</h3><a href="mailto:grievesashleigh@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-azendae-aiken"><div class="profile-avatar">AA</div><h3>Azendae Aiken</h3><a href="mailto:azendaeiken15@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-emily-hazzard"><div class="profile-avatar">EH</div><h3>Emily Hazzard</h3><a href="mailto:erhazzard8@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-heidi-anugrah"><div class="profile-avatar">HA</div><h3>Heidi Anugrah</h3><a href="mailto:heidia3479@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-kimberly-jones"><div class="profile-avatar">KJ</div><h3>Kimberly Jones</h3><a href="mailto:kimberlymurphyjones@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-marion-hawsey"><div class="profile-avatar">MH</div><h3>Marion Hawsey</h3><a href="mailto:Hawseymarion@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-natalia-lopez"><div class="profile-avatar">NL</div><h3>Natalia Lopez</h3><a href="mailto:lopezosorionataliaines@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-rodion-floresku"><div class="profile-avatar">RF</div><h3>Rodion Floresku</h3><a href="mailto:rodionfloresku@gmail.com" class="btn-secondary">Contact</a></div>
-            </div>
-          </div>
-
-          <!-- Spring 2024 -->
-          <div class="cohort-body" id="cohort-2024-grid">
-            <div class="grid-3" style="padding: 0.25rem 0;">
-              <div class="profile-card" id="amb-agya-boakye-boaten-ii"><div class="profile-avatar">AB</div><h3>Agya Boakye-Boaten II</h3><a href="mailto:agyakofiboaten@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-aydan-shelton"><div class="profile-avatar">AS</div><h3>Aydan Shelton</h3><a href="mailto:ashelton5676@k12bcs.org" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-christina-nguyen"><div class="profile-avatar">CN</div><h3>Christina Nguyen</h3><a href="mailto:misschristina188@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-citlally-diaz-mar-2024"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><a href="mailto:citlamar2406@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-douglas-swayze"><div class="profile-avatar">DS</div><h3>Douglas Swayze</h3><a href="mailto:douglasswayze@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-ernesto-arellano-perez"><div class="profile-avatar">EA</div><h3>Ernesto Arellano-Perez</h3><a href="mailto:ernestoa2025@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-jasmin-umanzor"><div class="profile-avatar">JU</div><h3>Jasmin Umanzor</h3><a href="mailto:jasminumanzor320@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-katherin-cid-hernandez"><div class="profile-avatar">KC</div><h3>Katherin Cid-Hernandez</h3><a href="mailto:katherincidhernandez@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-katherine-wombwell"><div class="profile-avatar">KW</div><h3>Katherine Wombwell</h3><a href="mailto:katherine.marie.2021@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-kaylie-phillips"><div class="profile-avatar">KP</div><h3>Kaylie Phillips</h3><a href="mailto:eilyakphillips@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-kenny-malis"><div class="profile-avatar">KM</div><h3>Kenny Malis</h3><a href="mailto:kencamboy@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-liliana-guapia"><div class="profile-avatar">LG</div><h3>Liliana Guapia</h3><a href="mailto:guapia2095@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-linlee-ammann"><div class="profile-avatar">LA</div><h3>Linlee Ammann</h3><a href="mailto:linleeammann@icloud.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-wilson-jones"><div class="profile-avatar">WJ</div><h3>Wilson Jones</h3><a href="mailto:joneswil0128@icloud.com" class="btn-secondary">Contact</a></div>
-            </div>
-          </div>
-
-          <!-- 2024–2025 -->
-          <div class="cohort-body" id="cohort-2024-2025-grid">
-            <div class="grid-3" style="padding: 0.25rem 0;">
-              <div class="profile-card" id="amb-aiden-o-donnell"><div class="profile-avatar">AO</div><h3>Aiden O'Donnell</h3><a href="mailto:alwaysaidan2007@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-charlie-bender"><div class="profile-avatar">CB</div><h3>Charlie Bender</h3><a href="mailto:cbender3127@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-citlally-diaz-mar-2025"><div class="profile-avatar">CD</div><h3>Citlally Diaz Mar</h3><a href="mailto:citlamar2406@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-erin-mitchell"><div class="profile-avatar">EM</div><h3>Erin Mitchell</h3><a href="mailto:erinmitchell5@yahoo.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-greysen-motley"><div class="profile-avatar">GM</div><h3>Greysen Motley</h3><a href="mailto:greysenemotley@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-jemma-richards"><div class="profile-avatar">JR</div><h3>Jemma Richards</h3><a href="mailto:jemmarichords0@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-kyla-christensen"><div class="profile-avatar">KC</div><h3>Kyla Christensen</h3><a href="mailto:kyla.kath04@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-matthew-lupo"><div class="profile-avatar">ML</div><h3>Matthew Lupo</h3><a href="mailto:matthew.r.lupo@gmail.com" class="btn-secondary">Contact</a></div>
-              <div class="profile-card" id="amb-shawn-ware"><div class="profile-avatar">SW</div><h3>Shawn Ware</h3><a href="mailto:Shawnware2007@gmail.com" class="btn-secondary">Contact</a></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Alumni Ambassadors -->
       <section class="section section-alt">
         <div class="container">
@@ -296,41 +296,41 @@
             <p>Representatives from partner organizations across the region.</p>
           </div>
           <div class="ambassador-search-wrap" style="margin-bottom: 2rem;">
-            <input type="text" id="council-search" placeholder="Search by name or institution…" oninput="searchCouncil(this.value)" autocomplete="off" />
+            <input type="text" id="council-search" placeholder="Search by name, institution, or strategic group…" oninput="searchCouncil(this.value)" autocomplete="off" />
             <span class="search-icon">&#128269;</span>
           </div>
           <div class="grid-3" id="council-grid">
-            <div class="profile-card" id="amb-dana-moore"><div class="profile-avatar">DM</div><h3>Dana Moore</h3><p class="profile-major">A-B Tech CC</p><p class="profile-bio">Associate Vice President of Instructional Services</p><a href="mailto:danabmoore@abtech.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-diana-blackett"><div class="profile-avatar">DB</div><h3>Diana Blackett</h3><p class="profile-major">Asheville Chamber of Commerce</p><p class="profile-bio">Workforce Partnership Specialist</p><a href="mailto:dblackett@ashevillechamber.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-ivry-cheeks"><div class="profile-avatar">IC</div><h3>Dr. Ivry Cheeks</h3><p class="profile-major">Asheville City Schools</p><p class="profile-bio">Career &amp; Technical Education Director</p><a href="mailto:ivry.cheeks@acsgmail.net" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-josh-kersey"><div class="profile-avatar">JK</div><h3>Josh Kersey</h3><p class="profile-major">Biltmore Farms</p><p class="profile-bio">Senior HR Manager</p><a href="mailto:jkersey@biltmorefarms.com" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-laura-leatherwood"><div class="profile-avatar">LL</div><h3>Dr. Laura Leatherwood</h3><p class="profile-major">Blue Ridge CC</p><p class="profile-bio">President</p><a href="mailto:leatherwood@blueridge.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-rachael-sawyer"><div class="profile-avatar">RS</div><h3>Rachael Sawyer</h3><p class="profile-major">Buncombe County</p><p class="profile-bio">Director of Strategic Partnerships</p><a href="mailto:Rachael.sawyer@buncombenc.gov" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-jennifer-reed"><div class="profile-avatar">JR</div><h3>Dr. Jennifer Reed</h3><p class="profile-major">Buncombe County Schools</p><p class="profile-bio">Associate Superintendent of Curriculum and Instruction</p><a href="mailto:jennifer.reed@bcsemail.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-devon-mccarthy-james"><div class="profile-avatar">DM</div><h3>Devon McCarthy-James</h3><p class="profile-major">CFNC</p><p class="profile-bio">Associate Outreach Director Western Region</p><a href="mailto:Devon.McCarthy-James@cfi.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-robe-rode"><div class="profile-avatar">RR</div><h3>Robe Rode</h3><p class="profile-major">City of Asheville</p><p class="profile-bio">Assistant Director of Human Resources</p><a href="mailto:rrode@ashevillenc.gov" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-samantha-cole"><div class="profile-avatar">SC</div><h3>Samantha Cole</h3><p class="profile-major">Commerce NC</p><p class="profile-bio">Child Care Business Liaison</p><a href="mailto:samantha.cole@commerce.nc.gov" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-gene-loflin"><div class="profile-avatar">GL</div><h3>Dr. Gene Loflin</h3><p class="profile-major">Community Member</p><p class="profile-bio"></p><a href="mailto:william.e.loflin@gmail.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dana-moore"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">DM</div><h3>Dana Moore</h3><p class="profile-major">A-B Tech CC</p><p class="profile-bio">Associate Vice President of Instructional Services</p><a href="mailto:danabmoore@abtech.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-diana-blackett"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">DB</div><h3>Diana Blackett</h3><p class="profile-major">Asheville Chamber of Commerce</p><p class="profile-bio">Workforce Partnership Specialist</p><a href="mailto:dblackett@ashevillechamber.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-ivry-cheeks"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">IC</div><h3>Dr. Ivry Cheeks</h3><p class="profile-major">Asheville City Schools</p><p class="profile-bio">Career &amp; Technical Education Director</p><a href="mailto:ivry.cheeks@acsgmail.net" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-josh-kersey"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">JK</div><h3>Josh Kersey</h3><p class="profile-major">Biltmore Farms</p><p class="profile-bio">Senior HR Manager</p><a href="mailto:jkersey@biltmorefarms.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-laura-leatherwood"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">LL</div><h3>Dr. Laura Leatherwood</h3><p class="profile-major">Blue Ridge CC</p><p class="profile-bio">President</p><a href="mailto:leatherwood@blueridge.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-rachael-sawyer"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">RS</div><h3>Rachael Sawyer</h3><p class="profile-major">Buncombe County</p><p class="profile-bio">Director of Strategic Partnerships</p><a href="mailto:Rachael.sawyer@buncombenc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-jennifer-reed"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">JR</div><h3>Dr. Jennifer Reed</h3><p class="profile-major">Buncombe County Schools</p><p class="profile-bio">Associate Superintendent of Curriculum and Instruction</p><a href="mailto:jennifer.reed@bcsemail.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-devon-mccarthy-james"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">DM</div><h3>Devon McCarthy-James</h3><p class="profile-major">CFNC</p><p class="profile-bio">Associate Outreach Director Western Region</p><a href="mailto:Devon.McCarthy-James@cfi.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-robe-rode"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">RR</div><h3>Robe Rode</h3><p class="profile-major">City of Asheville</p><p class="profile-bio">Assistant Director of Human Resources</p><a href="mailto:rrode@ashevillenc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-samantha-cole"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">SC</div><h3>Samantha Cole</h3><p class="profile-major">Commerce NC</p><p class="profile-bio">Child Care Business Liaison</p><a href="mailto:samantha.cole@commerce.nc.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-gene-loflin"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">GL</div><h3>Dr. Gene Loflin</h3><p class="profile-major">Community Member</p><p class="profile-bio"></p><a href="mailto:william.e.loflin@gmail.com" class="btn-secondary">Contact</a></div>
             <div class="profile-card" id="amb-dr-joseph-fox"><div class="profile-avatar">JF</div><h3>Dr. Joseph Fox</h3><p class="profile-major">Fox Management Consulting Enterprises</p><p class="profile-bio">President &amp; CEO</p></div>
-            <div class="profile-card" id="amb-jorie-matijevich"><div class="profile-avatar">JM</div><h3>Jorie Matijevich</h3><p class="profile-major">HCA Healthcare - NC Division</p><p class="profile-bio">Vice President, Human Resources</p><a href="mailto:jorie.matijevich@healthonecares.com" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-john-mitchell"><div class="profile-avatar">JM</div><h3>John Mitchell</h3><p class="profile-major">Henderson County</p><p class="profile-bio">County Manager</p><a href="mailto:jmitchell@hendersoncountync.gov" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-emily-martin"><div class="profile-avatar">EM</div><h3>Emily Martin</h3><p class="profile-major">Henderson County Partnership for Economic Development</p><p class="profile-bio">Director of Industry Relations</p><a href="mailto:emilym@hcped.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-scott-rhodes"><div class="profile-avatar">SR</div><h3>Scott Rhodes</h3><p class="profile-major">Henderson County Public Schools</p><p class="profile-bio">Assistant Superintendent for Human Resources</p><a href="mailto:wsrhodes@hcpsnc.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-brandon-priester"><div class="profile-avatar">BP</div><h3>Brandon Priester</h3><p class="profile-major">Land of Sky Regional Council</p><p class="profile-bio">Youth Business Services Representative, Mountain Area Workforce Development Board</p><a href="mailto:brandonp@landofsky.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-will-hoffman"><div class="profile-avatar">WH</div><h3>Dr. Will Hoffman</h3><p class="profile-major">Madison County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:whoffman@madisonk12.net" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-tracy-parkinson"><div class="profile-avatar">TP</div><h3>Dr. Tracy Parkinson</h3><p class="profile-major">Mars Hill University</p><p class="profile-bio">Executive Vice President and Provost</p><a href="mailto:tracy_parkinson@mhu.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-denisha-bonds"><div class="profile-avatar">DB</div><h3>Dr. Denisha Bonds</h3><p class="profile-major">Montreat College</p><p class="profile-bio">Director of Career Development</p><a href="mailto:denisha.bonds@montreat.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-pam-hartley"><div class="profile-avatar">PH</div><h3>Pam Hartley</h3><p class="profile-major">myFutureNC</p><p class="profile-bio">Regional Impact Manager</p><a href="mailto:pam@myfuturenc.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-wesley-downing"><div class="profile-avatar">WD</div><h3>Wesley Downing</h3><p class="profile-major">Pratt &amp; Whitney Asheville</p><p class="profile-bio">Senior Human Resources Manager</p><a href="mailto:Wesley.downing@prattwhitney.com" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-samantha-sircey"><div class="profile-avatar">SS</div><h3>Samantha Sircey</h3><p class="profile-major">South College</p><p class="profile-bio">Campus President</p><a href="mailto:ssircey@south.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-jaime-laughter"><div class="profile-avatar">JL</div><h3>Jaime Laughter</h3><p class="profile-major">Transylvania County</p><p class="profile-bio">County Manager</p><a href="mailto:jaime.laughter@transylvaniacounty.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-lisa-fletcher"><div class="profile-avatar">LF</div><h3>Dr. Lisa Fletcher</h3><p class="profile-major">Transylvania County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:lfletcher@tcsnc.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-lance-edwards"><div class="profile-avatar">LE</div><h3>Lance Edwards</h3><p class="profile-major">United Way</p><p class="profile-bio">Senior Vice President, Community Impact</p><a href="mailto:lance.edwards@unitedwayabc.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-lisa-mann"><div class="profile-avatar">LM</div><h3>Lisa Mann</h3><p class="profile-major">UNC-Asheville</p><p class="profile-bio">Director of Career Center</p><a href="mailto:mann@unca.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-dr-kevan-frazier"><div class="profile-avatar">KF</div><h3>Dr. Kevan Frazier</h3><p class="profile-major">WCU</p><p class="profile-bio">Executive Director, WCU at Biltmore Park</p><a href="mailto:kdfrazier@email.wcu.edu" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-drew-pollick"><div class="profile-avatar">DP</div><h3>Drew Pollick</h3><p class="profile-major">WNC Human Resources Association</p><p class="profile-bio">Founder/CEO of Craft HR Solutions</p><a href="mailto:drew@crafthr.com" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-candie-sellers"><div class="profile-avatar">CS</div><h3>Candie Sellers</h3><p class="profile-major">WRESA</p><p class="profile-bio">Elementary Coordinator, Western Region Education Service Alliance</p><a href="mailto:csellers@wresa.org" class="btn-secondary">Contact</a></div>
-            <div class="profile-card" id="amb-claudia-gutierrez"><div class="profile-avatar">CG</div><h3>Claudia Gutierrez</h3><p class="profile-major">WWBC Program Associate</p><p class="profile-bio">Program Associate</p><a href="mailto:cgutierrez@carolinasmallbusiness.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-jorie-matijevich"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">JM</div><h3>Jorie Matijevich</h3><p class="profile-major">HCA Healthcare - NC Division</p><p class="profile-bio">Vice President, Human Resources</p><a href="mailto:jorie.matijevich@healthonecares.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-john-mitchell"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">JM</div><h3>John Mitchell</h3><p class="profile-major">Henderson County</p><p class="profile-bio">County Manager</p><a href="mailto:jmitchell@hendersoncountync.gov" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-emily-martin"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">EM</div><h3>Emily Martin</h3><p class="profile-major">Henderson County Partnership for Economic Development</p><p class="profile-bio">Director of Industry Relations</p><a href="mailto:emilym@hcped.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-scott-rhodes"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">SR</div><h3>Scott Rhodes</h3><p class="profile-major">Henderson County Public Schools</p><p class="profile-bio">Assistant Superintendent for Human Resources</p><a href="mailto:wsrhodes@hcpsnc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-brandon-priester"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">BP</div><h3>Brandon Priester</h3><p class="profile-major">Land of Sky Regional Council</p><p class="profile-bio">Youth Business Services Representative, Mountain Area Workforce Development Board</p><a href="mailto:brandonp@landofsky.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-will-hoffman"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">WH</div><h3>Dr. Will Hoffman</h3><p class="profile-major">Madison County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:whoffman@madisonk12.net" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-tracy-parkinson"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">TP</div><h3>Dr. Tracy Parkinson</h3><p class="profile-major">Mars Hill University</p><p class="profile-bio">Executive Vice President and Provost</p><a href="mailto:tracy_parkinson@mhu.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-denisha-bonds"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">DB</div><h3>Dr. Denisha Bonds</h3><p class="profile-major">Montreat College</p><p class="profile-bio">Director of Career Development</p><a href="mailto:denisha.bonds@montreat.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-pam-hartley"><span class="council-highlight-badge">Collaborative Leadership &amp; Shared Community Commitment</span><div class="profile-avatar">PH</div><h3>Pam Hartley</h3><p class="profile-major">myFutureNC</p><p class="profile-bio">Regional Impact Manager</p><a href="mailto:pam@myfuturenc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-wesley-downing"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">WD</div><h3>Wesley Downing</h3><p class="profile-major">Pratt &amp; Whitney Asheville</p><p class="profile-bio">Senior Human Resources Manager</p><a href="mailto:Wesley.downing@prattwhitney.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-samantha-sircey"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">SS</div><h3>Samantha Sircey</h3><p class="profile-major">South College</p><p class="profile-bio">Campus President</p><a href="mailto:ssircey@south.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-jaime-laughter"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">JL</div><h3>Jaime Laughter</h3><p class="profile-major">Transylvania County</p><p class="profile-bio">County Manager</p><a href="mailto:jaime.laughter@transylvaniacounty.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-lisa-fletcher"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">LF</div><h3>Dr. Lisa Fletcher</h3><p class="profile-major">Transylvania County Schools</p><p class="profile-bio">Superintendent</p><a href="mailto:lfletcher@tcsnc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-lance-edwards"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">LE</div><h3>Lance Edwards</h3><p class="profile-major">United Way</p><p class="profile-bio">Senior Vice President, Community Impact</p><a href="mailto:lance.edwards@unitedwayabc.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-lisa-mann"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">LM</div><h3>Lisa Mann</h3><p class="profile-major">UNC-Asheville</p><p class="profile-bio">Director of Career Center</p><a href="mailto:mann@unca.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-dr-kevan-frazier"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">KF</div><h3>Dr. Kevan Frazier</h3><p class="profile-major">WCU</p><p class="profile-bio">Executive Director, WCU at Biltmore Park</p><a href="mailto:kdfrazier@email.wcu.edu" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-drew-pollick"><span class="council-badge-blue">Workforce Preparation &amp; Career Pathways</span><div class="profile-avatar">DP</div><h3>Drew Pollick</h3><p class="profile-major">WNC Human Resources Association</p><p class="profile-bio">Founder/CEO of Craft HR Solutions</p><a href="mailto:drew@crafthr.com" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-candie-sellers"><span class="council-badge-orange">Learner Readiness &amp; K-12 Engagement</span><div class="profile-avatar">CS</div><h3>Candie Sellers</h3><p class="profile-major">WRESA</p><p class="profile-bio">Elementary Coordinator, Western Region Education Service Alliance</p><a href="mailto:csellers@wresa.org" class="btn-secondary">Contact</a></div>
+            <div class="profile-card" id="amb-claudia-gutierrez"><span class="council-badge-green">Postsecondary Access, Transitions, &amp; Success</span><div class="profile-avatar">CG</div><h3>Claudia Gutierrez</h3><p class="profile-major">WWBC Program Associate</p><p class="profile-bio">Program Associate</p><a href="mailto:cgutierrez@carolinasmallbusiness.org" class="btn-secondary">Contact</a></div>
           </div>
         </div>
       </section>
@@ -465,9 +465,10 @@
       const grid = document.getElementById('council-grid');
       const q = query.trim().toLowerCase();
       grid.querySelectorAll('.profile-card').forEach(card => {
-        const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
-        const org  = card.querySelector('.profile-major')?.textContent.toLowerCase() || '';
-        card.style.display = (!q || name.includes(q) || org.includes(q)) ? '' : 'none';
+        const name  = card.querySelector('h3')?.textContent.toLowerCase() || '';
+        const org   = card.querySelector('.profile-major')?.textContent.toLowerCase() || '';
+        const badge = card.querySelector('[class^="council-badge"], .council-highlight-badge')?.textContent.toLowerCase() || '';
+        card.style.display = (!q || name.includes(q) || org.includes(q) || badge.includes(q)) ? '' : 'none';
       });
     }
 
